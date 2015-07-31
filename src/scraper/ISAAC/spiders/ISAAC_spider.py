@@ -18,7 +18,6 @@ class Timeslot():
       self.sTime = sTime
       self.eTime = eTime
       self.day = day
-
 class Section():
    def __init__():
       self.CRN = 0       #41562
