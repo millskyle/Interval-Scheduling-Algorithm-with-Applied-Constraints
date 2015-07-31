@@ -13,6 +13,29 @@ def printer(string):
    print "\n"
 
 
+class Timeslot():
+   def __init__(self, sTime, eTime, day):
+      self.sTime = sTime
+      self.eTime = eTime
+      self.day = day
+
+class Section():
+   def __init__():
+      self.CRN = 0       #41562
+      self.name = ""     #Physics I
+      self.subject = ""  #PHY
+      self.semester = 0  #201501
+      self.course = ""   #PHY1010
+      self.campus = ""   #North Oshawa
+      self.cType = ""    #Lec
+      self.timeslots = []#List of corresponding Timeslot objects
+   def add_timeslot(self, sTime, eTime, day):
+      t = Timeslot(sTime,eTime,day)
+      self.timeslots.append(t)
+
+
+
+
 class available_courses_spider(CrawlSpider):
    name = "UOITspider"
    allowed_domains = ['https://ssbp.mycampus.ca', 'ssbp.mycampus.ca']
@@ -56,9 +79,10 @@ class available_courses_spider(CrawlSpider):
       print body
 
       crns = body[0].xpath('//th[@class="ddheader"]')
-      for ch in crns:
+      for i,ch in enumerate(crns):
+         
          thisCRN = ch.xpath('./following-sibling::*[1]')
-         instructor = thisCRN.xpath('./tr/td[span="Seats"]/following-sibling::td[1]/text()').extract()
+         instructor = thisCRN.xpath('//tr/td[span="Seats"]/following-sibling::td[3]/text()').extract()[i]
          print instructor
 
 
