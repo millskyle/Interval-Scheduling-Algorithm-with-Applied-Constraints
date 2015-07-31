@@ -72,6 +72,10 @@ class available_courses_spider(CrawlSpider):
       semester = response.meta['semester']
       subject = response.meta['subject']
 
+      file = open('out.txt','w')
+      file.write(response.body)
+      file.close()
+
       printer("Parsing available {subject} courses for semester {semester}...".format(subject=subject,semester=semester))
 
       body = Selector(response).xpath('//table[@class="datadisplaytable"]')
@@ -79,10 +83,10 @@ class available_courses_spider(CrawlSpider):
 
       crns = body[0].xpath('//th[@class="ddheader"]')
       for i,ch in enumerate(crns):
-         
          thisCRN = ch.xpath('./following-sibling::*[1]')
-         instructor = thisCRN.xpath('//tr/td[span="Seats"]/following-sibling::td[3]/text()').extract()[i]
-         print instructor
+         seatsLeft = int(thisCRN.xpath('//tr/td[span="Seats"]/following-sibling::td[3]/text()').extract()[i])
+         temp = thisCRN.xpath('//')
+         print temp
 
 
 
