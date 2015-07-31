@@ -51,9 +51,10 @@ def line_to_dict(line):
 
     ls = line.split()
     
-    #File format is CRN CTYPE CODE RSEAT STIME ETIME DAY
+    #File format is CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ
     dict_temp = {'CRN':ls[0], 'CTYPE':ls[1], 'CODE':ls[2],
-                 'RSEAT':ls[3], 'TIMES':[ls[4], ls[5], ls[6]]}
+                 'CINFO':[ls[3], ls[7], ls[8]], 
+                 'TIMES':[ls[4], ls[5], ls[6]]}
 
     return dict_temp
 
@@ -71,18 +72,30 @@ def add_query_to_dict(course_dict, query_list):
         crn = q['CRN']
         ctype = q['CTYPE']
         code = q['CODE']
-        rseat = q['RSEAT']
+        cinfo = q['CINFO']
         times = q['TIMES']
 
         #Add the times list the course dictionary
         course_dict[code][ctype][crn]['TIMES'].append(times)
-        #Add the number of available seats to the dictionary
-        if len(course_dict[code][ctype][crn]['RSEAT']) == 0:
-            course_dict[code][ctype][crn]['RSEAT'].append(rseat)
+        #Add the course info to the dictionary
+        #Contains number of available seats and subject
+        if len(course_dict[code][ctype][crn]['CINFO']) == 0:
+            course_dict[code][ctype][crn]['CINFO'].append(cinfo)
         else:
-            course_dict[code][ctype][crn]['RSEAT'][0] = rseat
+            course_dict[code][ctype][crn]['CINFO'][0] = cinfo
 
     return course_dict     
+
+def print_course_dict(course_dict):
+    """Prints course dict to the screen.
+    TEMPORARY FUNCTION
+    """
+    
+    for code in course_dict.keys():
+        for ctype in course_dict[code].keys():
+            for crn in course_dict[code][ctype].keys():
+                print code, ctype, crn, course_dict[code][ctype][crn]['TIMES'], \
+                      course_dict[code][ctype][crn]['CINFO']
 
 
 def main():
@@ -93,6 +106,9 @@ def main():
     test_dict_list = file_read()
     
     course_dict = add_query_to_dict(course_dict, test_dict_list)
+
+    #Uncomment if you want to print the contents of the course dictionary
+    #print_course_dict(course_dict)
 
 if __name__=="__main__":
     main()
