@@ -1,4 +1,5 @@
 import scrapy
+import logging
 from scrapy.spiders import BaseSpider
 from scrapy.http import FormRequest,Request
 from scrapy.selector import Selector,HtmlXPathSelector
@@ -7,7 +8,9 @@ from scrapy.linkextractors.sgml import SgmlLinkExtractor
 
 
 def printer(string):
-   print "KYLE: " + string
+   print "\n"
+   logging.info("KYLE: " + string)
+   print "\n"
 
 
 class available_courses_spider(CrawlSpider):
@@ -30,19 +33,36 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         yield req
+         if (subject == "PHY") :
+            yield req
 
    def parseRoot(self, response):
       if "Search by Term" in response.body:
          semesters = Selector(response).xpath('//td[@class="dedefault"]/select[@name="p_term"]/option/@value').extract()
-         for semester in semesters:
+         for semester in ["201601",] : #semesters:
             req = scrapy.Request('https://ssbp.mycampus.ca/prod/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjects)
             req.meta['semester'] = semester
             yield req
 
 
    def parseSubjectOptions(self,response):
-      printer("parsing...")
+
+      semester = response.meta['semester']
+      subject = response.meta['subject']
+
+      printer("Parsing available {subject} courses for semester {semester}...".format(subject=subject,semester=semester))
+
+      body = Selector(response).xpath('//table[@class="datadisplaytable"]')
+      print body
+
+      crns = body[0].xpath('//th[@class="ddheader"]')
+      for ch in crns:
+         thisCRN = ch.xpath('./following-sibling::*[1]')
+         instructor = thisCRN.xpath('./tr/td[span="Seats"]/following-sibling::td[1]/text()').extract()
+         print instructor
+
+
+
 
 
 

@@ -14,6 +14,7 @@ BOT_NAME = 'ISAAC'
 SPIDER_MODULES = ['ISAAC.spiders']
 NEWSPIDER_MODULE = 'ISAAC.spiders'
 
+LOG_LEVEL = 'INFO'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ISAAC (+http://www.yourdomain.com)'
