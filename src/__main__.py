@@ -21,7 +21,7 @@ def file_read():
     """Reads course info from a text file into a dictionary 
     TEMPORARY FUNCTION
     """
-    course_file_name = 'courses.txt'
+    course_file_name = 'course_data.txt'
 
     course_file = open(course_file_name, 'r')
 
@@ -51,9 +51,9 @@ def line_to_dict(line):
 
     ls = line.split()
     
-    #File format is CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ
+    #File format is CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ CAMPUS
     dict_temp = {'CRN':ls[0], 'CTYPE':ls[1], 'CODE':ls[2],
-                 'CINFO':[ls[3], ls[7], ls[8]], 
+                 'CINFO':[ls[3], ls[7], ls[8], ls[9]], 
                  'TIMES':[ls[4], ls[5], ls[6]]}
 
     return dict_temp
@@ -85,6 +85,7 @@ def add_query_to_dict(course_dict, query_list):
             course_dict[code][ctype][crn]['CINFO'][0] = cinfo
 
     return course_dict     
+
 
 def print_course_dict(course_dict):
     """Prints course dict to the screen.
