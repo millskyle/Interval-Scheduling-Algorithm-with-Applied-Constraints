@@ -123,13 +123,12 @@ class available_courses_spider(CrawlSpider):
 
          for mt in meetingtimes:
             fields = mt.xpath('.//td[@class="dbdefault"]/text()').extract()
-            week = fields[0].printable
+            week = unicodedata.normalize('NFKD', fields[0]).encode('ascii','ignore')
             day = day2int(fields[3])
             startTime,endTime = [time2int(i) for i in fields[2].split(" - ")]
-            print "|"+week+"|"
-            if (week=='W1'):
+            if (week==' W1'):
                days = [day]
-            elif (week=='W2'):
+            elif (week==' W2'):
                days = [day+5]
             else:
                days = [day,day+5]
@@ -138,11 +137,8 @@ class available_courses_spider(CrawlSpider):
             for d in days:
                Sec.add_timeslot(startTime,endTime,d)
 
-
          Sec.cleanup()
-
          Sec.cType = string2courseType(fields[6])
-
 
          for ts in Sec.timeslots:
             f.write("{CRN} {CTYPE} {CODE} {RSEAT} {STIME} {ETIME} {DAY} {SEM} {SUBJ} \n".format(
