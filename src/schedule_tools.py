@@ -106,7 +106,12 @@ def build_schedule(course_dict, course_code_list,conflict_thresh=100):
     return schedule
 
 def print_schedule(schedule):
-    
+    """Prints the contents of the schedule
+
+    Keyword arguments:
+    schedule: dictionary containing the scheduled events
+    """
+
     print "CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ CAMPUS"
 
     for day in schedule.keys():
