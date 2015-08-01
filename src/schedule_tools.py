@@ -27,18 +27,20 @@ def check_conflict(day, stime, schedule):
     """
     for event in schedule[day]:
         #Check if there is an overlap between the two classes
-        if event.stime <= stime <= event.etime:
-            return False
-        else:
+        if event.stime <= stime < event.etime:
             return True
+        else:
+            return False
 
-def build_schedule(course_dict, course_code_list):
+def build_schedule(course_dict, course_code_list,conflict_thresh=100):
     """Builds a schedule with the courses in the list
     Returns dictionary containing the schedule
 
     Keyword arguments:
     course_dict: the dictionary containing relevant courses
     course_code_list: list containing all the desired course codes
+    conflict_thresh: number of times the program will try and find a new course
+    to fix conflicts
     """
     
     #Initialize the schedule
@@ -55,6 +57,8 @@ def build_schedule(course_dict, course_code_list):
     
         #Boolean that says if the time can be added
         able_to_add = False
+        #Counter for the number of attempts at conflict resolution
+        add_attempts = 0 
 
         while able_to_add == False:
             #Initialize a queue to store events temporarily 
@@ -91,6 +95,13 @@ def build_schedule(course_dict, course_code_list):
                     schedule[i[0]].append(i[1])
                 
                 able_to_add = True
+
+            #If the counter is larger than the threshold then break
+            if add_attempts > conflict_thresh:
+                print "Could not add %s %s section" % (code, ctype)
+                break
+            #Increment the counter 
+            add_attempts += 1
 
     return schedule
 
