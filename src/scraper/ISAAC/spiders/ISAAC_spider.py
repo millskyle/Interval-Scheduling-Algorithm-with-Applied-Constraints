@@ -69,7 +69,7 @@ class Section():
          print ts.sTime,ts.eTime,ts.day
 
 f = open('courses.txt','w')
-f.write('CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ \n ')
+f.write('CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ \n')
 
 class available_courses_spider(CrawlSpider):
 
@@ -90,7 +90,8 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         if (subject == "PHY") :
+#         if (subject == "PHY") :
+         if (1==1):
             yield req
 
    def parseRoot(self, response):
