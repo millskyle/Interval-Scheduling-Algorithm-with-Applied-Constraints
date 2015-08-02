@@ -1,4 +1,5 @@
 import scrapy
+import matplotlib.pyplot as plt
 import unicodedata
 import logging
 from scrapy.spiders import BaseSpider
@@ -7,6 +8,10 @@ from scrapy.selector import Selector,HtmlXPathSelector
 from scrapy.spiders import CrawlSpider
 from scrapy.linkextractors.sgml import SgmlLinkExtractor
 import time
+import networkx as nx
+
+
+G = nx.Graph()
 
 def time2int(string):
    t = time.strptime(string, "%I:%M %p")
@@ -22,6 +27,7 @@ def string2courseType(string):
    else:
       return "Oth"
 
+allcourses = []
 
 def day2int(day):
    return { 'M':1,'T':2,'W':3,'R':4,'F':5 }[day]
@@ -90,14 +96,14 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-#         if (subject == "PHY") :
-         if (1==1):
+         if (subject == "PHY" or subject == "CHEM" or subject == "CSCI" or subject == "BIOL" or subject == "MATH" ) :
+#         if (1==1):
             yield req
 
    def parseRoot(self, response):
       if "Search by Term" in response.body:
          semesters = Selector(response).xpath('//td[@class="dedefault"]/select[@name="p_term"]/option/@value').extract()
-         for semester in ["201601","201509"] : #semesters:
+         for semester in ["201509"] : #semesters:
             req = scrapy.Request('https://ssbp.mycampus.ca/prod/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjects)
             req.meta['semester'] = semester
             yield req
@@ -156,7 +162,54 @@ class available_courses_spider(CrawlSpider):
 
 
          Sec.printToScreen()
+
+         if (Sec.course in ['PHY1010U','CHEM1010U','BIOL1010U','CSCI1010U','MATH1010U']):
+#            if (Sec.remainingSeats > 0):
+            if (1==1):
+
+               G.add_node(Sec,unique=Sec.course[0:2])
+
+               allcourses.append(Sec)
          print "----------------------------------------------------------------"
+
+
+      edges = []
+      val_map = { 'Lec': 1.0, 'Tut':0.75, 'Lab':0.25, 'Oth':0.0 }
+      colors = [val_map[node.cType] for node in G.nodes() ]
+      print len(colors),len(G.nodes())
+      print colors
+
+      for i,iSec in enumerate(allcourses):
+         for j,jSec in enumerate(allcourses):
+            if i<j:
+         #      print jSec.cType,iSec.cType
+               have_edge = False
+               #If the two sections are from the same course and are the same type, they're incompatible
+               if ( (iSec.cType == jSec.cType) and (jSec.course==iSec.course)):
+                  have_edge = True
+               for itimeslot in iSec.timeslots:
+                  for jtimeslot in jSec.timeslots:
+                     if ( (jtimeslot.sTime <= itimeslot.eTime and jtimeslot.eTime >= itimeslot.eTime and jtimeslot.day==itimeslot.day) ):
+                        have_edge = True
+
+               if have_edge:
+                  G.add_edge(iSec,jSec)
+                  edges.append([i,j]) #G.add_edge(i,j)
+
+      print "Your schedule: "
+      for CC in nx.maximal_independent_set(G):
+         print "  "
+         print CC.course, CC.cType, CC.CRN
+         for ts in CC.timeslots:
+            print "   ",ts.day, ts.sTime, ts.eTime
+
+      nx.draw_networkx(G,with_labels=True,labels=nx.get_node_attributes(G,'unique'), cmap=plt.get_cmap('jet'), node_color=colors,vmin=0, vmax=1.0)
+      plt.show()
+
+
+
+      print "done"
+
 
 
 
