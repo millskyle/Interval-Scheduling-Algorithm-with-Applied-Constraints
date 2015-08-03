@@ -1,0 +1,76 @@
+from dbSetup import *
+
+#initializes the database
+#Use reinit for debugging purposes
+#True or 1 to clear all data in database
+def init(reinit):
+	if reinit:
+		__deleteTables()
+	__createTables()
+
+def __deleteTables():
+	Sectiondb.drop_table(True)
+	Timeslotdb.drop_table(True)
+
+def __createTables():
+	Sectiondb.create_tables(True)
+	Timeslotdb.create_tables(True)
+
+
+
+#I don't know what the data structure is that holds courses
+def insertCourse(sectionlist):
+	for section in courselist:
+		sec = Sectiondb()
+		sec.crn = section.crn
+		sec.name = section.name
+		sec.subject = section.subject
+		sec.semester = section.semester
+		sec.code = section.course
+		sec.campus = section.campus
+		sec.type = section.cType
+		sec.save()
+
+		for timeslot in section.timeslots:
+			t = Timeslotdb()
+			t.sid = sec.id
+			t.day = timeslot.day
+			t.starttime = timeslot.sTime
+			t.endtime = timeslot.eTime
+
+#I'm assuming I'm just going to get a list of strings for this part
+def grabCourses(courselist):
+	coursesdict = {}
+	for course in courselist:
+		cdict = {
+			'LAB' : {},
+			'LEC' : {},
+			'TUT' : {}
+		}
+
+
+		query = Sectiondb.select().\
+					where(Sectiondb.code == course).\
+					join(Timeslotdb)
+
+		if query.exists():
+			for row in query:
+				t = {
+						'day' 		: row.day,
+						'stime'		: row.starttime,
+						'etime'		: row.endtime
+					}
+				if row.crn in cdict[row.type]:
+					cdict[row.type][row.crn]['timeslots'].append(t)
+				else:
+					r = {
+						'rseats' 	: row.remainingseats,
+						'sem'	 	: row.semester,
+						'subject'	: row.subject,
+						'timeslots'	: [t]
+					}
+
+					cdict[row.type][row.crn] = r
+		coursesdict[course] = cdict
+	return coursesdict
+
