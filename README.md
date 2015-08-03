@@ -13,3 +13,11 @@
 
 ```sudo pip install networkx```
 
+- Peewee (Database interface)
+```sudo pip install peewee```
+
+- MySQLdb
+```sudo apt-get install python-mysqldb```
+
+
+
