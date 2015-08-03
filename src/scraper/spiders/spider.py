@@ -11,6 +11,8 @@ import time
 import networkx as nx
 import json
 from  course import *
+from build_graph import graph_optimize
+from filter_list import * #filter_section_list, count_types_within_courses
 
 def time2int(string):
    try:
@@ -52,11 +54,10 @@ class available_courses_spider(CrawlSpider):
    def __init__(self, *args, **kwargs):
       self.start_urls = ['https://ssbp.mycampus.ca/prod/bwckschd.p_disp_dyn_sched?TRM=U']
 
-
    def start_requests(self):
-      yield scrapy.Request('https://ssbp.mycampus.ca/prod/bwckschd.p_disp_dyn_sched?TRM=U', self.parseRoot)
+      yield scrapy.Request('https://ssbp.mycampus.ca/prod/bwckschd.p_disp_dyn_sched?TRM=U', self.parseSemesterChoicePage)
 
-   def parseSubjects(self, response):
+   def parseSubjectChoicePage(self, response):
       semester = response.meta['semester']
       subjects = Selector(response).xpath('//td[@class="dedefault"]/select[@id="subj_id"]/option/@value').extract()
       for subject in subjects:
@@ -64,15 +65,15 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         if (subject == "PHY" or subject == "CHEM" or subject == "CSCI" or subject == "BIOL" or subject == "MATH" ) :
-#         if (1==1):
+         #if (subject == "PHY" or subject == "CHEM" or subject == "CSCI" or subject == "BIOL" or subject == "MATH" ) :
+         if (1==1):
             yield req
 
-   def parseRoot(self, response):
+   def parseSemesterChoicePage(self, response):
       if "Search by Term" in response.body:
          semesters = Selector(response).xpath('//td[@class="dedefault"]/select[@name="p_term"]/option/@value').extract()
          for semester in ["201509"] : #semesters:
-            req = scrapy.Request('https://ssbp.mycampus.ca/prod/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjects)
+            req = scrapy.Request('https://ssbp.mycampus.ca/prod/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjectChoicePage)
             req.meta['semester'] = semester
             yield req
 
@@ -116,6 +117,8 @@ class available_courses_spider(CrawlSpider):
             Sec.cleanup()
             Sec.cType = string2courseType(fields[6])
 
+            allcourses.append(Sec)
+
             for ts in Sec.timeslots:
                f.write("{CRN} {CTYPE} {CODE} {RSEAT} {STIME} {ETIME} {DAY} {SEM} {SUBJ} \n".format(
                     CRN=Sec.CRN,
@@ -129,12 +132,21 @@ class available_courses_spider(CrawlSpider):
                     SUBJ=subject ) )
 
 
-
             #Somehow, at this point, we need to put the Sec object into a database, file or some storage medium
-            Sec.printToScreen()
-            print "----------------------------------------------------------------"
+#            Sec.printToScreen()
+ #           print "----------------------------------------------------------------"
          except ValueError:
             print "Error parsing course schedule information for {0}".format(header)
+
+   def close(self):
+      print len(allcourses)
+
+      courses_to_optimize = ['BIOL1010U','CHEM1010U','CSCI1040U','PHY1010U','MATH1010U']
+#     courses_to_optimize = [
+      subset = filter_section_list(allcourses,courses_to_optimize)
+      graph_optimize(subset)
+
+#   foo()
 
 
 
