@@ -9,5 +9,7 @@
 
 ```sudo pip install scrapy```
 
+- Network X (Python network graph tools)
 
+```sudo pip install networkx```
 
