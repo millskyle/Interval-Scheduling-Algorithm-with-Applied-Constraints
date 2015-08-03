@@ -16,18 +16,20 @@ class BaseModel(peewee.Model):
 #Base Tables used to store information
 #These classes define both the tables and can be used to store row information
 #More info on usage can be found in dbHandler
-class Class(BaseModel):
+class Sectiondb(BaseModel):
 	id = peewee.PrimaryKeyField() #pretty much just used for joins don't touch
 	crn = peewee.IntegerField()
+	name = peewee.TextField()
+	campus = peewee.TextField()
 	code = peewee.CharField()
 	type = peewee.CharField(max_length=3)
 	remainingseats = peewee.IntegerField()
 	semester = peewee.CharField()
 	subject = peewee.CharField()
 
-class Timeslot(BaseModel):
+class Timeslotdb(BaseModel):
 	id = peewee.PrimaryKeyField()
-	cid = peewee.ForeignKeyField(Class, to_field="id")
+	sid = peewee.ForeignKeyField(Sectiondb, to_field="id")
 	day = peewee.IntegerField()
 	starttime = peewee.IntegerField()
 	endtime = peewee.IntegerField()
