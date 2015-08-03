@@ -1,5 +1,5 @@
 from dict_construct import dict_construct
-from course import Course
+from course import Graham_Course
 import random
 
 def find_required_events(course_dict, course_code_list):
@@ -85,7 +85,7 @@ def build_schedule(course_dict, course_code_list,conflict_thresh=100):
                     campus = course_dict[code][ctype][crn]['CINFO'][3]
                     #Add to the queue
                     #Tuple of day and class instance
-                    ev_queue.append((day, Course(crn, ctype, code, rseat, stime, 
+                    ev_queue.append((day, Graham_Course(crn, ctype, code, rseat, stime, 
                                                  etime, day, sem, subj, campus)))
     
             #Check that there were no conflicts
