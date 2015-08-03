@@ -132,8 +132,11 @@ class available_courses_spider(CrawlSpider):
                     SUBJ=subject ) )
 
 
-            #Somehow, at this point, we need to put the Sec object into a database, file or some storage medium
-#            Sec.printToScreen()
+            Sec.printToScreen()
+#            dbHandler.insertCourse(Sec)  #insert the course into the database.   dbHandler must take care of converting the Section() object to a database query/object.
+
+
+
  #           print "----------------------------------------------------------------"
          except ValueError:
             print "Error parsing course schedule information for {0}".format(header)

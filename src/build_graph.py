@@ -80,7 +80,7 @@ def graph_optimize(query_results):
       successfully_scheduled_sections =  len(yoursched)
       tries +=1
       print "Attempt ",tries
-      if tries > 100:
+      if tries > 1000:
          print "Unsuccessful at making a schedule which includes all courses.  The best one possible has been created, but please check for missing courses/sections"
          break
 
