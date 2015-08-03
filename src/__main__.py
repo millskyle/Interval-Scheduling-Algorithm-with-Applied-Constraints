@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from collections import defaultdict
-from course import Course
+from course import Graham_Course
 import random 
 from schedule_tools import find_required_events
 from schedule_tools import check_conflict
