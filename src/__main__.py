@@ -1,27 +1,19 @@
 #!/usr/bin/python
 
 from collections import defaultdict
-
-def dict_construct(levels, final_type):
-    """Returns n level deep dictionary
-    Keyword arguments:
-    levels: the number of levels desired
-    final_type: data type of the last level
-    
-    E.g.
-    some_dict=dict_construct(3, list) 
-     will create a 3 level deep (i.e. 3 sets of keys) dictionary
-     with a list as the innermost value 
-    """
-
-    return(defaultdict(final_type) if levels<2 else
-          defaultdict(lambda: dict_construct(levels-1,final_type)))
+from course import Course
+import random 
+from schedule_tools import find_required_events
+from schedule_tools import check_conflict
+from schedule_tools import build_schedule
+from schedule_tools import print_schedule
+from dict_construct import dict_construct
 
 def file_read():
     """Reads course info from a text file into a dictionary 
     TEMPORARY FUNCTION
     """
-    course_file_name = 'courses.txt'
+    course_file_name = 'course_data.txt'
 
     course_file = open(course_file_name, 'r')
 
@@ -51,10 +43,11 @@ def line_to_dict(line):
 
     ls = line.split()
     
-    #File format is CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ
+    #File format is CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ CAMPUS
+    #STIME and ETIME are converted to ints to compare times later
     dict_temp = {'CRN':ls[0], 'CTYPE':ls[1], 'CODE':ls[2],
-                 'CINFO':[ls[3], ls[7], ls[8]], 
-                 'TIMES':[ls[4], ls[5], ls[6]]}
+                 'CINFO':[ls[3], ls[7], ls[8], ls[9]], 
+                 'TIMES':[int(ls[4]), int(ls[5]), ls[6]]}
 
     return dict_temp
 
@@ -80,23 +73,23 @@ def add_query_to_dict(course_dict, query_list):
         #Add the course info to the dictionary
         #Contains number of available seats and subject
         if len(course_dict[code][ctype][crn]['CINFO']) == 0:
-            course_dict[code][ctype][crn]['CINFO'].append(cinfo)
+            course_dict[code][ctype][crn]['CINFO'].extend(cinfo)
         else:
-            course_dict[code][ctype][crn]['CINFO'][0] = cinfo
+            course_dict[code][ctype][crn]['CINFO'] = cinfo
 
     return course_dict     
+
 
 def print_course_dict(course_dict):
     """Prints course dict to the screen.
     TEMPORARY FUNCTION
     """
-    
     for code in course_dict.keys():
         for ctype in course_dict[code].keys():
             for crn in course_dict[code][ctype].keys():
                 print code, ctype, crn, course_dict[code][ctype][crn]['TIMES'], \
                       course_dict[code][ctype][crn]['CINFO']
-
+            
 
 def main():
     
@@ -107,8 +100,14 @@ def main():
     
     course_dict = add_query_to_dict(course_dict, test_dict_list)
 
+    course_code_list = ['phy1001', 'calc1010']
+
+    sched_temp = build_schedule(course_dict, course_code_list)
+    
+    print_schedule(sched_temp) 
+
     #Uncomment if you want to print the contents of the course dictionary
-    #print_course_dict(course_dict)
+    print_course_dict(course_dict)
 
 if __name__=="__main__":
     main()

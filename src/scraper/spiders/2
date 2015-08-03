@@ -9,6 +9,8 @@ from scrapy.spiders import CrawlSpider
 from scrapy.linkextractors.sgml import SgmlLinkExtractor
 import time
 import networkx as nx
+import json
+import course
 
 
 G = nx.Graph()
@@ -38,17 +40,10 @@ def printer(string):
    logging.info("KYLE: " + string)
    print "\n"
 
+def time2ftime(string):
+  return string[0:2] + ":" + string[2:4]
 
-class Timeslot():
-   def __init__(self, sTime, eTime, day):
-      self.key="{0}{1}{2}".format(sTime,eTime,day)
-      self.sTime = sTime
-      self.eTime = eTime
-      self.day = day
-   def __hash__(self):
-      return hash(self.key)
-   def __eq__(self, other):
-      return self.key == other.key
+old= """
 class Section():
    def __init__(self):
       self.CRN = 0            #41562
@@ -60,8 +55,18 @@ class Section():
       self.cType = ""         #Lec
       self.remainingSeats = 0 #34
       self.timeslots = []     #List of corresponding Timeslot objects
+   class Timeslot():
+      def __init__(self, sTime, eTime, day):
+         self.key="{0}{1}{2}".format(sTime,eTime,day)
+         self.sTime = sTime
+         self.eTime = eTime
+         self.day = day
+      def __hash__(self):
+         return hash(self.key)
+      def __eq__(self, other):
+         return self.key == other.key
    def add_timeslot(self, sTime, eTime, day):
-      t = Timeslot(sTime,eTime,day)
+      t = self.Timeslot(sTime,eTime,day)
       self.timeslots.append(t)
    def cleanup(self):
       #remove duplicate timeslots (e.g. labs listed 6 times per semester)
@@ -73,6 +78,35 @@ class Section():
       print self.name, self.CRN, self.cType
       for ts in self.timeslots:
          print ts.sTime,ts.eTime,ts.day
+   def toDict(self):
+      colors = { "Lec":"#FFFF66","Tut":"FF6699", "Lab": "#99FF99" }
+      w1 = []
+      w2 = []
+      for t in self.timeslots:
+         if (t.day>5):
+            w2.append( {
+              "title" : self.course + " " + self.cType + " (" + self.CRN + ")",
+              "start" : time2ftime(t.sTime),
+              "end"   : time2ftime(t.eTime),
+              "dow"   : "[" + str(t.day-5) + "]",
+              "color" : colors[self.cType],
+              "textColor" : "black",
+            })
+         else:
+            w1.append( {
+              "title" : self.course + " " + self.cType + " (" + self.CRN + ")",
+              "start" : time2ftime(t.sTime),
+              "end"   : time2ftime(t.eTime),
+              "dow"   : "[" + str(t.day) + "]",
+              "color" : colors[self.cType],
+              "textColor" : "black",
+            })
+      return w1,w2
+
+"""
+
+
+
 
 f = open('courses.txt','w')
 f.write('CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ \n')
@@ -164,8 +198,8 @@ class available_courses_spider(CrawlSpider):
          Sec.printToScreen()
 
          if (Sec.course in ['PHY1010U','CHEM1010U','BIOL1010U','CSCI1010U','MATH1010U']):
-#            if (Sec.remainingSeats > 0):
-            if (1==1):
+            if (Sec.remainingSeats > 0):
+#            if (1==1):
 
                G.add_node(Sec,unique=Sec.course[0:2])
 
@@ -197,15 +231,44 @@ class available_courses_spider(CrawlSpider):
                   edges.append([i,j]) #G.add_edge(i,j)
 
       print "Your schedule: "
-      for CC in nx.maximal_independent_set(G):
+      requiredNumberOfSections = 10
+      x = 0
+      tries = 0
+      while x < requiredNumberOfSections:
+         yoursched = nx.maximal_independent_set(G)
+         x =  len(yoursched)
+         tries +=1
+         print "Attempt ",tries
+         if tries > 1000:
+            print "Unsuccessful at making a schedule which includes all courses.  The best one possible has been created, but please check for missing courses/sections"
+            break
+      print len(yoursched)," SECTIONS"
+
+      w1jsonData = []
+      w2jsonData = []
+      for CC in yoursched:
          print "  "
+         w1js,w2js = CC.toDict()
+         for w1jsd in w1js:
+            w1jsonData.append(w1jsd)
+         for w2jsd in w2js:
+            w2jsonData.append(w2jsd)
+
          print CC.course, CC.cType, CC.CRN
          for ts in CC.timeslots:
             print "   ",ts.day, ts.sTime, ts.eTime
 
       nx.draw_networkx(G,with_labels=True,labels=nx.get_node_attributes(G,'unique'), cmap=plt.get_cmap('jet'), node_color=colors,vmin=0, vmax=1.0)
-      plt.show()
+      plt.savefig('graph.svg')
 
+
+
+
+      with open('w1.json','w') as outfile:
+        json.dump(w1jsonData, outfile, sort_keys = True, indent = 4, ensure_ascii = True)
+
+      with open('w2.json','w') as outfile:
+        json.dump(w2jsonData, outfile, sort_keys = True, indent = 4, ensure_ascii = True)
 
 
       print "done"
