@@ -10,7 +10,11 @@ scraperWorker.run()
 
 @bottle.route('/')
 def index():
-    return bottle.static_file('index.html', root='static/')
+    return bottle.static_file('input.html', root='static/')
+
+@bottle.route('/input.js')
+def input():
+    return bottle.static_file('input.js', root='static/')
 
 @bottle.route('/getCalendar')
 def getCalendar():

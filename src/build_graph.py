@@ -37,7 +37,7 @@ def graph_optimize(query_results):
 
 #add all potential courses as nodes to the graph
    for Sec in query_results:
-      G.add_node(Sec, label=Sec.course[0:2],selected=1.0, score=Sec.score())
+      G.add_node(Sec, label=Sec.course[0:2],selected=1.0)
 
 
 #map the type to a float for coloring the graph output
