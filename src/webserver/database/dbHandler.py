@@ -1,3 +1,4 @@
+import re
 from dbSetup import *
 
 #initializes the database
@@ -9,8 +10,8 @@ def init(reinit=False):
 	__createTables()
 
 def __deleteTables():
-	Sectiondb.drop_table(True)
 	Timeslotdb.drop_table(True)
+	Sectiondb.drop_table(True)
 
 def __createTables():
 	Sectiondb.create_table(True)
@@ -21,12 +22,17 @@ def insertCourse(section):
 	sec = Sectiondb()
 	sec.crn = section.CRN
 	sec.name = section.name
-	sec.subject = section.subject
 	sec.semester = section.semester
 	sec.code = section.course
 	sec.campus = section.campus
 	sec.type = section.cType
 	sec.remainingseats = section.remainingSeats
+
+
+	mo = re.match("([A-Za-z]{3,4})([0-9]{4})([UTG])", section.course)
+	if mo: 
+		sec.subject = mo.groups()[0]
+
 	sec.save()
 
 	for timeslot in section.timeslots:
@@ -84,16 +90,18 @@ def grabCourses(courselist):
 def getAvailableCourses():
 	retdict = {}
 
-	subjectquery = Sectiondb.select(Sectiondb.subject).distinct()
+	subjectquery = Sectiondb.\
+					select(Sectiondb.subject).\
+					distinct().naive()
 	if subjectquery.exists():
 		for subrow in subjectquery:
+			print subrow.subject
 			retdict[subrow.subject] = []
 
 			coursequery = Sectiondb.select().\
-							where(Sectiondb.subject == subrow.subject)
+							where(Sectiondb.subject == subrow.subject).\
+					distinct().naive()
 			if coursequery.exists():
 				for row in coursequery:
 					retdict[subrow.subject].append(row.code)
 	return retdict
-
-
