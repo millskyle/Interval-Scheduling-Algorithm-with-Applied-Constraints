@@ -16,27 +16,32 @@ def __createTables():
 	Sectiondb.create_tables(True)
 	Timeslotdb.create_tables(True)
 
+@db.atomic() #ensures changes are rolledback once an error occurs
+def insertCourse(section):
+	sec = Sectiondb()
+	sec.crn = section.crn
+	sec.name = section.name
+	sec.subject = section.subject
+	sec.semester = section.semester
+	sec.code = section.course
+	sec.campus = section.campus
+	sec.type = section.cType
+	sec.save()
+
+	for timeslot in section.timeslots:
+		t = Timeslotdb()
+		t.sid = sec.id
+		t.day = timeslot.day
+		t.starttime = timeslot.sTime
+		t.endtime = timeslot.eTime
+		t.save()
 
 
 #I don't know what the data structure is that holds courses
-def insertCourse(sectionlist):
-	for section in courselist:
-		sec = Sectiondb()
-		sec.crn = section.crn
-		sec.name = section.name
-		sec.subject = section.subject
-		sec.semester = section.semester
-		sec.code = section.course
-		sec.campus = section.campus
-		sec.type = section.cType
-		sec.save()
-
-		for timeslot in section.timeslots:
-			t = Timeslotdb()
-			t.sid = sec.id
-			t.day = timeslot.day
-			t.starttime = timeslot.sTime
-			t.endtime = timeslot.eTime
+def insertCourses(sectionlist):
+	for section in sectionlist:
+		insertCourse(section)
+		
 
 #I'm assuming I'm just going to get a list of strings for this part
 def grabCourses(courselist):
