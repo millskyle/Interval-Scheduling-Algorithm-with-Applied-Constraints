@@ -1,3 +1,5 @@
+from weighting import *
+
 class Graham_Course():
 
     #Initialize variables
@@ -29,6 +31,7 @@ class Section():
       self.cType = ""         #Lec
       self.remainingSeats = 0 #34 
       self.timeslots = []     #List of corresponding Timeslot objects
+      self.weight = 0
    class Timeslot():
       def __init__(self, sTime, eTime, day):
          self.key="{0}{1}{2}".format(sTime,eTime,day)
@@ -47,6 +50,10 @@ class Section():
       self.timeslots = set(self.timeslots)
       #remove space in course code:
       self.course = self.course.replace(" ","")
+   def score(self):
+      if self.weight==0:
+         self.weight = compute_section_weight(self)
+      return self.weight
    def printToScreen(self):
       print "\n"
       print self.name, self.CRN, self.cType

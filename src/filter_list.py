@@ -24,7 +24,11 @@ def get_list_of_CRNS(allcourses):
       crns.append(C.CRN)
    return crns
 
-
+def get_weights_of_list(allcourses):
+   total = 0
+   for C in allcourses:
+      total += C.score()
+   return total
 
 
 

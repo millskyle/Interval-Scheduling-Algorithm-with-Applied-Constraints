@@ -65,8 +65,8 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         #if (subject == "PHY" or subject == "CHEM" or subject == "CSCI" or subject == "BIOL" or subject == "MATH" ) :
-         if (1==1):
+         if (subject in ["PHY","CHEM","CSCI","BIOL","MATH"] ) :
+#         if (1==1):
             yield req
 
    def parseSemesterChoicePage(self, response):
@@ -146,7 +146,8 @@ class available_courses_spider(CrawlSpider):
 
       courses_to_optimize = ['BIOL1010U','CHEM1010U','CSCI1040U','PHY1010U','MATH1010U']
 #     courses_to_optimize = [
-      subset = filter_section_list(allcourses,courses_to_optimize)
+      #subset = filter_section_list(ListOfAllSections,ListOfAllCoursesDesired,MinimumNumberOfAvailableSeats)
+      subset = filter_section_list(allcourses,courses_to_optimize,-1)
       graph_optimize(subset)
 
 #   foo()

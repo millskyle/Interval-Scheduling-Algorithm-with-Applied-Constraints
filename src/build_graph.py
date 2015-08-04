@@ -37,7 +37,7 @@ def graph_optimize(query_results):
 
 #add all potential courses as nodes to the graph
    for Sec in query_results:
-      G.add_node(Sec, label=Sec.course[0:2],selected=1.0)
+      G.add_node(Sec, label=Sec.course[0:2],selected=1.0, score=Sec.score())
 
 
 #map the type to a float for coloring the graph output
@@ -59,6 +59,8 @@ def graph_optimize(query_results):
                   if ((jtimeslot.sTime <= itimeslot.eTime and jtimeslot.eTime >= itimeslot.eTime and jtimeslot.day==itimeslot.day)):
                      #if they overlap in time, and they're on the same day, then they're incompatible.
                      have_edge = True
+                  if (jtimeslot.sTime == itimeslot.sTime and jtimeslot.day==itimeslot.day ):
+                     have_edge = True
 
             if have_edge:
                #If have_edge is true, then these two nodes are incompatible with each other.
@@ -69,22 +71,42 @@ def graph_optimize(query_results):
 
 
 
-   successfully_scheduled_sections = 0
-   tries = 0
+
+   all_valid = []
+   calculate_how_many = 250
+   max_attempts = 20
+
+   best_score = -1.0e9
 
 
-   while successfully_scheduled_sections < requiredNumberOfSections:
-      #compute the maximal independent set.  This is NOT the MAXIMUM independent set. Thus we must loop a few times
-      #to attempt to get the best possible optimization.
-      yoursched = nx.maximal_independent_set(G)
-      successfully_scheduled_sections =  len(yoursched)
-      tries +=1
-      print "Attempt ",tries
-      if tries > 1000:
-         print "Unsuccessful at making a schedule which includes all courses.  The best one possible has been created, but please check for missing courses/sections"
-         break
+   for i in xrange(calculate_how_many):
+      successfully_scheduled_sections = 0
+      tries = 0
+      while successfully_scheduled_sections < requiredNumberOfSections:
+         # compute the maximal independent set.  
+         # This is NOT the MAXIMUM independent set. Thus we must loop a few times
+         # to attempt to get the best possible optimization.
+         thissched = nx.maximal_independent_set(G)
+         #compute the weight-score of this
+         successfully_scheduled_sections =  len(thissched)
+         tries +=1
+         print "   Attempt",tries
+         if tries > max_attempts:
+            print "Timetable creation failed for timetable option",i
+            break
+      thisScore = get_weights_of_list(thissched)
+      all_valid.append(thissched)
+      print "Timetable option",i,"\t\t Score:",thisScore
+      if thisScore > best_score:
+         best_score = thisScore
+         bestsched = thissched
 
 
+
+   print "OUTCOME: the best timetable has score",best_score
+   yoursched = bestsched
+
+#   print nx.get_node_attributes(G, 'score')
    chosen = get_list_of_CRNS(yoursched)
    for node in sorted(G.nodes()):
       if node.CRN in chosen:
@@ -107,6 +129,7 @@ def graph_optimize(query_results):
 
 
 
+   #JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
    JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
 
 
