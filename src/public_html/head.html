@@ -4,6 +4,16 @@
 <HEAD>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="./moment.js" ></script>
+<style>
+.mycalendar {
+width:600px;
+float: left;
+}
+
+
+
+
+</style>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"  rel="stylesheet" type="text/css">
 <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.print.css" rel="stylesheet" type="text/css"> -->
@@ -16,6 +26,9 @@ $(document).ready(function() {
 
            $('#calendar').fullCalendar({
                       // put your options and callbacks here
+minTime: '08:00',
+maxTime: '21:30',
+height:800,
 textColor: "black",
 weekends: false,                          
 defaultView: 'agendaWeek',
