@@ -2,9 +2,9 @@ import peewee
 import MySQLdb
 import datetime
 
-dbname = ''
-dbuser = ''
-dbpass = ''
+dbname = 'MyCampusSections'
+dbuser = 'hackweek'
+dbpass = 'hackweekteam'
 
 db = peewee.MySQLDatabase(dbname, user=dbuser, passwd=dbpass)
 
