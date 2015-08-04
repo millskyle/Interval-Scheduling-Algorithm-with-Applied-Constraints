@@ -94,7 +94,7 @@ def graph_optimize(query_results):
          if tries > max_attempts:
             print "Timetable creation failed for timetable option",i
             break
-      thisScore = get_weights_of_list(thissched)
+      thisScore = compute_schedule_weight(thissched)
       all_valid.append(thissched)
       print "Timetable option",i,"\t\t Score:",thisScore
       if thisScore > best_score:

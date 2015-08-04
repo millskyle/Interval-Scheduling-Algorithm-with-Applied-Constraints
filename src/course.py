@@ -50,10 +50,6 @@ class Section():
       self.timeslots = set(self.timeslots)
       #remove space in course code:
       self.course = self.course.replace(" ","")
-   def score(self):
-      if self.weight==0:
-         self.weight = compute_section_weight(self)
-      return self.weight
    def printToScreen(self):
       print "\n"
       print self.name, self.CRN, self.cType
