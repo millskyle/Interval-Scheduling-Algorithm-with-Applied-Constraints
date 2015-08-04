@@ -21,5 +21,8 @@
 
 ```sudo apt-get install python-mysqldb```
 
+- Bottle (Simple Webserver Package)
+```sudo pip install bottle```
+
 
 
