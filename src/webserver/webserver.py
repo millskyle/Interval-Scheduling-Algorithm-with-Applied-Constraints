@@ -3,9 +3,9 @@ import bottle
 from scraper import spiderworker
 from database import dbHandler
 
-dbHandler.init()
+dbHandler.init(True)
 scraperWorker = spiderworker.SpiderWorker()
-# scraperWorker.run()
+scraperWorker.run()
 
 
 @bottle.route('/')
