@@ -1,6 +1,7 @@
 from course import *
 import amberWeighting
 import math
+from userpreferences import UserPrefs
 
 def daysOff(Schedule):
    weight = 0.0
@@ -10,7 +11,7 @@ def daysOff(Schedule):
 
 
 def optimumTimeOfDay(Schedule):
-   optimum_time= float(1100)
+   optimum_time= float(UserPrefs.OptimumTimeOfDay) #float(1200)
    counter = 0.
    score = 0.
    for CRN in Schedule:
@@ -32,7 +33,7 @@ def myScore(Schedule):
 
 def compute_schedule_score(Schedule):
    score = 0.0
-#   score += optimumTimeOfDay(Schedule)
+   score += optimumTimeOfDay(Schedule)
 #   score+=amberWeighting.earlyRiser(Schedule)
    score+=daysOff(Schedule)
    score += myScore(Schedule)
