@@ -34,14 +34,7 @@ def myScore(Schedule):
 
 def compute_schedule_score(Schedule):
    score = 0.0
-<<<<<<< HEAD
-#   score += optimumTimeOfDay(Schedule)
-   
-  # score+=amberWeighting.earlyRiser()
-=======
-   score += optimumTimeOfDay(Schedule)
-#   score+=amberWeighting.earlyRiser(Schedule)
->>>>>>> bb9302795c9563211c669d1460d5e4bb65c4337b
+   #score += optimumTimeOfDay(Schedule)
    score+=daysOff(Schedule)
    score += myScore(Schedule)
    return score
