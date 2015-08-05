@@ -23,13 +23,15 @@ def input():
 @bottle.route('/input_form', method="POST")
 def getCalendar():
 	#Now begin the process of querying the db
+
+
 	semester = request.forms.get("semester")
 	mandatory_subjects = request.forms.get("mandatory_subjects")
 	mandatory_available_courses = request.forms.get("mandatory_available_courses")
-	mandatory_selected_courses = request.forms.get("mandatory_selected_courses")
+	mandatory_selected_courses = request.forms.getall("mandatory_selected_courses")
 	elective_subjects = request.forms.get("elective_subjects")
 	elective_available_courses = request.forms.get("elective_available_courses")
-	elective_selected_courses = request.forms.get("elective_selected_courses")
+	elective_selected_courses = request.forms.getall("elective_selected_courses")
 	campus_pref = request.forms.get("campus_pref")
 	morning_class_pref = request.forms.get("morning_class_pref")
 	afternoon_class_pref = request.forms.get("afternoon_class_pref")
@@ -50,9 +52,12 @@ def getCalendar():
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
 
+	print request.body.read()
+	print mandatory_selected_courses
+
 	inputdict = {
-		'SEMESTER': 'Fall 2015',
-		'COURSES' : ['CSCI1030U','MATH1010U','']
+		'SEMESTER': semester,
+		'COURSES' : mandatory_selected_courses+elective_selected_courses
 	}
 
 	courses = dbHandler.grabCourses(inputdict)

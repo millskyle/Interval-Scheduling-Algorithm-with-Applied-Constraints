@@ -29,11 +29,13 @@ xmlhttp.open("GET","/getAvailableCourses",true);
 xmlhttp.send();
 }
 
+
 $(function () {
 	
 	$("#b1").click(function() {
 		$("#l2 option:selected").each(function(){
 			$(this).remove().appendTo("#l3");
+			$(this).attr("selected")
 		});
 	});
 
@@ -46,6 +48,7 @@ $(function () {
 	$("#b3").click(function() {
 		$("#l5 option:selected").each(function(){
 			$(this).remove().appendTo("#l6");
+			$(this).attr("selected")
 		});
 	});
 
@@ -80,7 +83,14 @@ $(function () {
 			})
 		});
 	});
-
 });
+
+function selectAllOptions(selStr)
+{
+	var selObj = document.getElementById(selStr);
+	for (var i=0; i<selObj.options.length; i++) {
+		selObj.options[i].selected = true;
+	}
+}
 
 loadXMLDoc();
