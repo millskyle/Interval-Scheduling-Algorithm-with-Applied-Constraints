@@ -35,6 +35,7 @@ def updateCourse(sec):
 		row.type = sec.cType
 		row.remainingseats = sec.remainingSeats
 		row.save()
+
 	else:
 		row.crn = sec.CRN
 		row.name = sec.name
@@ -120,6 +121,8 @@ def grabCourses(courselist):
 
 def getAvailableCourses():
 	retdict = {}
+	coursesdict = {}
+	semesterdict = {}
 
 	subjectquery = Sectiondb.\
 					select(Sectiondb.subject).\
@@ -127,12 +130,21 @@ def getAvailableCourses():
 	if subjectquery.exists():
 		for subrow in subjectquery:
 			print subrow.subject
-			retdict[subrow.subject] = []
+			coursesdict[subrow.subject] = []
 
 			coursequery = Sectiondb.select().\
 							where(Sectiondb.subject == subrow.subject).\
-					distinct().naive()
+							group_by(Sectiondb.code).\
+							distinct().naive()
 			if coursequery.exists():
 				for row in coursequery:
-					retdict[subrow.subject].append(row.code)
+					coursesdict[subrow.subject].append(row.code)
+
+	semesterquery = Sectiondb.\
+					select(Sectiondb.semester).\
+					group_by(Sectiondb.semester)
+	if semesterquery.exists():
+		for semester in semesterquery:
+			print semester.semester
+	retdict["COURSES"] = coursesdict
 	return retdict

@@ -12,6 +12,7 @@ class SpiderWorker(threading.Thread):
  		super(SpiderWorker, self).__init__()
  		self.exit = False
  		self.interval_time = 7200
+ 		self.callbackInt = [0]
 
  	def run(self):
  		while not self.exit:
@@ -23,9 +24,13 @@ class SpiderWorker(threading.Thread):
 				p.join()
 
 			duration = time.time() - start_time
-			time.sleep(self.interval_time - duration)
+			for i in range(int(self.interval_time - duration)):
+				if not self.exit:
+					time.sleep(1)
+				else:
+					break;
 
-	def end():
+	def end(self):
 		self.exit = True
 
  	def runProcess(self):
