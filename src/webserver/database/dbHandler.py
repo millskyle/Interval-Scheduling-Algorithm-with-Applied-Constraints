@@ -90,12 +90,26 @@ def insertCourses(sectionlist):
 		
 
 #I'm assuming I'm just going to get a list of strings for this part
-def grabCourses(courselist):
+def grabCourses(courses):
 	sectionlist = []
+	courselist = courses["COURSES"]
+	tsem = courses["SEMESTER"]
+	sem = ""
+	opts = tsem.split(" ")
+	if opts[0] == 'Fall':
+		sem = str(opts[1]) + '09'
+	elif opts[0] == 'Winter':
+		sem = str(opts[1]) + '01'
+	elif opts[0] == 'Spring/Summer':
+		sem = str(opts[1]) + '05'
+	else:
+		print "if this happens someone goofed"
+		print "in dbHandler grabCourses"
+		return
 
 	for course in courselist:
 		query = Sectiondb.select().\
-					where(Sectiondb.code == course)
+					where(Sectiondb.code == course, Sectiondb.semester == sem)
 
 		if query.exists():
 			for row in query:
