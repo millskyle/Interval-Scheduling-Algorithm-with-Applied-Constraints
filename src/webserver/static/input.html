@@ -16,7 +16,7 @@
 
 			Which semester would you like to organize a schedule for?
 			<br><br>
-			<span style="color:red">*</span><select>
+			<span style="color:red">*</span><select name="semester">
 				<option name="201509">Fall 2015</option>
 				<option name="201601">Winter 2016</option>
 			</select>
@@ -27,16 +27,16 @@
 				<br><br>
 				<span style="float:left; color:red">*</span>	
 				<div>
-					<select id="l1" multiple="multiple" style="font-size:20px"></select>
+					<select name="mandatory_subjects" id="l1" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<br>
 				<span style="float:left; color:red">*</span>	
 				<div style="float:left">
-					<select id="l2" multiple="multiple" style="font-size:20px"></select>
+					<select name="mandatory_available_courses" id="l2" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<input style="float:left" id="b1" type="button" value=">" /><input style="float:left" id="b2" type="button" value="<" />
 				<div style="float:left">
-					<select id="l3" multiple="multiple" style="font-size:20px"></select>
+					<select name="mandatory_selected_courses" id="l3" multiple="multiple" style="font-size:20px"></select>
 				</div>
 			<br><br><br><br><br>
 			<h3>Elective Courses</h3>
@@ -44,15 +44,15 @@
 				Select any elective courses you would like to take this semester (max. 7):
 				<br><br>
 				<div>
-					<select id="l4" multiple="multiple" style="font-size:20px"></select>
+					<select name="elective_subjects" id="l4" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<br>
 				<div style="float:left">
-					<select id="l5" multiple="multiple" style="font-size:20px"></select>
+					<select name="elective_available_courses" id="l5" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<input style="float:left" id="b3" type="button" value=">" /><input style="float:left" id="b4" type="button" value="<" />
 				<div style="float:left">
-					<select id="l6" multiple="multiple" style="font-size:20px">
+					<select name="elective_selected_courses" id="l6" multiple="multiple" style="font-size:20px">
 					</select>
 				</div>
 			<br><br><br><br><br>
@@ -61,15 +61,15 @@
 
 					Would you like anything to be taken into account when organizing your course schedule?
 
-					<strong>Campus Preference</strong>: <select><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
+					<strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
 
-					<strong>Preferred Class Times (you may check more than one option)</strong>: <input type="checkbox" name="Morning">Morning(8:00 am - 12:00 pm)<input type="checkbox" name="Afternoon">Afternoon(12:00 pm - 4:00 pm)<input type="checkbox" name="Evening">Evening(4:00 pm - )<br><br>
+					<strong>Preferred Class Times (you may check more than one option)</strong>: <input type="checkbox" name="morning_class_pref">Morning(8:00 am - 12:00 pm)<input type="checkbox" name="afternoon_class_pref">Afternoon(12:00 pm - 4:00 pm)<input type="checkbox" name="evening_class_pref">Evening(4:00 pm - )<br><br>
 
-					<span style="color:red">*</span><strong>Would you like a day off?</strong>: <input type="checkbox" name="Yes">Yes<input type="checkbox" name="No">No<br><br>
+					<span style="color:red">*</span><strong>Would you like a day off?</strong>: <input type="checkbox" name="yes_day_off">Yes<input type="checkbox" name="no_day_off">No<br><br>
 
-					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <input type="checkbox" name="Monday">Monday<input type="checkbox" name="Tuesday">Tuesday<input type="checkbox" name="Wednesday">Wednesday<input type="checkbox" name="Thursday">Thursday<input type="checkbox" name="Friday">Friday<br><br>
+					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <input type="checkbox" name="monday_off">Monday<input type="checkbox" name="tuesday_off">Tuesday<input type="checkbox" name="wednesday_off">Wednesday<input type="checkbox" name="thursday_off">Thursday<input type="checkbox" name="friday_off">Friday<br><br>
 
-					<strong>Preferred Instructional Method</strong>: <select><option name="none">none</option><option name="In-class Delivery Only">In-class Delivery Only</option><option name="Online Delivery Only">Online Delivery Only</option></select><br><br>
+					<strong>Preferred Instructional Method</strong>: <select><option name="no_instruct_method_pref">none</option><option name="in_class_delivery_pref">In-class Delivery Only</option><option name="online_delivery_pref">Online Delivery Only</option></select><br><br>
 
 					<strong>Preferred CRN(s) (Optional)</strong>: <input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><br><br>
 
