@@ -129,7 +129,12 @@ def graph_optimize(query_results):
          # to attempt to get the best possible optimization.
          thissched = nx.maximal_independent_set(G )# , [pseudo])
          #compute the weight-score of this
-         successfully_scheduled_sections = len(thissched)
+         numberofblanks =0
+         for CRN in thissched:
+            if CRN.CRN == "55555":
+               numberofblanks+=1
+
+         successfully_scheduled_sections = len(thissched) - numberofblanks
 #         print "got an MIS with",successfully_scheduled_sections,"elements"
 #         tries +=1
          print "   Attempt",tries
