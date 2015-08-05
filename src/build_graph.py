@@ -40,25 +40,13 @@ def graph_optimize(query_results):
       G.add_node(Sec, label=Sec.course[0:2],selected=1.0)
 
 
-   comment="""   for day in range(1..10)
-   pseudo = Section()
-   dayoff = 2
-   pseudo.add_timeslot("0800","2200", dayoff)
-   pseudo.add_timeslot("0800","2200", dayoff+5)
-   pseudo.CRN = "55555"
-   pseudo.semester="201509"
-   pseudo.remainingSeats = 1000
-   pseudo.cType = "Lec"
-   pseudo.course = "TimeOff"
-   pseudo.name = "PSEUDO_DAY_OFF"
-   pseudo.weight = 10000.0
-   pseudo.cleanup()
-   """
+   # If the user wants days off, create pseudo-events that span every day.  Weight them so that if possible, they will be selected.
+   if UserPrefs.MaximizeDaysOff:
+      for pseudoBlock in pseudo_blocks.add_days_off_blocks():
+         G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
 
-#   if UserPrefs.MaximizeDaysOff:
- #     for pseudoBlock in pseudo_blocks.add_days_off_blocks():
-  #       G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
-
+   #If the user prefers to have mornings (or afternoons or evenings) FREE, then
+   #create the corresponding pseudo-blocks to conflict with all courses at those times.
    if not(UserPrefs.PreferTimeOfDay == ""):
       for pseudoBlock in pseudo_blocks.TimeCut():
          G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
@@ -71,48 +59,36 @@ def graph_optimize(query_results):
 # }
 
 
+
+#  Add edges between the nodes, representing conflicts (two courses for which a user
+#  cannot be simultaneously registered.
    for i,iSec in enumerate(G.nodes()):
       for j,jSec in enumerate(G.nodes()):
          if i<j:
             have_edge = False
             if ( (iSec.cType == jSec.cType) and (jSec.course==iSec.course)):
-               #If the two sections are from the same course and are the same type, then they're incompatible.
-               #draw an edge between them
+               # If the two sections are from the same course
+               # and are the same type, then they're incompatible.
+               # (can't take two physics tutorials)
                have_edge = True
             else:
                for itimeslot in iSec.timeslots:
                   for jtimeslot in jSec.timeslots:
+                     #If they overlap in time:
                      if (  (itimeslot.eTime >= jtimeslot.sTime) and (itimeslot.sTime <= jtimeslot.eTime) and itimeslot.day==jtimeslot.day ):
                         have_edge = True
-                     if (  (jtimeslot.eTime >= itimeslot.sTime) and (jtimeslot.sTime <= itimeslot.eTime) and itimeslot.day==jtimeslot.day ):
+                     elif (  (jtimeslot.eTime >= itimeslot.sTime) and (jtimeslot.sTime <= itimeslot.eTime) and itimeslot.day==jtimeslot.day ):
                         have_edge = True
-                     ddd="""
-                     if (itimeslot.sTime <= jtimeslot.sTime and itimeslot.eTime >= jtimeslot.eTime and itimeslot.day==jtimeslot.day ):
+                     elif (itimeslot.sTime == jtimeslot.sTime and itimeslot.day==jtimeslot.day ):
                         have_edge = True
-                     elif (jtimeslot.sTime <= itimeslot.sTime and jtimeslot.eTime >= itimeslot.eTime and jtimeslot.day==itimeslot.day ):
-                        have_edge = True
-                     elif ((itimeslot.sTime <= jtimeslot.eTime and itimeslot.eTime >= jtimeslot.eTime and jtimeslot.day==itimeslot.day)):
-                        #if they overlap in time, and they're on the same day, then they're incompatible.
-                        have_edge = True
-                     elif ((jtimeslot.sTime <= itimeslot.eTime and jtimeslot.eTime >= itimeslot.eTime and jtimeslot.day==itimeslot.day)):
-                        #if they overlap in time, and they're on the same day, then they're incompatible.
-                        have_edge = True
-                        """
-                     if (itimeslot.sTime == jtimeslot.sTime and itimeslot.day==jtimeslot.day ):
-                        have_edge = True
-                     if (jtimeslot.sTime == itimeslot.sTime and jtimeslot.day==itimeslot.day ):
+                     elif (jtimeslot.sTime == itimeslot.sTime and jtimeslot.day==itimeslot.day ):
                         have_edge = True
 
             if have_edge:
-            #If have_edge is true, then these two nodes are incompatible with each other.
+            #If have_edge is, at this point, true then
+            #these two nodes are incompatible with each other.
             #Add an edge between them
                G.add_edge(iSec,jSec)
-
-
-
-
- #  requiredNumberOfSections += 1
-
 
    all_valid = []
    calculate_how_many = 200
@@ -127,13 +103,14 @@ def graph_optimize(query_results):
       tries = 0
       failure = True
       for tries in xrange(max_attempts):
-#      while successfully_scheduled_sections < requiredNumberOfSections:
          # compute the maximal independent set.  
          # This is NOT the MAXIMUM independent set. Thus we must loop a few times
-         # to attempt to get the best possible optimization.
+         # to get the largest possible set.
          thissched = nx.maximal_independent_set(G )# , [pseudo])
          #compute the weight-score of this
          numberofblanks =0
+         # We need to count the number of pseudo-blocks in the generated schedule since we
+         # must only break out of this loop once we have enough sections in our schedule.  Pseudo blocks count, my default, and must be subtracted 
          for CRN in thissched:
             if CRN.CRN == "55555":
                numberofblanks+=1
