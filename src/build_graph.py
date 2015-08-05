@@ -8,6 +8,7 @@ from sample_data import generate_dense_data
 import pseudo_blocks
 from random import randint
 from userpreferences import UserPrefs
+from config import config
 
 def graph_optimize(query_results):
 ##NOTE:  At this point, it is assumed that the variable query_results is 
@@ -26,6 +27,9 @@ def graph_optimize(query_results):
    print requiredNumberOfSections,":",requiredSections
 
 
+#  SOME CONFIGURATION:
+   calculate_how_many = config.generate_this_many_schedules
+   max_attempts = config.maximum_attempts_per_schedule
 
 ##start code
 
@@ -91,13 +95,16 @@ def graph_optimize(query_results):
                G.add_edge(iSec,jSec)
 
    all_valid = []
-   calculate_how_many = 200
-   max_attempts = 5
 
    best_score = -1.0e9
 
    globalFailure = True
 
+
+
+   # Here we begin generating many different schedules.  After each schedule
+   # is found (and verified to contain the correct number of courses), it is scored and
+   # added to a list of all valid courses.
    for potentialSchedule in xrange(calculate_how_many):
       successfully_scheduled_sections = 0
       tries = 0
@@ -106,28 +113,21 @@ def graph_optimize(query_results):
          # compute the maximal independent set.  
          # This is NOT the MAXIMUM independent set. Thus we must loop a few times
          # to get the largest possible set.
-         thissched = nx.maximal_independent_set(G )# , [pseudo])
+         thissched = nx.maximal_independent_set(G)
          #compute the weight-score of this
-         numberofblanks =0
          # We need to count the number of pseudo-blocks in the generated schedule since we
-         # must only break out of this loop once we have enough sections in our schedule.  Pseudo blocks count, my default, and must be subtracted 
+         # must only break out of this loop once we have enough sections in our schedule.  
+         # Pseudo blocks count, my default, and must be subtracted.
+         numberofblanks = 0
          for CRN in thissched:
             if CRN.CRN == "55555":
                numberofblanks+=1
-
          successfully_scheduled_sections = len(thissched) - numberofblanks
-#         print "got an MIS with",successfully_scheduled_sections,"elements"
-#         tries +=1
          print "   Attempt",tries
          if (successfully_scheduled_sections >= requiredNumberOfSections):
              failure=False
              break
 
-#         if tries > max_attempts:
-#            print "Timetable creation failed for timetable option",i
-#            failure = True
-#            tries = 0
-#            break
       if not(failure):
          globalFailure = False
          thisScore = compute_schedule_score(thissched)
