@@ -1,19 +1,27 @@
 import threading
 import scrapy
 import spider
-from scrapy.crawler import CrawlerProcess
+from twisted.internet import reactor
+from scrapy.crawler import CrawlerRunner
+from scrapy.utils.log import configure_logging
+from multiprocessing import Process
 
-class SpiderWorker(threading.Thread):
+class SpiderWorker():
  	def __init__(self):
- 		super(SpiderWorker, self).__init__()
- 		dbHandler = None
+ 		return
 
  	def run(self):
- 		process = CrawlerProcess({
-		    'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
-		})
+ 		p = Process(target=self.runProcess)
+		p.start()
+		p.join()
 
-		process.crawl(spider.available_courses_spider)
-		process.start()
-		process.stop()
+
+ 	def runProcess(self):
+ 		configure_logging()
+ 		runner = CrawlerRunner()
+		runner.crawl(spider.available_courses_spider)
+		d = runner.join()
+		d.addBoth(lambda _: reactor.stop())
+
+		reactor.run()
  		
