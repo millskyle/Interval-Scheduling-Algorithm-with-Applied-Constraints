@@ -17,33 +17,42 @@
 			Which semester would you like to organize a schedule for?
 			<br><br>
 			<span style="color:red">*</span><select>
-				<option value="201509">Fall 2015</option>
-				<option value="201601">Winter 2016</option>
+				<option name="201509">Fall 2015</option>
+				<option name="201601">Winter 2016</option>
 			</select>
 		<h2>Courses</h2>
 			<h3>Mandatory Courses</h3>
 
-				Select the courses you have to take this semester (max. 7):
+				Select the courses you have to take this semester per subject(max. 7):
 				<br><br>
 				<span style="float:left; color:red">*</span>	
-				<div style="float:left">
+				<div>
 					<select id="l1" multiple="multiple" style="font-size:20px"></select>
+				</div>
+				<br>
+				<span style="float:left; color:red">*</span>	
+				<div style="float:left">
+					<select id="l2" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<input style="float:left" id="b1" type="button" value=">" /><input style="float:left" id="b2" type="button" value="<" />
 				<div style="float:left">
-					<select id="l2" multiple="multiple" style="font-size:20px"></select>
+					<select id="l3" multiple="multiple" style="font-size:20px"></select>
 				</div>
 			<br><br><br><br><br>
 			<h3>Elective Courses</h3>
 
 				Select any elective courses you would like to take this semester (max. 7):
 				<br><br>
+				<div>
+					<select id="l4" multiple="multiple" style="font-size:20px"></select>
+				</div>
+				<br>
 				<div style="float:left">
-					<select id="l3" multiple="multiple" style="font-size:20px"></select>
+					<select id="l5" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<input style="float:left" id="b3" type="button" value=">" /><input style="float:left" id="b4" type="button" value="<" />
 				<div style="float:left">
-					<select id="l4" multiple="multiple" style="font-size:20px">
+					<select id="l6" multiple="multiple" style="font-size:20px">
 					</select>
 				</div>
 			<br><br><br><br><br>
@@ -52,15 +61,15 @@
 
 					Would you like anything to be taken into account when organizing your course schedule?
 
-					<strong>Campus Preference</strong>: <select><option value="none">none</option><option value="Downtown Campus">Downtown Campus</option><option value="North Campus">North Campus</option></select><br><br>
+					<strong>Campus Preference</strong>: <select><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
 
-					<strong>Preferred Class Times (you may check more than one option)</strong>: <input type="checkbox" value="Morning">Morning(8:00 am - 12:00 pm)<input type="checkbox" value="Afternoon">Afternoon(12:00 pm - 4:00 pm)<input type="checkbox" value="Evening">Evening(4:00 pm - )<br><br>
+					<strong>Preferred Class Times (you may check more than one option)</strong>: <input type="checkbox" name="Morning">Morning(8:00 am - 12:00 pm)<input type="checkbox" name="Afternoon">Afternoon(12:00 pm - 4:00 pm)<input type="checkbox" name="Evening">Evening(4:00 pm - )<br><br>
 
-					<span style="color:red">*</span><strong>Would you like a day off?</strong>: <input type="checkbox" value="Yes">Yes<input type="checkbox" value="No">No<br><br>
+					<span style="color:red">*</span><strong>Would you like a day off?</strong>: <input type="checkbox" name="Yes">Yes<input type="checkbox" name="No">No<br><br>
 
-					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <input type="checkbox" value="Monday">Monday<input type="checkbox" value="Tuesday">Tuesday<input type="checkbox" value="Wednesday">Wednesday<input type="checkbox" value="Thursday">Thursday<input type="checkbox" value="Friday">Friday<br><br>
+					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <input type="checkbox" name="Monday">Monday<input type="checkbox" name="Tuesday">Tuesday<input type="checkbox" name="Wednesday">Wednesday<input type="checkbox" name="Thursday">Thursday<input type="checkbox" name="Friday">Friday<br><br>
 
-					<strong>Preferred Instructional Method</strong>: <select><option value="none">none</option><option value="In-class Delivery Only">In-class Delivery Only</option><option value="Online Delivery Only">Online Delivery Only</option></select><br><br>
+					<strong>Preferred Instructional Method</strong>: <select><option name="none">none</option><option name="In-class Delivery Only">In-class Delivery Only</option><option name="Online Delivery Only">Online Delivery Only</option></select><br><br>
 
 					<strong>Preferred CRN(s) (Optional)</strong>: <input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><br><br>
 

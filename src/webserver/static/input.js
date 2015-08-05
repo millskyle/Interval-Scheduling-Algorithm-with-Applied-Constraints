@@ -14,14 +14,21 @@ function loadXMLDoc() {
   			courses = JSON.parse(xmlhttp.responseText);
 
   			for (var subject in courses) {
-  				alert(subject);
-
-  				$.each(courses[subject], function(key, value) {   
+  				
+  				$.each([subject], function(key, value) {   
   				     $('#l1').append($("<option></option>").attr("value",key).text(value)); 
   				});
 
+  				$.each([subject], function(key, value) {   
+  				     $('#l4').append($("<option></option>").attr("value",key).text(value)); 
+  				});
+
   				$.each(courses[subject], function(key, value) {   
-  				     $('#l3').append($("<option></option>").attr("value",key).text(value)); 
+  				     $('#l2').append($("<option></option>").attr("value",key).text(value)); 
+  				});
+
+  				$.each(courses[subject], function(key, value) {   
+  				     $('#l5').append($("<option></option>").attr("value",key).text(value)); 
   				});
   			}
       	}
@@ -34,26 +41,26 @@ xmlhttp.send();
 $(function () {
 	
 	$("#b1").click(function() {
-		$("#l1 option:selected").each(function(){
-			$(this).remove().appendTo("#l2");
+		$("#l2 option:selected").each(function(){
+			$(this).remove().appendTo("#l3");
 		});
 	});
 
 	$("#b2").click(function() {
-		$("#l2 option:selected").each(function(){
-			$(this).remove().appendTo("#l1");
+		$("#l3 option:selected").each(function(){
+			$(this).remove().appendTo("#l2");
 		});
 	});
 
 	$("#b3").click(function() {
-		$("#l3 option:selected").each(function(){
-			$(this).remove().appendTo("#l4");
+		$("#l5 option:selected").each(function(){
+			$(this).remove().appendTo("#l6");
 		});
 	});
 
 	$("#b4").click(function() {
-		$("#l4 option:selected").each(function(){
-			$(this).remove().appendTo("#l3");
+		$("#l6 option:selected").each(function(){
+			$(this).remove().appendTo("#l5");
 		});
 	});		
 
