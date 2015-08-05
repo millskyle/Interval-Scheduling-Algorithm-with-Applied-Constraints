@@ -4,41 +4,54 @@
 
 	<head>
 		<title>UOIT Course Schedule Organizer</title>
-		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>		<script src="input.js"></script>
     </head>
 
 	<body>
+
+		<form action="input_form" method="post">
+
 		<h1>UOIT Course Schedule Organizer</h1>
 		<h2>Semester</h2>
+
+			Which semester would you like to organize a schedule for?
+			<br><br>
 			<span style="color:red">*</span><select>
 				<option value="201509">Fall 2015</option>
 				<option value="201601">Winter 2016</option>
 			</select>
 		<h2>Courses</h2>
-			<h3>Mandatory Courses:</h3>
+			<h3>Mandatory Courses</h3>
+
+				Select the courses you have to take this semester (max. 7):
+				<br><br>
 				<span style="float:left; color:red">*</span>	
 				<div style="float:left">
-					<select id="l1" multiple="multiple"></select>
+					<select id="l1" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<input style="float:left" id="b1" type="button" value=">" /><input style="float:left" id="b2" type="button" value="<" />
 				<div style="float:left">
-					<select id="l2" multiple="multiple"></select>
+					<select id="l2" multiple="multiple" style="font-size:20px"></select>
 				</div>
-			<br><br><br><br>
-			<h3>Elective Courses:</h3>
-				<span style="float:left; color:red">*</span>
+			<br><br><br><br><br>
+			<h3>Elective Courses</h3>
+
+				Select any elective courses you would like to take this semester (max. 7):
+				<br><br>
 				<div style="float:left">
-					<select id="l3" multiple="multiple"></select>
+					<select id="l3" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<input style="float:left" id="b3" type="button" value=">" /><input style="float:left" id="b4" type="button" value="<" />
 				<div style="float:left">
-					<select id="l4" multiple="multiple">
+					<select id="l4" multiple="multiple" style="font-size:20px">
 					</select>
 				</div>
-			<br><br><br><br>
+			<br><br><br><br><br>
 			<h2>Schedule Preferences</h3>
 				<p>
+
+					Would you like anything to be taken into account when organizing your course schedule?
+
 					<strong>Campus Preference</strong>: <select><option value="none">none</option><option value="Downtown Campus">Downtown Campus</option><option value="North Campus">North Campus</option></select><br><br>
 
 					<strong>Preferred Class Times (you may check more than one option)</strong>: <input type="checkbox" value="Morning">Morning(8:00 am - 12:00 pm)<input type="checkbox" value="Afternoon">Afternoon(12:00 pm - 4:00 pm)<input type="checkbox" value="Evening">Evening(4:00 pm - )<br><br>
@@ -53,6 +66,9 @@
 
 					<span style="color:red">*</span> indicates required field<br><br>
 				</p>
-			<input type="button" value="Submit" />	
+			<input type="submit" value="Submit" />
+
+		</form>
+
 	</body>
 </html>
