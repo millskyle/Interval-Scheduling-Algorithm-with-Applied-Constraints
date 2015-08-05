@@ -1,20 +1,32 @@
-import threading
+import time
 import scrapy
 import spider
+import threading
 from twisted.internet import reactor
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 from multiprocessing import Process
 
-class SpiderWorker():
+class SpiderWorker(threading.Thread):
  	def __init__(self):
- 		return
+ 		super(SpiderWorker, self).__init__()
+ 		self.exit = False
+ 		self.interval_time = 7200
 
  	def run(self):
- 		p = Process(target=self.runProcess)
-		p.start()
-		p.join()
+ 		while not self.exit:
+ 			start_time = time.time()
 
+ 			if (1):
+		 		p = Process(target=self.runProcess)
+				p.start()
+				p.join()
+
+			duration = time.time() - start_time
+			time.sleep(self.interval_time - duration)
+
+	def end():
+		self.exit = True
 
  	def runProcess(self):
  		configure_logging()

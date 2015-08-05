@@ -1,4 +1,5 @@
 import re
+from scraper.course import Section
 from dbSetup import *
 
 #initializes the database
@@ -17,7 +18,43 @@ def __createTables():
 	Sectiondb.create_table(True)
 	Timeslotdb.create_table(True)
 
-@db.atomic() #ensures changes are rolledback once an error occurs
+@db.atomic()
+def updateCourse(sec):
+	query = Sectiondb.select().\
+			where(Sectiondb.crn == sec.CRN)
+
+	row = Sectiondb()
+	if query.exists():
+		row = query.get()
+
+		row.crn = sec.CRN
+		row.name = sec.name
+		row.semester = sec.semester
+		row.code = sec.course
+		row.campus = sec.campus
+		row.type = sec.cType
+		row.remainingseats = sec.remainingSeats
+		row.save()
+	else:
+		row.crn = sec.CRN
+		row.name = sec.name
+		row.semester = sec.semester
+		row.code = sec.course
+		row.campus = sec.campus
+		row.type = sec.cType
+		row.remainingseats = sec.remainingSeats
+		row.save()
+
+		for timeslot in sec.timeslots:
+			t = Timeslotdb()
+			t.sid = row.id
+			t.day = timeslot.day
+			t.starttime = timeslot.sTime
+			t.endtime = timeslot.eTime
+			t.save()
+
+
+
 def insertCourse(section):
 	sec = Sectiondb()
 	sec.crn = section.CRN
@@ -46,46 +83,40 @@ def insertCourse(section):
 
 #I don't know what the data structure is that holds courses
 def insertCourses(sectionlist):
-	for section in sectionlist:
-		insertCourse(section)
+	with db.atomic():
+		for section in sectionlist:
+			insertCourse(section)
 		
 
 #I'm assuming I'm just going to get a list of strings for this part
 def grabCourses(courselist):
-	coursesdict = {}
+	sectionlist = []
+
 	for course in courselist:
-		cdict = {
-			'LAB' : {},
-			'LEC' : {},
-			'TUT' : {}
-		}
-
-
 		query = Sectiondb.select().\
-					where(Sectiondb.code == course).\
-					join(Timeslotdb)
+					where(Sectiondb.code == course)
 
 		if query.exists():
 			for row in query:
-				t = {
-						'day' 		: row.day,
-						'stime'		: row.starttime,
-						'etime'		: row.endtime
-					}
-				if row.crn in cdict[row.type]:
-					cdict[row.type][row.crn]['timeslots'].append(t)
-				else:
-					r = {
-						'rseats' 	: row.remainingseats,
-						'sem'	 	: row.semester,
-						'subject'	: row.subject,
-						'timeslots'	: [t]
-					}
+				#setup the section
+				sec = Section()
+				sec.CRN = row.crn
+				sec.name = row.name
+				sec.cType = row.type
+				sec.course = row.code
+				sec.campus = row.campus
+				sec.subject = row.subject
+				sec.remainingSeats = row.remainingseats
 
-					cdict[row.type][row.crn] = r
-		coursesdict[course] = cdict
-	return coursesdict
-
+				#get the timeslots
+				timequery = Timeslotdb.select().\
+							where(Timeslotdb.sid == row.id)
+				for timerow in timequery:
+					sec.add_timeslot(timerow.starttime,
+									 timerow.endtime,
+									 timerow.day)
+				sectionlist.append(sec)
+	return sectionlist
 
 def getAvailableCourses():
 	retdict = {}
