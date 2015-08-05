@@ -17,10 +17,11 @@ function loadXMLDoc() {
   				alert(subject);
 
   				$.each(courses[subject], function(key, value) {   
-  				     $('#l1')
-  				         .append($("<option></option>")
-  				         .attr("value",key)
-  				         .text(value)); 
+  				     $('#l1').append($("<option></option>").attr("value",key).text(value)); 
+  				});
+
+  				$.each(courses[subject], function(key, value) {   
+  				     $('#l3').append($("<option></option>").attr("value",key).text(value)); 
   				});
   			}
       	}
