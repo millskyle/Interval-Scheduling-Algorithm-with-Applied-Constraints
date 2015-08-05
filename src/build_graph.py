@@ -5,8 +5,8 @@ from course import *
 import styles
 from filter_list import  * #filter_section_list, count_types_within_courses
 from sample_data import generate_dense_data
-
-
+import pseudo_blocks
+from random import randint
 
 
 
@@ -30,8 +30,8 @@ def graph_optimize(query_results):
 
 ##start code
 
-   query_results = generate_dense_data()
-   requiredNumberOfSections = 17
+#   query_results = generate_dense_data()
+#   requiredNumberOfSections = 8
 
 #Construct the graph object
    G = nx.Graph()
@@ -40,8 +40,10 @@ def graph_optimize(query_results):
    for Sec in query_results:
       G.add_node(Sec, label=Sec.course[0:2],selected=1.0)
 
+
+   comment="""   for day in range(1..10)
    pseudo = Section()
-   dayoff = 1
+   dayoff = 2
    pseudo.add_timeslot("0800","2200", dayoff)
    pseudo.add_timeslot("0800","2200", dayoff+5)
    pseudo.CRN = "55555"
@@ -50,8 +52,16 @@ def graph_optimize(query_results):
    pseudo.cType = "Lec"
    pseudo.course = "TimeOff"
    pseudo.name = "PSEUDO_DAY_OFF"
+   pseudo.weight = 10000.0
    pseudo.cleanup()
-   G.add_node(pseudo, label="XX", selected = 3.0, score = 1.0 )
+   """
+
+   for pseudoBlock in pseudo_blocks.add_days_off_blocks()[0]:
+      G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
+
+   preferred_days_off = pseudo_blocks.add_days_off_blocks()[1]
+
+   dayOffSeed = preferred_days_off[randint(0,len(preferred_days_off)-1)]
 
 #map the type to a float for coloring the graph output
 # {
@@ -103,8 +113,8 @@ def graph_optimize(query_results):
 
 
    all_valid = []
-   calculate_how_many = 25
-   max_attempts = 50
+   calculate_how_many = 20000
+   max_attempts = 20
 
    best_score = -1.0e9
 
@@ -137,7 +147,7 @@ def graph_optimize(query_results):
 #            break
       if not(failure):
          globalFailure = False
-         thisScore = 1.0 #compute_schedule_score(thissched)
+         thisScore = compute_schedule_score(thissched)
          all_valid.append(thissched)
          print "Timetable option",potentialSchedule,"\t\t Score:",thisScore
          if thisScore > best_score:
