@@ -59,6 +59,10 @@ def graph_optimize(query_results):
       for pseudoBlock in pseudo_blocks.add_days_off_blocks():
          G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
 
+   if not(UserPrefs.PreferTimeOfDay == ""):
+      for pseudoBlock in pseudo_blocks.earlyRiser():
+         G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
+
 
 #map the type to a float for coloring the graph output
 # {
