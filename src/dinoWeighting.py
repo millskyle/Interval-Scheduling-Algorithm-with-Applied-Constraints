@@ -37,10 +37,6 @@ def course_density(Schedule):
 
 
 
-def compute_schedule_score(Schedule):
-   score = 0.0
-   score += course_density(Schedule)
-   return score
 
 
 
