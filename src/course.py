@@ -52,7 +52,7 @@ class Section():
       self.course = self.course.replace(" ","")
    def printToScreen(self):
       print "\n"
-      print self.name, self.CRN, self.cType
+      print self.name, self.CRN, self.cType, "@", self.campus
       for ts in self.timeslots:
          print ts.sTime,ts.eTime,ts.day
    def toDict(self):

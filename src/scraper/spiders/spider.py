@@ -65,7 +65,7 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         if (subject in ["PHY","CHEM","CSCI","BIOL","MATH"] ) :
+         if (subject in ["PHY","CHEM","CSCI","BIOL","HLSC","MATH"] ) :
 #         if (1==1):
             yield req
 
@@ -94,7 +94,18 @@ class available_courses_spider(CrawlSpider):
             Sec.semester = semester
             header = ch.xpath('..//th[@class="ddheader"]/text()').extract()[i]
             thisCRN = ch.xpath('.//following-sibling::*[1]')
-#            print thisCRN.extract()
+            text = thisCRN.xpath('.//span[@class="fieldlabeltext"]/..').extract()[0]
+            if "North Oshawa" in text:
+               Sec.campus = "North"
+#               print "North Campus"
+            elif "Downtown Oshawa" in text:
+               Sec.campus = "Downtown"
+#               print "Downtown campus"
+            else:
+               Sec.campus = "Other"
+#               print "OTHER CAMPUS"
+#            if "Online Delivery" in text:
+#               print "ONLINE"
             Sec.remainingSeats = int(thisCRN.xpath('.//tr/td[span="Seats"]/following-sibling::td[3]/text()').extract()[0])
             meetingtimes = thisCRN.xpath('.//table[caption="Scheduled Meeting Times"]/tr[td[@class="dbdefault"]] ')
             Sec.name,Sec.CRN,Sec.course,section_number = header.split(" - ")
@@ -141,7 +152,7 @@ class available_courses_spider(CrawlSpider):
                     SUBJ=subject ) )
 
 
-          # Sec.printToScreen()
+            Sec.printToScreen()
 #            dbHandler.insertCourse(Sec)  #insert the course into the database.   dbHandler must take care of converting the Section() object to a database query/object.
 
 
@@ -154,7 +165,7 @@ class available_courses_spider(CrawlSpider):
 
       courses_to_optimize = ['BIOL1010U','CHEM1010U','CSCI1040U','PHY1010U','MATH1010U']
       subset = filter_section_list(allcourses,courses_to_optimize,-1)
-#      graph_optimize(subset)
+      graph_optimize(subset)
 
 
 

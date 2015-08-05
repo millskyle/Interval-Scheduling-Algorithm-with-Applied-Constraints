@@ -1,5 +1,5 @@
 from course import *
-
+import userpreferences
 
 
 """
@@ -34,6 +34,11 @@ def course_density(Schedule):
     return weight/counter
 
 
+def preferred_crn(Schedule):
+    weight=0.
+    for CRN in Schedule:
+        if CRN ==  UserPrefs.preferredCRNs:
+            CRN.weight=1000.0
 
 
 
