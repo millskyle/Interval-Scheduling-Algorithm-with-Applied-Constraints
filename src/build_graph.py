@@ -55,12 +55,12 @@ def graph_optimize(query_results):
    pseudo.cleanup()
    """
 
-   if UserPrefs.MaximizeDaysOff:
-      for pseudoBlock in pseudo_blocks.add_days_off_blocks():
-         G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
+#   if UserPrefs.MaximizeDaysOff:
+ #     for pseudoBlock in pseudo_blocks.add_days_off_blocks():
+  #       G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
 
    if not(UserPrefs.PreferTimeOfDay == ""):
-      for pseudoBlock in pseudo_blocks.earlyRiser():
+      for pseudoBlock in pseudo_blocks.TimeCut():
          G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
 
 

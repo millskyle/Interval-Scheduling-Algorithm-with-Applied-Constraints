@@ -25,14 +25,19 @@ def add_days_off_blocks():
    return blocks #,preferred_blocks
 
 
-def earlyRiser():
+def TimeCut():
    score = 0.
    counter = 0.
  #  blocks = []
    preferred_blocks = []
    for timeoff in range(1,11):
       pseudo = Section()
-      pseudo.add_timeslot("1700", "2359", timeoff)
+      if UserPrefs.PreferTimeOfDay == "Morning":
+         pseudo.add_timeslot("1710", "2359", timeoff)
+      if UserPrefs.PreferTimeOfDay == "Afternoon":
+         pseudo.add_timeslot("1200","1700", timeoff)
+      if UserPrefs.PreferTimeOfDay == "Evening":
+         pseudo.add_timeslot("0800","1159", timeoff)
       pseudo.semester = UserPrefs.semester
       pseudo.remainingSeats = 1000
       pseudo.cType = "Lec"

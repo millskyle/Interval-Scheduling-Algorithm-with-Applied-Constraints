@@ -7,6 +7,8 @@ class UserPreferences():
       self.semester = "201509"
       self.MaximizeDaysOff = True
       self.PreferredDaysOff = [1,2,3,4,5,6,7,8,9,10]
-      self.PreferTimeOfDay = "Morning"
-
+      self.PreferTimeOfDay = "Evening" 
+      # Options "Morning", "Afternoon", "Evening"
+      self.optimumTimeOfDay = "0800"
+      # Sets preferred time for Gaussian
 UserPrefs = UserPreferences()
