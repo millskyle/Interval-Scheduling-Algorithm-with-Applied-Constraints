@@ -3,7 +3,7 @@ from userpreferences import UserPrefs
 
 def add_days_off_blocks():
    blocks = []
-   preferred_blocks= []
+#   preferred_blocks= []
    for dayoff in range(1,11):
       pseudo = Section()
       pseudo.add_timeslot("0001","2359", dayoff)
@@ -16,11 +16,11 @@ def add_days_off_blocks():
       pseudo.cleanup()
       if dayoff in [ i for i in UserPrefs.PreferredDaysOff ] + [ i+5 for i in UserPrefs.PreferredDaysOff ]:
          pseudo.weight = 10000.0
-         preferred_blocks.append(pseudo)
+#         preferred_blocks.append(pseudo)
       else:
          pseudo.weight = 5000.0
       blocks.append(pseudo)
 
 
-   return blocks,preferred_blocks
+   return blocks #,preferred_blocks
 

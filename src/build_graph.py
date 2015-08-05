@@ -7,8 +7,7 @@ from filter_list import  * #filter_section_list, count_types_within_courses
 from sample_data import generate_dense_data
 import pseudo_blocks
 from random import randint
-
-
+from userpreferences import UserPrefs
 
 def graph_optimize(query_results):
 ##NOTE:  At this point, it is assumed that the variable query_results is 
@@ -56,12 +55,10 @@ def graph_optimize(query_results):
    pseudo.cleanup()
    """
 
-   for pseudoBlock in pseudo_blocks.add_days_off_blocks()[0]:
-      G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
+   if UserPrefs.MaximizeDaysOff:
+      for pseudoBlock in pseudo_blocks.add_days_off_blocks():
+         G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
 
-   preferred_days_off = pseudo_blocks.add_days_off_blocks()[1]
-
-   dayOffSeed = preferred_days_off[randint(0,len(preferred_days_off)-1)]
 
 #map the type to a float for coloring the graph output
 # {
@@ -113,12 +110,12 @@ def graph_optimize(query_results):
 
 
    all_valid = []
-   calculate_how_many = 20000
+   calculate_how_many = 200
    max_attempts = 20
 
    best_score = -1.0e9
 
-   requiredNumberOfSections += 1
+   requiredNumberOfSections += 0
    globalFailure = True
 
    for potentialSchedule in xrange(calculate_how_many):
