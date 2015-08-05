@@ -91,6 +91,7 @@ class available_courses_spider(CrawlSpider):
       for i,ch in enumerate(crns):
          try:
             Sec = Section()
+            Sec.semester = semester
             header = ch.xpath('..//th[@class="ddheader"]/text()').extract()[i]
             thisCRN = ch.xpath('.//following-sibling::*[1]')
             Sec.remainingSeats = int(thisCRN.xpath('.//tr/td[span="Seats"]/following-sibling::td[3]/text()').extract()[0])
