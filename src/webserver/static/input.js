@@ -1,4 +1,5 @@
 var xmlhttp;
+var courses;
 
 function loadXMLDoc() {
 
@@ -13,30 +14,15 @@ function loadXMLDoc() {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
   			courses = JSON.parse(xmlhttp.responseText);
 
-  			for (var subject in courses[""]) {
-  				
-				console.log(subject);
+  			$.each(courses[""], function(key, value) {   
+  			    $('#l1').append($("<option></option>").attr("value",key).text(key)); 
+  			});
 
-  				$.each([subject], function(key, value) {   
-  				    $('#l1').append($("<option></option>").attr("value",key).text(value)); 
-  				});
+  			$.each(courses[""], function(key, value) {   
+  			    $('#l4').append($("<option></option>").attr("value",key).text(key)); 
+  			});
 
-  				$.each([subject], function(key, value) {   
-  				    $('#l4').append($("<option></option>").attr("value",key).text(value)); 
-  				});
-
-  				console.log(courses[""][subject]);
-
-  				$.each(courses[""][subject], function(index) { 
-  				    $('#l2').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
-  					//console.log(index);
-  				});
-
-  				$.each(courses[""][subject], function(index) {   
-  				    $('#l5').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
-  				});
-  			}
-      	}
+  		}
   	}
 
 xmlhttp.open("GET","/getAvailableCourses",true);
@@ -68,6 +54,32 @@ $(function () {
 			$(this).remove().appendTo("#l5");
 		});
 	});		
+
+	$("#l1").change(function(){
+		$("#l1 option:selected").each(function(){
+			var subject = $(this).text();
+
+			$("#l2").empty();
+
+			$.each(courses[""][subject], function(index) {
+
+				$('#l2').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
+			})
+		});
+	});
+
+	$("#l4").change(function(){
+		$("#l4 option:selected").each(function(){
+			var subject = $(this).text();
+
+			$("#l5").empty();
+
+			$.each(courses[""][subject], function(index) {
+
+				$('#l5').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
+			})
+		});
+	});
 
 });
 
