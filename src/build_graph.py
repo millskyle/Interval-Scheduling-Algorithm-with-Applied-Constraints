@@ -4,7 +4,7 @@ from JSON_io import JSON_write
 from course import *
 import styles
 from filter_list import  * #filter_section_list, count_types_within_courses
-from test_data import generate_independent_data
+from sample_data import generate_dense_data
 
 
 
@@ -30,8 +30,8 @@ def graph_optimize(query_results):
 
 ##start code
 
-   query_results = generate_independent_data()
-   requiredNumberOfSections = 5
+   query_results = generate_dense_data()
+   requiredNumberOfSections = 17
 
 #Construct the graph object
    G = nx.Graph()
@@ -62,7 +62,7 @@ def graph_optimize(query_results):
 
    for i,iSec in enumerate(G.nodes()):
       for j,jSec in enumerate(G.nodes()):
-         if i>j:
+         if i<j:
             have_edge = False
             if ( (iSec.cType == jSec.cType) and (jSec.course==iSec.course)):
                #If the two sections are from the same course and are the same type, then they're incompatible.
@@ -71,6 +71,11 @@ def graph_optimize(query_results):
             else:
                for itimeslot in iSec.timeslots:
                   for jtimeslot in jSec.timeslots:
+                     if (  (itimeslot.eTime >= jtimeslot.sTime) and (itimeslot.sTime <= jtimeslot.eTime) and itimeslot.day==jtimeslot.day ):
+                        have_edge = True
+                     if (  (jtimeslot.eTime >= itimeslot.sTime) and (jtimeslot.sTime <= itimeslot.eTime) and itimeslot.day==jtimeslot.day ):
+                        have_edge = True
+                     ddd="""
                      if (itimeslot.sTime <= jtimeslot.sTime and itimeslot.eTime >= jtimeslot.eTime and itimeslot.day==jtimeslot.day ):
                         have_edge = True
                      elif (jtimeslot.sTime <= itimeslot.sTime and jtimeslot.eTime >= itimeslot.eTime and jtimeslot.day==itimeslot.day ):
@@ -81,7 +86,10 @@ def graph_optimize(query_results):
                      elif ((jtimeslot.sTime <= itimeslot.eTime and jtimeslot.eTime >= itimeslot.eTime and jtimeslot.day==itimeslot.day)):
                         #if they overlap in time, and they're on the same day, then they're incompatible.
                         have_edge = True
-                     elif (jtimeslot.sTime == itimeslot.sTime and jtimeslot.day==itimeslot.day ):
+                        """
+                     if (itimeslot.sTime == jtimeslot.sTime and itimeslot.day==jtimeslot.day ):
+                        have_edge = True
+                     if (jtimeslot.sTime == itimeslot.sTime and jtimeslot.day==itimeslot.day ):
                         have_edge = True
 
             if have_edge:
@@ -96,7 +104,7 @@ def graph_optimize(query_results):
 
    all_valid = []
    calculate_how_many = 25
-   max_attempts = 10
+   max_attempts = 50
 
    best_score = -1.0e9
 
