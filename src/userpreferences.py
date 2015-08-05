@@ -11,4 +11,7 @@ class UserPreferences():
       # Options "Morning", "Afternoon", "Evening"
       self.optimumTimeOfDay = "0800"
       # Sets preferred time for Gaussian
+      self.preferredCampus = ""
+      self.preferOnline = False
+      self.preferredCRNs = []
 UserPrefs = UserPreferences()
