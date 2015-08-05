@@ -48,16 +48,16 @@ class Section():
       for t in self.timeslots:
          if (t.day>5):
             w2.append( {
-              "title" : self.course + " " + self.cType + " (" + str(self.CRN) + ")",
-              "start" : time2ftime(str(t.sTime)),
-              "end"   : time2ftime(str(t.eTime)),
+              "title" : self.course + " " + self.cType + " (" + self.CRN + ")",
+              "start" : time2ftime(t.sTime),
+              "end"   : time2ftime(t.eTime),
               "dow"   : "[" + str(t.day-5) + "]",
               "color" : colors[self.cType],
               "textColor" : "black",
             })
          else:
             w1.append( {
-              "title" : self.course + " " + self.cType + " (" + str(self.CRN) + ")",
+              "title" : self.course + " " + self.cType + " (" + self.CRN + ")",
               "start" : time2ftime(t.sTime),
               "end"   : time2ftime(t.eTime),
               "dow"   : "[" + str(t.day) + "]",
