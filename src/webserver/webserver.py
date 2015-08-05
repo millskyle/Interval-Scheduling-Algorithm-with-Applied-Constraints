@@ -3,9 +3,11 @@ import bottle
 from scraper import spiderworker
 from database import dbHandler
 
-dbHandler.init(True)
+setup = False
+dbHandler.init(setup)
 scraperWorker = spiderworker.SpiderWorker()
-scraperWorker.start()
+if setup:
+	scraperWorker.start()
 
 
 @bottle.route('/')
@@ -16,9 +18,11 @@ def index():
 def input():
     return bottle.static_file('input.js', root='static/')
 
-@bottle.route('/getCalendar')
+@bottle.route('/calendar')
 def getCalendar():
 	#Now begin the process of querying the db
+	courses = dbHandler.grabCourses(['CSCI1010U'])
+	print courses
 	return "Placeholder Response"
 
 @bottle.route('/getAvailableCourses')
@@ -26,5 +30,6 @@ def getAvailCourses():
 	return json.dumps(dbHandler.getAvailableCourses())
 
 bottle.run(host='localhost', port=8080)
-scraperWorker.end()
-scraperWorker.join()
+if setup:
+	scraperWorker.end()
+	scraperWorker.join()

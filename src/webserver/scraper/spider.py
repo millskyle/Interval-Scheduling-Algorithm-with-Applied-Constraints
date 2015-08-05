@@ -90,6 +90,7 @@ class available_courses_spider(CrawlSpider):
             Sec.remainingSeats = int(thisCRN.xpath('.//tr/td[span="Seats"]/following-sibling::td[3]/text()').extract()[0])
             meetingtimes = thisCRN.xpath('.//table[caption="Scheduled Meeting Times"]/tr[td[@class="dbdefault"]] ')
             Sec.name,Sec.CRN,Sec.course,section_number = header.split(" - ")
+            Sec.semester = semester
 
             for mt in meetingtimes:
                fields = mt.xpath('.//td[@class="dbdefault"]/text()').extract()
@@ -111,11 +112,9 @@ class available_courses_spider(CrawlSpider):
             Sec.cleanup()
             Sec.cType = string2courseType(fields[6])
             allcourses.append(Sec)
-            print Sec
 
 
             Sec.printToScreen()
-            print "inserting Course"
             dbHandler.insertCourse(Sec)
 
 
