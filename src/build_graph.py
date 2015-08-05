@@ -30,7 +30,7 @@ def graph_optimize(query_results):
 ##start code
 
 #   query_results = generate_dense_data()
-#   requiredNumberOfSections = 8
+#   requiredNumberOfSections = 9
 
 #Construct the graph object
    G = nx.Graph()
@@ -107,15 +107,15 @@ def graph_optimize(query_results):
 
 
 
+ #  requiredNumberOfSections += 1
 
 
    all_valid = []
    calculate_how_many = 200
-   max_attempts = 20
+   max_attempts = 5
 
    best_score = -1.0e9
 
-   requiredNumberOfSections += 0
    globalFailure = True
 
    for potentialSchedule in xrange(calculate_how_many):
