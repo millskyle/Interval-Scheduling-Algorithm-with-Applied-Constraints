@@ -4,51 +4,55 @@
 
 	<head>
 		<title>UOIT Course Schedule Organizer</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>			
-		<script src="input.js"></script>
+		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>		<script src="input.js"></script>
     </head>
 
 	<body>
 		<h1>UOIT Course Schedule Organizer</h1>
+		<h2>Semester</h2>
+			<span style="color:red">*</span><select>
+				<option value="201509">Fall 2015</option>
+				<option value="201601">Winter 2016</option>
+			</select>
 		<h2>Courses</h2>
-			<h3>Mandatory Courses:</h3>	
-				<div>
-					<select id="l1" multiple="multiple">
-						<option value="BIOL 1010U">Biology I</option>
-						<option value="CHEM 1010U">Chemisty I</option>
-						<option value="PHY 1010U">Physics I</option>
-					</select>
+			<h3>Mandatory Courses:</h3>
+				<span style="float:left; color:red">*</span>	
+				<div style="float:left">
+					<select id="l1" multiple="multiple"></select>
 				</div>
-				<input id="b1" type="button" value=">" /><input id="b2" type="button" value="<" />
-				<div>
-					<select id="l2" multiple="multiple">
-					</select>
+				<input style="float:left" id="b1" type="button" value=">" /><input style="float:left" id="b2" type="button" value="<" />
+				<div style="float:left">
+					<select id="l2" multiple="multiple"></select>
 				</div>
+			<br><br><br><br>
 			<h3>Elective Courses:</h3>
-				<div>
-					<select id="l3" multiple="multiple">
-						<option value="BIOL 1010U">Biology I</option>
-						<option value="CHEM 1010U">Chemisty I</option>
-						<option value="PHY 1010U">Physics I</option>
-					</select>
+				<span style="float:left; color:red">*</span>
+				<div style="float:left">
+					<select id="l3" multiple="multiple"></select>
 				</div>
-				<input id="b3" type="button" value=">" /><input id="b4" type="button" value="<" />
-				<div>
+				<input style="float:left" id="b3" type="button" value=">" /><input style="float:left" id="b4" type="button" value="<" />
+				<div style="float:left">
 					<select id="l4" multiple="multiple">
 					</select>
 				</div>
+			<br><br><br><br>
 			<h2>Schedule Preferences</h3>
 				<p>
-					Campus Preference: <select><option value="none">none</option><option value="Downtown Campus">Downtown Campus</option><option value="North Campus">North Campus</option></select><br><br>
+					<strong>Campus Preference</strong>: <select><option value="none">none</option><option value="Downtown Campus">Downtown Campus</option><option value="North Campus">North Campus</option></select><br><br>
 
-					Preferred Class Times (you may check more than one option): <input type="checkbox" value="Morning">Morning(8:00 am - 12:00 pm)<input type="checkbox" value="Afternoon">Afternoon(12:00 pm - 4:00 pm)<input type="checkbox" value="Evening">Evening(4:00 pm - )<br><br>
+					<strong>Preferred Class Times (you may check more than one option)</strong>: <input type="checkbox" value="Morning">Morning(8:00 am - 12:00 pm)<input type="checkbox" value="Afternoon">Afternoon(12:00 pm - 4:00 pm)<input type="checkbox" value="Evening">Evening(4:00 pm - )<br><br>
 
-					Potential Day(s) Off (Optional) (you may check more than one option): <input type="checkbox" value="Monday">Monday<input type="checkbox" value="Tuesday">Tuesday<input type="checkbox" value="Wednesday">Wednesday<input type="checkbox" value="Thursday">Thursday<input type="checkbox" value="Friday">Friday<br><br>
+					<span style="color:red">*</span><strong>Would you like a day off?</strong>: <input type="checkbox" value="Yes">Yes<input type="checkbox" value="No">No<br><br>
 
-					Preferred Instructional Method: <select><option value="none">none</option><option value="In-class Delivery Only">In-class Delivery Only</option><option value="Online Delivery Only">Online Delivery Only</option></select><br><br>
+					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <input type="checkbox" value="Monday">Monday<input type="checkbox" value="Tuesday">Tuesday<input type="checkbox" value="Wednesday">Wednesday<input type="checkbox" value="Thursday">Thursday<input type="checkbox" value="Friday">Friday<br><br>
 
-					Preferred CRN(s) (Optional): <input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><br><br>
+					<strong>Preferred Instructional Method</strong>: <select><option value="none">none</option><option value="In-class Delivery Only">In-class Delivery Only</option><option value="Online Delivery Only">Online Delivery Only</option></select><br><br>
+
+					<strong>Preferred CRN(s) (Optional)</strong>: <input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><br><br>
+
+					<span style="color:red">*</span> indicates required field<br><br>
 				</p>
-				
+			<input type="button" value="Submit" />	
 	</body>
 </html>

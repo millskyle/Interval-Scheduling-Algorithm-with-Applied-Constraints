@@ -11,8 +11,19 @@ function loadXMLDoc() {
 
 	xmlhttp.onreadystatechange=function() {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-    		alert(xmlhttp.responseText);
-    	}
+  			courses = JSON.parse(xmlhttp.responseText);
+
+  			for (var subject in courses) {
+  				alert(subject);
+
+  				$.each(courses[subject], function(key, value) {   
+  				     $('#l1')
+  				         .append($("<option></option>")
+  				         .attr("value",key)
+  				         .text(value)); 
+  				});
+  			}
+      	}
   	}
 
 xmlhttp.open("GET","/getAvailableCourses",true);
