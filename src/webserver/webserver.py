@@ -3,14 +3,18 @@ import bottle
 from scraper import spiderworker
 from database import dbHandler
 
-dbHandler.init()
+dbHandler.init(True)
 scraperWorker = spiderworker.SpiderWorker()
-# scraperWorker.run()
+scraperWorker.run()
 
 
 @bottle.route('/')
 def index():
-    return bottle.static_file('index.html', root='static/')
+    return bottle.static_file('input.html', root='static/')
+
+@bottle.route('/input.js')
+def input():
+    return bottle.static_file('input.js', root='static/')
 
 @bottle.route('/getCalendar')
 def getCalendar():
