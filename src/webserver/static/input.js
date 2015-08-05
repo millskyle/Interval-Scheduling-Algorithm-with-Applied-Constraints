@@ -14,11 +14,11 @@ function loadXMLDoc() {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
   			courses = JSON.parse(xmlhttp.responseText);
 
-  			$.each(courses[""], function(key, value) {   
+  			$.each(courses["Fall 2015"], function(key, value) {   
   			    $('#l1').append($("<option></option>").attr("value",key).text(key)); 
   			});
 
-  			$.each(courses[""], function(key, value) {   
+  			$.each(courses["Fall 2015"], function(key, value) {   
   			    $('#l4').append($("<option></option>").attr("value",key).text(key)); 
   			});
 
@@ -61,9 +61,9 @@ $(function () {
 
 			$("#l2").empty();
 
-			$.each(courses[""][subject], function(index) {
+			$.each(courses["Fall 2015"][subject], function(index) {
 
-				$('#l2').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
+				$('#l2').append($("<option></option>").attr("value",courses["Fall 2015"][subject][index]).text(courses["Fall 2015"][subject][index])); 
 			})
 		});
 	});
@@ -74,9 +74,9 @@ $(function () {
 
 			$("#l5").empty();
 
-			$.each(courses[""][subject], function(index) {
+			$.each(courses["Fall 2015"][subject], function(index) {
 
-				$('#l5').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
+				$('#l5').append($("<option></option>").attr("value",courses["Fall 2015"][subject][index]).text(courses["Fall 2015"][subject][index])); 
 			})
 		});
 	});
