@@ -13,22 +13,27 @@ function loadXMLDoc() {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
   			courses = JSON.parse(xmlhttp.responseText);
 
-  			for (var subject in courses) {
+  			for (var subject in courses[""]) {
   				
-  				$.each([subject], function(key, value) {   
-  				     $('#l1').append($("<option></option>").attr("value",key).text(value)); 
-  				});
+				console.log(subject);
 
   				$.each([subject], function(key, value) {   
-  				     $('#l4').append($("<option></option>").attr("value",key).text(value)); 
+  				    $('#l1').append($("<option></option>").attr("value",key).text(value)); 
   				});
 
-  				$.each(courses[subject], function(key, value) {   
-  				     $('#l2').append($("<option></option>").attr("value",key).text(value)); 
+  				$.each([subject], function(key, value) {   
+  				    $('#l4').append($("<option></option>").attr("value",key).text(value)); 
   				});
 
-  				$.each(courses[subject], function(key, value) {   
-  				     $('#l5').append($("<option></option>").attr("value",key).text(value)); 
+  				console.log(courses[""][subject]);
+
+  				$.each(courses[""][subject], function(index) { 
+  				    $('#l2').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
+  					//console.log(index);
+  				});
+
+  				$.each(courses[""][subject], function(index) {   
+  				    $('#l5').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
   				});
   			}
       	}
