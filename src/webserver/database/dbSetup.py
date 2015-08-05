@@ -18,12 +18,12 @@ class BaseModel(peewee.Model):
 #More info on usage can be found in dbHandler
 class Sectiondb(BaseModel):
 	id = peewee.PrimaryKeyField() #pretty much just used for joins don't touch
-	crn = peewee.IntegerField()
+	crn = peewee.CharField()
 	name = peewee.TextField()
 	campus = peewee.TextField()
 	code = peewee.CharField()
 	type = peewee.CharField(max_length=3)
-	remainingseats = peewee.IntegerField()
+	remainingseats = peewee.CharField()
 	semester = peewee.CharField()
 	subject = peewee.CharField()
 
@@ -31,5 +31,5 @@ class Timeslotdb(BaseModel):
 	id = peewee.PrimaryKeyField()
 	sid = peewee.ForeignKeyField(Sectiondb, to_field="id")
 	day = peewee.IntegerField()
-	starttime = peewee.IntegerField()
-	endtime = peewee.IntegerField()
+	starttime = peewee.CharField()
+	endtime = peewee.CharField()
