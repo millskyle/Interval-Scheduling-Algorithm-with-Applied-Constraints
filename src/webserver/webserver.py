@@ -3,7 +3,7 @@ import bottle
 from scraper import spiderworker
 from database import dbHandler
 
-setup = True
+setup = False
 dbHandler.init(setup)
 scraperWorker = spiderworker.SpiderWorker()
 if setup:

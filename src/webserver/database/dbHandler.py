@@ -121,30 +121,40 @@ def grabCourses(courselist):
 
 def getAvailableCourses():
 	retdict = {}
-	coursesdict = {}
-	semesterdict = {}
-
-	subjectquery = Sectiondb.\
-					select(Sectiondb.subject).\
-					distinct().naive()
-	if subjectquery.exists():
-		for subrow in subjectquery:
-			print subrow.subject
-			coursesdict[subrow.subject] = []
-
-			coursequery = Sectiondb.select().\
-							where(Sectiondb.subject == subrow.subject).\
-							group_by(Sectiondb.code).\
-							distinct().naive()
-			if coursequery.exists():
-				for row in coursequery:
-					coursesdict[subrow.subject].append(row.code)
 
 	semesterquery = Sectiondb.\
 					select(Sectiondb.semester).\
 					group_by(Sectiondb.semester)
 	if semesterquery.exists():
-		for semester in semesterquery:
-			print semester.semester
-	retdict["COURSES"] = coursesdict
+		for semesterrow in semesterquery:
+			coursesdict = {}
+			semstring=""
+			mo = re.match("([0-9]{4})([0-9]{2})", semesterrow.semester)
+			if mo: 
+				if mo.groups()[1] == '09':
+					semstring = "Fall "
+				if mo.groups()[1] == '01':
+					semstring = "Winter "
+				if mo.groups()[1] == '05':
+					semstring = "Spring/Summer "
+				semstring += mo.groups()[0]
+
+			subjectquery = Sectiondb.\
+							select(Sectiondb.subject).\
+							where(Sectiondb.semester == semesterrow.semester).\
+							distinct().naive()
+
+			if subjectquery.exists():
+				for subrow in subjectquery:
+					coursesdict[subrow.subject] = []
+
+					coursequery = Sectiondb.select().\
+									where(Sectiondb.subject == subrow.subject, Sectiondb.semester == semesterrow.semester).\
+									group_by(Sectiondb.code).\
+									distinct().naive()
+					if coursequery.exists():
+						for row in coursequery:
+							coursesdict[subrow.subject].append(row.code)
+
+			retdict[semstring] = coursesdict
 	return retdict
