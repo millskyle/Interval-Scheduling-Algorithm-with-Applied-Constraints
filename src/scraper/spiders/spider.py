@@ -44,8 +44,8 @@ def printer(string):
    print "\n"
 
 
-f = open('courses.txt','w')
-f.write('CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ \n')
+#f = open('courses.txt','w')
+#f.write('CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ \n')
 
 class available_courses_spider(CrawlSpider):
 
@@ -139,18 +139,18 @@ class available_courses_spider(CrawlSpider):
 
             allcourses.append(Sec)
 
-            for ts in Sec.timeslots:
-               f.write("{CRN} {CTYPE} {CODE} {RSEAT} {STIME} {ETIME} {DAY} {SEM} {SUBJ} \n".format(
-                    CRN=Sec.CRN,
-                    CTYPE=Sec.cType,
-                    CODE=Sec.course,
-                    RSEAT=Sec.remainingSeats,
-                    STIME=ts.sTime,
-                    ETIME=ts.eTime,
-                    DAY=ts.day,
-                    SEM=semester,
-                    SUBJ=subject ) )
-
+#            for ts in Sec.timeslots:
+#               f.write("{CRN} {CTYPE} {CODE} {RSEAT} {STIME} {ETIME} {DAY} {SEM} {SUBJ} \n".format(
+#                    CRN=Sec.CRN,
+#                    CTYPE=Sec.cType,
+#                    CODE=Sec.course,
+#                    RSEAT=Sec.remainingSeats,
+#                    STIME=ts.sTime,
+#                    ETIME=ts.eTime,
+#                    DAY=ts.day,
+#                    SEM=semester,
+#                    SUBJ=subject ) )
+#
 
             Sec.printToScreen()
 #            dbHandler.insertCourse(Sec)  #insert the course into the database.   dbHandler must take care of converting the Section() object to a database query/object.
