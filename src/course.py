@@ -116,7 +116,8 @@ class Timetable():
       self.userscore = 0
       self.notes = []
       self.warnings = []
-      self.weekData = []
+      self.w1JSON = []
+      self.w2JSON = []
       self.Schedule = Schedule
       self.isValid = ""
 

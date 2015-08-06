@@ -2,7 +2,7 @@ import json
 from course import *
 
 
-def JSON_write(Schedule, w1_out, w2_out):
+def JSON_dump(Schedule):
    w1jsonData = []
    w2jsonData = []
    for CC in Schedule:
@@ -12,11 +12,12 @@ def JSON_write(Schedule, w1_out, w2_out):
       for w2jsd in w2js:
          w2jsonData.append(w2jsd)
 
-   with open(w1_out,'w') as outfile:
-     json.dump(w1jsonData, outfile, sort_keys = True, indent = 4, ensure_ascii = True)
+#   with open(w1_out,'w') as outfile:
+   return     json.dumps(w1jsonData, sort_keys = True, indent = 4, ensure_ascii = True), \
+              json.dumps(w2jsonData, sort_keys = True, indent = 4, ensure_ascii = True)
 
-   with open(w2_out,'w') as outfile:
-     json.dump(w2jsonData, outfile, sort_keys = True, indent = 4, ensure_ascii = True)
+#   with open(w2_out,'w') as outfile:
+#     json.dump(w2jsonData, outfile, sort_keys = True, indent = 4, ensure_ascii = True)
 
 
 

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 from networkx.algorithms.approximation import clique_removal
-from JSON_io import JSON_write
+from JSON_io import JSON_dump
 from course import *
 import styles
 from filter_list import  * #filter_section_list, count_types_within_courses
@@ -147,6 +147,13 @@ def graph_optimize(query_results):
 
 
 
+      newsched = []
+      for i in range(len(thissched)):
+         if not(thissched[i].CRN=="55555"):
+            newsched.append(thissched[i])
+      thissched = newsched
+
+
 
       thisTimeTable = Timetable(thissched, compute_schedule_score(thissched))
 
@@ -168,30 +175,8 @@ def graph_optimize(query_results):
 
 
 
-#   for i in all_valid + consolation:
-#      print "FOUND", i.isValid , "SCHEDULE WITH SCORE \t",i.score
-
-   
-   
-
-
-
-
-
-
    if globalFailure:
       print "FAILURE to find even one valid schedule"
-
-      cccccc="""
-      #psueod code:
-      for each invalid schedule:
-         calculate the score
-      sort the list of invalid schedules by score
-
-      for each invalid schedule in the top five:
-         find_missing_courses(Schedule)
-
-"""
 
 
    good_schedules = len(all_valid)
@@ -202,42 +187,43 @@ def graph_optimize(query_results):
 
    print "FOUND",len(schedules_to_return),"schedules to return"
 
+   returnData = []
+   for thisSchedule in schedules_to_return:
+      thisSchedule.w1JSON,thisSchedule.w2JSON = JSON_dump(thisSchedule.Schedule)
+      returnData.append(  [ thisSchedule.w1JSON,thisSchedule.w1JSON,thisSchedule.notes,thisSchedule.warnings,thisSchedule.score    ]  )
 
 
+   return returnData
+
+#   yoursched = schedules_to_return[0]
+#   print "BEST SCORE:",yoursched.score
+#   temp = missingCourses(yoursched, requiredSections)
+#   yoursched = yoursched.Schedule
 
 
+   JSON_dump(yoursched)
 
-   print "OUTCOME: the best timetable has score",best_score
-   yoursched = schedules_to_return[0]
+#print nx.get_node_attributes(G, 'score')
+#   chosen = get_list_of_CRNS(yoursched)
+#   for node in sorted(G.nodes()):
+#      if node.CRN in chosen:
+#         G.node[node]['label'] = "**" + G.node[node]['label']+"**"
 
-   temp = missingCourses(yoursched, requiredSections)
-   yoursched = yoursched.Schedule
 
-#   print nx.get_node_attributes(G, 'score')
-   chosen = get_list_of_CRNS(yoursched)
-   for node in sorted(G.nodes()):
-      if node.CRN in chosen:
-         G.node[node]['label'] = "**" + G.node[node]['label']+"**"
-#         G.node[node]['selected'] = 5.0
-
-#   for Sec in yoursched:
-#      G.node[Sec]['selected'] = 5.0
-
-   plt.figure(figsize=[24,20])
-   nx.draw_spring(G,
-         with_labels=True,
-         labels=nx.get_node_attributes(G,'label'),
-         node_color=colors,
-         node_size=500,
-#         linewidths=nx.get_node_attributes(G,'selected').values(),
-         )
-   plt.axis('off')
-   plt.savefig('graph.svg')
+#   plt.figure(figsize=[24,20])
+#   nx.draw_spring(G,
+#         with_labels=True,
+#         labels=nx.get_node_attributes(G,'label'),
+#         node_color=colors,
+#         node_size=500,
+##         linewidths=nx.get_node_attributes(G,'selected').values(),
+#         )
+#   plt.axis('off')
+#   plt.savefig('graph.svg')
 
 
 
    #JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
-   JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
 
 
 
