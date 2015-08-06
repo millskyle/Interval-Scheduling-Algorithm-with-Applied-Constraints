@@ -18,7 +18,7 @@ class BaseModel(peewee.Model):
 #More info on usage can be found in dbHandler
 class Sectiondb(BaseModel):
 	id = peewee.PrimaryKeyField() #pretty much just used for joins don't touch
-	crn = peewee.CharField()
+	crn = peewee.CharField(unique=True, index=True)
 	name = peewee.TextField()
 	campus = peewee.TextField()
 	code = peewee.CharField()
