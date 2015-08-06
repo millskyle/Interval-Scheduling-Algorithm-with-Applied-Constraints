@@ -1,5 +1,5 @@
 from course import *
-
+import collections
 
 def filter_section_list(original,courses,min_remaining_seats=0):
    print "Before:",len(original)
@@ -30,5 +30,24 @@ def get_weights_of_list(allcourses):
       total += C.score()
    return total
 
+def missingCourses(consolation, RS):
+ #  x = []
+   y = []
+   missingCourses = []
+#   out = open('testsched', 'w+')
+   #out.write("Required: " + "\n")
+   #for Lec in requiredSections:
+   #   out.write(str(Lec) + "\n")
+  #    x.append(str(Lec))
+ #  out.write("\n" + "Returned: " + "\n")
+   i = consolation[0]
+   for CRN in i:
+      #out.write(str(CRN.course)+ "_" + str(CRN.cType) + "\n")
+      y.append(str(CRN.course) + "_" + str(CRN.cType))
+   missingCourses = set(RS) - set(y)
+   print missingCourses
+  # out.write(str(missingCourses))
+  
+   #out.close()
 
 
