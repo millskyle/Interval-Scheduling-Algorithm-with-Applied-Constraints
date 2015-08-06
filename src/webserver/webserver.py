@@ -5,7 +5,7 @@ from scraper import spiderworker
 from coursegraph import build_graph
 from bottle import request
 
-setup = True
+setup = False
 dbHandler.init(setup)
 scraperWorker = spiderworker.SpiderWorker()
 if setup:
@@ -52,18 +52,13 @@ def getCalendar():
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
 
-	print request.body.read()
-	print mandatory_selected_courses
-
 	inputdict = {
 		'SEMESTER': semester,
 		'COURSES' : mandatory_selected_courses+elective_selected_courses
 	}
 
 	courses = dbHandler.grabCourses(inputdict)
-	build_graph.graph_optimize(courses)
-	w1 = open('public_html/w1.json','r').read()
-	w2 = open('public_html/w2.json','r').read()
+	w1, w2 = build_graph.graph_optimize(courses)
 	templ = open('public_html/cal.tmpl','r').read()
 	
 	return bottle.template(templ, w1=w1, w2=w2)
