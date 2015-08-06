@@ -42,28 +42,30 @@ def selectedCourses():
 		UserPrefs.MaximizeDaysOff = False
 	
 	if monday_off == "on":
-		UserPrefs.PreferredDaysOff.append(1,6)
+		UserPrefs.PreferredDaysOff += [1,6]
 
 	if tuesday_off == "on":
-		UserPrefs.PreferredDaysOff.append(2,7)
+		UserPrefs.PreferredDaysOff += [2,7]
 
 	if wednesday_off == "on":
-		UserPrefs.PreferredDaysOff.append(3,8)
+		UserPrefs.PreferredDaysOff += [3,8]
 
 	if thursday_off == "on":
-		UserPrefs.PreferredDaysOff.append(4,9)
+		UserPrefs.PreferredDaysOff += [4,9]
 
 	if friday_off == "on":
-		UserPrefs.PreferredDaysOff.append(5,10)
+		UserPrefs.PreferredDaysOff += [5,10]
 
 	if morning_class_pref == "on":
-		UserPrefs.PreferredDaysOff = "Morning"
+		UserPrefs.PreferTimeOfDay = "Morning"
 
 	if afternoon_class_pref == "on":
-		UserPrefs.PreferredDaysOff = "Afternoon"
+		UserPrefs.PreferTimeOfDay = "Afternoon"
 
 	if evening_class_pref == "on":
-		UserPrefs.PreferredDaysOff = "Evening"
+		UserPrefs.PreferTimeOfDay = "Evening"
+
+	print UserPrefs.PreferredDaysOff, "PreferredDaysOff"
 
 	UserPrefs.optimumTimeOfDay = "1200"
 
