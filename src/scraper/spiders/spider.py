@@ -75,7 +75,8 @@ class available_courses_spider(CrawlSpider):
          for semester in ["201509"] : #semesters:
             req = scrapy.Request('https://ssbp.mycampus.ca/prod/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjectChoicePage)
             req.meta['semester'] = semester
-            yield req
+            if int(semester) > 201400:
+               yield req
 
 
    def parseSubjectOptions(self,response):
