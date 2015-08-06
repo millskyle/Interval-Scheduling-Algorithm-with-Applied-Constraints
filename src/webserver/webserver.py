@@ -63,8 +63,6 @@ def selectedCourses():
 	if evening_class_pref == "on":
 		UserPrefs.PreferTimeOfDay = "Evening"
 
-	print UserPrefs.PreferredDaysOff, "PreferredDaysOff"
-
 	UserPrefs.optimumTimeOfDay = "1200"
 
 	if campus_pref == "none":
