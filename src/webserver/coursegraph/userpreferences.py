@@ -13,6 +13,6 @@ class UserPreferences():
       # Sets preferred time for Gaussian
       self.preferredCampus = 0
       #0 for none, 1 for north, 2 for dt
-      self.preferOnline = False
       self.preferredCRNs = []
+      self.PreferGaps = True
 UserPrefs = UserPreferences()

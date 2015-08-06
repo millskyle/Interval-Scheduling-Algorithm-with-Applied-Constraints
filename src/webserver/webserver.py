@@ -52,13 +52,7 @@ if setup:
 	scraperWorker.join()
 
 def selectedCourses():
-	semester = request.forms.get("semester")
-	mandatory_subjects = request.forms.get("mandatory_subjects")
-	mandatory_available_courses = request.forms.get("mandatory_available_courses")
-	mandatory_selected_courses = request.forms.getall("mandatory_selected_courses")
-	elective_subjects = request.forms.get("elective_subjects")
-	elective_available_courses = request.forms.get("elective_available_courses")
-	elective_selected_courses = request.forms.getall("elective_selected_courses")
+	semester = request.forms.get("semester")	
 	campus_pref = request.forms.get("campus_pref")
 	morning_class_pref = request.forms.get("morning_class_pref")
 	afternoon_class_pref = request.forms.get("afternoon_class_pref")
@@ -70,48 +64,57 @@ def selectedCourses():
 	wednesday_off = request.forms.get("wednesday_off")
 	thursday_off = request.forms.get("thursday_off")
 	friday_off = request.forms.get("friday_off")
-	no_instruct_method_pref = request.forms.get("no_instruct_method_pref")
-	in_class_delivery_pref = request.forms.get("in_class_delivery_pref")
-	online_delivery_pref = request.forms.get("online_delivery_pref")
 	CRN1 = request.forms.get("CRN1")
 	CRN2 = request.forms.get("CRN2")
 	CRN3 = request.forms.get("CRN3")
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
+	yes_gaps = request.forms.get("yes_gaps")
+	no_gaps = request.forms.get("no_gaps")
 
 	UserPrefs.semester = semester
 	
-	if yes_day_off == on:
+	if yes_day_off == "on":
 		UserPrefs.MaximizeDaysOff = True
-	elif no_day_off == on:
+	elif no_day_off == "on":
 		UserPrefs.MaximizeDaysOff = False
 	
-	if monday_off == on:
+	if monday_off == "on":
 		UserPrefs.PreferredDaysOff.append(1,6)
 
-	if tuesday_off == on:
+	if tuesday_off == "on":
 		UserPrefs.PreferredDaysOff.append(2,7)
 
-	if wednesday_off == on:
+	if wednesday_off == "on":
 		UserPrefs.PreferredDaysOff.append(3,8)
 
-	if thursday_off == on:
+	if thursday_off == "on":
 		UserPrefs.PreferredDaysOff.append(4,9)
 
-	if friday_off == on:
+	if friday_off == "on":
 		UserPrefs.PreferredDaysOff.append(5,10)
 
-	# if 
+	if morning_class_pref == "on":
+		UserPrefs.PreferredDaysOff = "Morning"
 
+	if afternoon_class_pref == "on":
+		UserPrefs.PreferredDaysOff = "Afternoon"
 
-	self.semester = "201509"
-	self.MaximizeDaysOff = True
-	self.PreferredDaysOff = [1,2,3,4,5,6,7,8,9,10]
-	self.PreferTimeOfDay = "Evening" 
-	# Options "Morning", "Afternoon", "Evening"
-	self.optimumTimeOfDay = "0800"
-	# Sets preferred time for Gaussian
-	self.preferredCampus = 0
-	#0 for none, 1 for north, 2 for dt
-	self.preferOnline = False
-	self.preferredCRNs = []
+	if evening_class_pref == "on":
+		UserPrefs.PreferredDaysOff = "Evening"
+
+	UserPrefs.optimumTimeOfDay = "1200"
+
+	if campus_pref == "none":
+		UserPrefs.preferredCampus = 0
+	elif campus_pref == "North Campus":
+		UserPrefs.preferredCampus = 1
+	else:
+		UserPrefs.preferredCampus = 2
+
+	UserPrefs.preferredCRNs.append(CRN1,CRN2,CRN3,CRN4,CRN5)
+
+	if yes_gaps == "on":
+		UserPrefs.PreferGaps = True
+	elif no_gaps == "on":
+		UserPrefs.PreferGaps = False  
