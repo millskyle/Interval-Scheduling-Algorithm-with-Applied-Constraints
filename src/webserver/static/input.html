@@ -23,32 +23,21 @@
 
 		<h2>Semester</h2>
 			<p>
-			Which semester would you like to organize a schedule for?
+			<span style="color:red">*</span>Which semester would you like to organize a schedule for?
 			<br><br>
-			<span style="color:red">*</span><select name="semester">
-				<option name="201509">Fall 2015</option>
-				<option name="201601">Winter 2016</option>
-			</select>
+			<select name="semester"><option name="201509">Fall 2015</option><option name="201601">Winter 2016</option></select>
 			</p>
 		<h2>Courses</h2>
 			<h3>Mandatory Courses</h3>
 
 				<p>
-				Select the courses you have to take this semester per subject(max. 8):
+				<span style="color:red">*</span>Select the courses you have to take this semester per subject(max. 8):
 				<br><br>
-				<span style="float:left; color:red">* </span>	
-				<div>
-					<select name="mandatory_subjects" id="l1" multiple="multiple" style="font-size:20px"></select>
-				</div>
+				<div><select name="mandatory_subjects" id="l1" multiple="multiple" style="font-size:20px"></select></div>
 				<br>
-				<span style="float:left; color:red">* </span>	
-				<div style="float:left">
-					<select name="mandatory_available_courses" id="l2" multiple="multiple" style="font-size:20px"></select>
-				</div>
+				<div style="float:left"><select name="mandatory_available_courses" id="l2" multiple="multiple" style="font-size:20px"></select></div>
 				<input style="float:left" id="b1" type="button" value=">" /><input style="float:left" id="b2" type="button" value="<" />
-				<div style="float:left">
-					<select name="mandatory_selected_courses" id="l3" multiple="multiple" style="font-size:20px"></select>
-				</div>
+				<div style="float:left"><select name="mandatory_selected_courses" id="l3" multiple="multiple" style="font-size:20px"></select></div>
 				</p>
 			<br><br><br><br><br>
 			<h3>Elective Courses</h3>
@@ -56,17 +45,11 @@
 				<p>
 				Select any elective courses you would like to take this semester (max. 8):
 				<br><br>
-				<div>
-					<select name="elective_subjects" id="l4" multiple="multiple" style="font-size:20px"></select>
-				</div>
+				<div><select name="elective_subjects" id="l4" multiple="multiple" style="font-size:20px"></select></div>
 				<br>
-				<div style="float:left">
-					<select name="elective_available_courses" id="l5" multiple="multiple" style="font-size:20px"></select>
-				</div>
+				<div style="float:left"><select name="elective_available_courses" id="l5" multiple="multiple" style="font-size:20px"></select></div>
 				<input style="float:left" id="b3" type="button" value=">" /><input style="float:left" id="b4" type="button" value="<" />
-				<div style="float:left">
-					<select name="elective_selected_courses" id="l6" multiple="multiple" style="font-size:20px"></select>
-				</div>
+				<div style="float:left"><select name="elective_selected_courses" id="l6" multiple="multiple" style="font-size:20px"></select></div>
 				</p>
 			<br><br><br><br><br>
 			<h2>Schedule Preferences</h3>
