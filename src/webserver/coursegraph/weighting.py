@@ -22,7 +22,7 @@ def optimumTimeOfDay(Schedule):
 def campusPref(Schedule):
    for CRN in Schedule:
       if UserPrefs.preferredCampus == "None":
-         
+         pass
       if UserPrefs.preferredCampus == "North" and CRN.campus == "North":
          CRN.weight += 900
       if UserPrefs.preferredCampus == "Downtown" and CRN.campus == "Downtown":
