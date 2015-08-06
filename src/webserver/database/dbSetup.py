@@ -23,7 +23,7 @@ class Sectiondb(BaseModel):
 	campus = peewee.TextField()
 	code = peewee.CharField()
 	type = peewee.CharField(max_length=3)
-	remainingseats = peewee.CharField()
+	remainingseats = peewee.IntegerField()
 	semester = peewee.CharField()
 	subject = peewee.CharField()
 

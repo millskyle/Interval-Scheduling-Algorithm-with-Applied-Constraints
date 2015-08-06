@@ -37,6 +37,10 @@ def updateCourse(sec):
 	row.campus = sec.campus
 	row.type = sec.cType
 	row.remainingseats = sec.remainingSeats
+	print sec.remainingSeats
+
+	if sec.remainingSeats < 0:
+		row.remainingseats = 0
 
 	#Grabs subject from course code
 	#Course code is seperated into 3 groups like so

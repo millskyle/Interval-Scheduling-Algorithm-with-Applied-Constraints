@@ -6,7 +6,7 @@ from coursegraph import build_graph
 from bottle import request
 from coursegraph.userpreferences import UserPrefs
 
-setup = False
+setup = True
 dbHandler.init(setup)
 scraperWorker = spiderworker.SpiderWorker()
 if setup:
@@ -28,6 +28,9 @@ def input():
 @bottle.route('/input_form', method="POST")
 def getCalendar():
 	#Now begin the process of querying the db
+
+	selectedCourses()
+
 	inputdict = {
 		'SEMESTER': semester,
 		'COURSES' : mandatory_selected_courses+elective_selected_courses
@@ -43,7 +46,7 @@ def getCalendar():
 def getAvailCourses():
 	return json.dumps(dbHandler.getAvailableCourses())
 
-bottle.run(host='localhost', port=8080)
+bottle.run(host='', port=8080)
 if setup:
 	scraperWorker.end()
 	scraperWorker.join()
@@ -98,7 +101,7 @@ def selectedCourses():
 	if friday_off == on:
 		UserPrefs.PreferredDaysOff.append(5,10)
 
-	if 
+	# if 
 
 
 	self.semester = "201509"
