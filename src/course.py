@@ -111,13 +111,19 @@ def dict_construct(levels, final_type):
 
 
 class Timetable():
-   def __init__(self,Schedule):
-      a = {1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[]} #dict_construct(1,list)
-      for CRN in Schedule:
-          for ts in CRN.timeslots:
-             a[ts.day].append( [ts.sTime,ts.eTime] )
-      self.dict_ = a
+   def __init__(self,Schedule,score):
+      self.score = score
+      self.userscore = 0
+      self.notes = []
+      self.warnings = []
+      self.weekData = []
+      self.Schedule = Schedule
+      self.isValid = ""
 
+#      for CRN in Schedule:
+#          for ts in CRN.timeslots:
+#             a[ts.day].append( [ts.sTime,ts.eTime] )
+#      self.dict_ = a
 
 
 
