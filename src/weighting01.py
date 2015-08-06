@@ -1,4 +1,5 @@
-from scraper.course import *
+from course import *
+from userpreferences import UserPrefs
 import amberWeighting
 import math
 
@@ -10,7 +11,7 @@ def daysOff(Schedule):
 
 
 def optimumTimeOfDay(Schedule):
-   optimum_time= float(1100)
+   optimum_time= float(UserPrefs.OptimumTimeOfDay) 
    counter = 0.
    score = 0.
    for CRN in Schedule:
@@ -21,20 +22,20 @@ def optimumTimeOfDay(Schedule):
 
 def campusPref(Schedule):
    for CRN in Schedule:
-      if UserPrefs.preferredCampus == "None":
-         
-      if UserPrefs.preferredCampus == "North" and CRN.campus == "North":
-         CRN.weight += 900
-      if UserPrefs.preferredCampus == "Downtown" and CRN.campus == "Downtown":
-         CRN.weight += 900
-      if UserPrefs.preferredCampus == "Other" and CRN.campus == "Other":
-         CRN.weight += 900
-
+      if UserPref.campus == "None":
+         CRN.weight = 10000
+      if UserPref.campus == "North" and CRN.campus:
+         CRN.weight = 10000
+      if UserPref.campus == "Downtown":
+         CRN.weight = 10000
+      elif UserPref.campus == "Online":
+         CRN.weight = 10000      
+ 
 def myScore(Schedule):
    weight = 0.
    for CRN in Schedule:
       for ts in CRN.timeslots:
-      #   doSomeMath
+         doSomeMath
          junk=1
    return 0 # return a float from -1 to 1
 
@@ -42,12 +43,9 @@ def myScore(Schedule):
 
 def compute_schedule_score(Schedule):
    score = 0.0
-   #score += optimumTimeOfDay(Schedule)
-   score += addWeights(Schedule)
+ #  score += optimumTimeOfDay(Schedule)
+   score += daysOff(Schedule)
 #   score += myScore(Schedule)
-   score += campusPref(Schedule)
-   if UserPrefs.preferMinGaps == True:
-      score +=dinoWeighting.course_density(Schedule)
    return score
 
 
