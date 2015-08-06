@@ -10,13 +10,13 @@ def course_density(Schedule):
             for jCRN in Schedule:
                 for i in iCRN.timeslots:
                     for j in jCRN.timeslots:
-                    #mints=min(i.sTime)
-                    #maxts=max(j.eTime)
+                        #mints=min(i.sTime)
+                        #maxts=max(j.eTime)
                         if i.day==j.day:
                             time = int(j.eTime) - int(i.sTime)
                             if time<=40:
-                               weight += 1
-                               counter+=1
+                                weight +=1.
+                                counter+=1.
 
                             #if time<=40:
                             #    weight+=1.
