@@ -4,6 +4,7 @@ from database import dbHandler
 from scraper import spiderworker
 from coursegraph import build_graph
 from bottle import request
+from coursegraph.userpreferences import UserPrefs
 
 setup = False
 dbHandler.init(setup)
@@ -16,6 +17,10 @@ if setup:
 def index():
     return bottle.static_file('input.html', root='static/')
 
+@bottle.route('/stylesheet.css')
+def style():
+	return bottle.static_file('stylesheet.css', root='static/')
+
 @bottle.route('/input.js')
 def input():
     return bottle.static_file('input.js', root='static/')
@@ -23,6 +28,27 @@ def input():
 @bottle.route('/input_form', method="POST")
 def getCalendar():
 	#Now begin the process of querying the db
+	inputdict = {
+		'SEMESTER': semester,
+		'COURSES' : mandatory_selected_courses+elective_selected_courses
+	}
+
+	courses = dbHandler.grabCourses(inputdict)
+	w1, w2 = build_graph.graph_optimize(courses)
+	templ = open('public_html/cal.tmpl','r').read()
+	
+	return bottle.template(templ, w1=w1, w2=w2)
+
+@bottle.route('/getAvailableCourses')
+def getAvailCourses():
+	return json.dumps(dbHandler.getAvailableCourses())
+
+bottle.run(host='localhost', port=8080)
+if setup:
+	scraperWorker.end()
+	scraperWorker.join()
+
+def selectedCourses():
 	semester = request.forms.get("semester")
 	mandatory_subjects = request.forms.get("mandatory_subjects")
 	mandatory_available_courses = request.forms.get("mandatory_available_courses")
@@ -50,22 +76,39 @@ def getCalendar():
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
 
-	inputdict = {
-		'SEMESTER': semester,
-		'COURSES' : mandatory_selected_courses+elective_selected_courses
-	}
-
-	courses = dbHandler.grabCourses(inputdict)
-	w1, w2 = build_graph.graph_optimize(courses)
-	templ = open('public_html/cal.tmpl','r').read()
+	UserPrefs.semester = semester
 	
-	return bottle.template(templ, w1=w1, w2=w2)
+	if yes_day_off == on:
+		UserPrefs.MaximizeDaysOff = True
+	elif no_day_off == on:
+		UserPrefs.MaximizeDaysOff = False
+	
+	if monday_off == on:
+		UserPrefs.PreferredDaysOff.append(1,6)
 
-@bottle.route('/getAvailableCourses')
-def getAvailCourses():
-	return json.dumps(dbHandler.getAvailableCourses())
+	if tuesday_off == on:
+		UserPrefs.PreferredDaysOff.append(2,7)
 
-bottle.run(host='localhost', port=8080)
-if setup:
-	scraperWorker.end()
-	scraperWorker.join()
+	if wednesday_off == on:
+		UserPrefs.PreferredDaysOff.append(3,8)
+
+	if thursday_off == on:
+		UserPrefs.PreferredDaysOff.append(4,9)
+
+	if friday_off == on:
+		UserPrefs.PreferredDaysOff.append(5,10)
+
+	if 
+
+
+	self.semester = "201509"
+	self.MaximizeDaysOff = True
+	self.PreferredDaysOff = [1,2,3,4,5,6,7,8,9,10]
+	self.PreferTimeOfDay = "Evening" 
+	# Options "Morning", "Afternoon", "Evening"
+	self.optimumTimeOfDay = "0800"
+	# Sets preferred time for Gaussian
+	self.preferredCampus = 0
+	#0 for none, 1 for north, 2 for dt
+	self.preferOnline = False
+	self.preferredCRNs = []
