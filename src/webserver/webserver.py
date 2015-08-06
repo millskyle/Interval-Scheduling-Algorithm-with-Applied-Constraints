@@ -15,10 +15,6 @@ if setup:
 
 def selectedCourses():
 	semester = request.forms.get("semester")
-	mandatory_subjects = request.forms.get("mandatory_subjects")
-	mandatory_available_courses = request.forms.get("mandatory_available_courses")
-	elective_subjects = request.forms.get("elective_subjects")
-	elective_available_courses = request.forms.get("elective_available_courses")
 	campus_pref = request.forms.get("campus_pref")
 	morning_class_pref = request.forms.get("morning_class_pref")
 	afternoon_class_pref = request.forms.get("afternoon_class_pref")
