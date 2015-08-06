@@ -170,7 +170,7 @@ def graph_optimize(query_results):
 
 #   for Sec in yoursched:
 #      G.node[Sec]['selected'] = 5.0
-   return JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
+   return JSON_write(yoursched)
 
 
 

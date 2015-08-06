@@ -2,7 +2,7 @@ import json
 from scraper.course import *
 
 
-def JSON_write(Schedule, w1_out, w2_out):
+def JSON_write(Schedule):
    w1jsonData = []
    w2jsonData = []
    for CC in Schedule:

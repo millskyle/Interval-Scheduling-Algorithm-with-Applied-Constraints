@@ -6,7 +6,7 @@ from coursegraph import build_graph
 from bottle import request
 from coursegraph.userpreferences import UserPrefs
 
-setup = False
+setup = True
 dbHandler.init(setup)
 scraperWorker = spiderworker.SpiderWorker()
 if setup:
@@ -29,15 +29,15 @@ def input():
 def getCalendar():
 	#Now begin the process of querying the db
 
+	selectedCourses()
+
 	inputdict = {
 		'SEMESTER': semester,
 		'COURSES' : mandatory_selected_courses+elective_selected_courses
 	}
 
 	courses = dbHandler.grabCourses(inputdict)
-	build_graph.graph_optimize(courses)
-	w1 = open('public_html/w1.json','r').read()
-	w2 = open('public_html/w2.json','r').read()
+	w1, w2 = build_graph.graph_optimize(courses)
 	templ = open('public_html/cal.tmpl','r').read()
 	
 	return bottle.template(templ, w1=w1, w2=w2)
@@ -46,13 +46,12 @@ def getCalendar():
 def getAvailCourses():
 	return json.dumps(dbHandler.getAvailableCourses())
 
-bottle.run(host='localhost', port=8080)
+bottle.run(host='', port=8080)
 if setup:
 	scraperWorker.end()
 	scraperWorker.join()
 
 def selectedCourses():
-
 	semester = request.forms.get("semester")
 	mandatory_subjects = request.forms.get("mandatory_subjects")
 	mandatory_available_courses = request.forms.get("mandatory_available_courses")
@@ -80,17 +79,6 @@ def selectedCourses():
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
 
-	inputdict = {
-		'SEMESTER': semester,
-		'COURSES' : mandatory_selected_courses+elective_selected_courses
-	}
-
-	courses = dbHandler.grabCourses(inputdict)
-	w1, w2 = build_graph.graph_optimize(courses)
-	templ = open('public_html/cal.tmpl','r').read()
-	
-	return bottle.template(templ, w1=w1, w2=w2)
-
 	UserPrefs.semester = semester
 	
 	if yes_day_off == on:
@@ -113,7 +101,7 @@ def selectedCourses():
 	if friday_off == on:
 		UserPrefs.PreferredDaysOff.append(5,10)
 
-	if 
+	# if 
 
 
 	self.semester = "201509"
