@@ -28,8 +28,13 @@ def graph_optimize(query_results):
    requiredNumberOfSections = len(requiredSections)
    print requiredSections,":",requiredNumberOfSections
 
-   query_results = [i for i in query_results if i.remainingSeats > 0 ] 
+   query_results = [i for i in query_results if i.remainingSeats > 0 ]
 
+
+   for i in range(10):
+      print "!"*100
+   for CRN in query_results:
+      CRN.printToScreen()
 
 #  SOME CONFIGURATION:
    calculate_how_many = config.generate_this_many_schedules
@@ -133,10 +138,10 @@ def graph_optimize(query_results):
          for CRN in thissched:
             if CRN.CRN == "55555":
                numberofblanks+=1
-         successfully_scheduled_sections = len(thissched) - numberofblanks
+         successfully_scheduled_sections = len(thissched)
 
- #        print "   Attempt",tries
-         if (successfully_scheduled_sections >= requiredNumberOfSections):
+         #print "   Attempt",tries
+         if (successfully_scheduled_sections >= requiredNumberOfSections + numberofblanks):
             failure=False
             break
          else:
@@ -146,7 +151,7 @@ def graph_optimize(query_results):
             thissched = bestTry
 
 
-
+      #Remove all pseudo events now.  They've served their purpose.
       newsched = []
       for i in range(len(thissched)):
          if not(thissched[i].CRN=="55555"):
@@ -154,7 +159,7 @@ def graph_optimize(query_results):
       thissched = newsched
 
 
-
+      #Build a timetable object to hold timetable and associated data.
       thisTimeTable = Timetable(thissched, compute_schedule_score(thissched))
 
       if not(failure):
@@ -178,12 +183,17 @@ def graph_optimize(query_results):
    if globalFailure:
       print "FAILURE to find even one valid schedule"
 
-
    good_schedules = len(all_valid)
    if good_schedules >= config.number_of_schedules_to_show_user:
       schedules_to_return = all_valid[0:config.number_of_schedules_to_show_user]
    else:
       schedules_to_return = all_valid[0:good_schedules] + consolation[0:config.number_of_schedules_to_show_user - good_schedules]
+
+   for tt in schedules_to_return:
+      _ = missingCourses(tt,requiredSections)
+      print len(tt.Schedule)
+      for wn in tt.warnings:
+         print wn
 
    print "FOUND",len(schedules_to_return),"schedules to return"
 
