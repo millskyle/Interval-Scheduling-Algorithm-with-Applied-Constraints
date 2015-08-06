@@ -106,10 +106,10 @@ def getCalendar():
 	}
 
 	courses, ecourses = dbHandler.grabCourses(inputdict)
-	w1, w2 = build_graph.graph_optimize(courses+ecourses)
-	templ = open('public_html/cal.tmpl','r').read()
+	calendars = build_graph.graph_optimize(courses+ecourses)
+	templ = open('public_html/cal2.tmpl','r').read()
 	
-	return bottle.template(templ, w1=w1, w2=w2)
+	return bottle.template(templ, calendars=calendars)
 
 @bottle.route('/getAvailableCourses')
 def getAvailCourses():
