@@ -78,7 +78,7 @@ def selectedCourses():
 
 	if mingaps == "yes":
 		UserPrefs.preferMinGaps = True
-	elif no_gaps == "no":
+	elif mingaps == "no":
 		UserPrefs.preferMinGaps = False  
 
 @bottle.route('/')
