@@ -30,6 +30,7 @@ def TimeCut():
    counter = 0.
  #  blocks = []
    preferred_blocks = []
+   blocks = []
    for timeoff in range(1,11):
       pseudo = Section()
       if UserPrefs.PreferTimeOfDay == "Morning":
@@ -45,7 +46,7 @@ def TimeCut():
       pseudo.name = "PSEUDO_DAY_OFF"
       pseudo.cleanup()
       pseudo.CRN = "55555"
-      if timeoff in [i for i in UserPrefs.PreferredDaysOff]:
+      if timeoff in [i for i in UserPrefs.PreferredDaysOff] + [i+5 for i in UserPrefs.PreferredDaysOff]:
          pseudo.weight = 1000.0
       preferred_blocks.append(pseudo)
    return preferred_blocks
