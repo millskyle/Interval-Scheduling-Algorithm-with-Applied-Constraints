@@ -147,7 +147,6 @@ def getAvailableCourses():
 
 			if subjectquery.exists():
 				for subrow in subjectquery:
-					print subrow.subject
 					coursesdict[subrow.subject] = []
 
 					coursequery = Sectiondb.select().\

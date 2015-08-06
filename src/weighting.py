@@ -38,7 +38,8 @@ def compute_schedule_score(Schedule):
    #score += optimumTimeOfDay(Schedule)
    score += addWeights(Schedule)
 #   score += myScore(Schedule)
-   score +=dinoWeighting.course_density(Schedule)
+   if UserPrefs.preferMinGaps ==True:
+      score +=dinoWeighting.course_density(Schedule)
    return score
 
 

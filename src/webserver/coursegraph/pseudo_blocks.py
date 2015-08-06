@@ -11,7 +11,7 @@ def add_days_off_blocks():
       pseudo.semester = UserPrefs.semester
       pseudo.remainingSeats = 1000
       pseudo.cType = "Lec"
-      pseudo.course = "TimeOff"
+      pseudo.course = "TimeOff" + str(dayoff)
       pseudo.name = "PSEUDO_DAY_OFF"
       pseudo.cleanup()
       if dayoff in [ i for i in UserPrefs.PreferredDaysOff ] + [ i+5 for i in UserPrefs.PreferredDaysOff ]:
@@ -23,4 +23,32 @@ def add_days_off_blocks():
 
 
    return blocks #,preferred_blocks
+
+
+def TimeCut():
+   score = 0.
+   counter = 0.
+ #  blocks = []
+   preferred_blocks = []
+   blocks = []
+   for timeoff in range(1,11):
+      pseudo = Section()
+      if UserPrefs.PreferTimeOfDay == "Morning":
+         pseudo.add_timeslot("1710", "2359", timeoff)
+      if UserPrefs.PreferTimeOfDay == "Afternoon":
+         pseudo.add_timeslot("1200","1700", timeoff)
+      if UserPrefs.PreferTimeOfDay == "Evening":
+         pseudo.add_timeslot("0800","1159", timeoff)
+      pseudo.semester = UserPrefs.semester
+      pseudo.remainingSeats = 1000
+      pseudo.cType = "Lec"
+      pseudo.course = "TimeOff" + str(timeoff)
+      pseudo.name = "PSEUDO_DAY_OFF"
+      pseudo.cleanup()
+      pseudo.CRN = "55555"
+      if timeoff in [i for i in UserPrefs.PreferredDaysOff] + [i+5 for i in UserPrefs.PreferredDaysOff]:
+         pseudo.weight = 1000.0
+      preferred_blocks.append(pseudo)
+   return preferred_blocks
+
 

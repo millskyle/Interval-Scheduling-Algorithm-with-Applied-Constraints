@@ -15,6 +15,7 @@ float: left;
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"  rel="stylesheet" type="text/css">
 <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.print.css" rel="stylesheet" type="text/css"> -->
+<link href="../static/fullcalendar_custom.css" rel="stylesheet" type="text/css">
 
 <script>
 
@@ -30,7 +31,10 @@ height:800,
 textColor: "black",
 weekends: false,                          
 defaultView: 'agendaWeek',
-events : {{!w1}}
+events : {{!w1}},
+header: false,
+allDaySlot: false,
+columnFormat: 'ddd'
 
 
 })
@@ -53,7 +57,10 @@ height:800,
 textColor: "black",
 weekends: false,                          
 defaultView: 'agendaWeek',
-events : {{!w2}}
+events : {{!w2}},
+header: false,
+allDaySlot: false,
+columnFormat: 'ddd'
 
 })
 

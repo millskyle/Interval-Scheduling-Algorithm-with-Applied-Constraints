@@ -13,31 +13,35 @@
 
 		<form id="form" action="input_form" method="post" onsubmit="selectAllOptions('l3');selectAllOptions('l6');">
 
-		<h1 align="center">UOIT Course Schedule Organizer</h1>
+		<h1 align="center">UOIT Course Optimizer</h1>
 
-		<center><img src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center>
+		<center><img src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br>
 
-		The UOIT Course Schedule Organizer was created by students for students as a tool to find all of your class CRNs corresponding to your ideal class schedule. To create your ideal school schedule, input your semester, courses, and scedule preferences in the fields below, and click "Submit" to see the calendar and CRN list for your preferred school schedule. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">here</a>.
+		<p>
+		The UOIT Course Optimizer was created by students for students as a tool to find all of your class CRNs corresponding to your ideal class schedule. To create your ideal school schedule, input your semester, courses, and scedule preferences in the fields below, and click "Submit" to see the calendar and CRN list for your preferred school schedule. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">here</a>.
+		</p>
 
 		<h2>Semester</h2>
-
+			<p>
 			Which semester would you like to organize a schedule for?
 			<br><br>
 			<span style="color:red">*</span><select name="semester">
 				<option name="201509">Fall 2015</option>
 				<option name="201601">Winter 2016</option>
 			</select>
+			</p>
 		<h2>Courses</h2>
 			<h3>Mandatory Courses</h3>
 
+				<p>
 				Select the courses you have to take this semester per subject(max. 8):
 				<br><br>
-				<span style="float:left; color:red">*</span>	
+				<span style="float:left; color:red">* </span>	
 				<div>
 					<select name="mandatory_subjects" id="l1" multiple="multiple" style="font-size:20px"></select>
 				</div>
 				<br>
-				<span style="float:left; color:red">*</span>	
+				<span style="float:left; color:red">* </span>	
 				<div style="float:left">
 					<select name="mandatory_available_courses" id="l2" multiple="multiple" style="font-size:20px"></select>
 				</div>
@@ -45,9 +49,11 @@
 				<div style="float:left">
 					<select name="mandatory_selected_courses" id="l3" multiple="multiple" style="font-size:20px"></select>
 				</div>
+				</p>
 			<br><br><br><br><br>
 			<h3>Elective Courses</h3>
 
+				<p>
 				Select any elective courses you would like to take this semester (max. 8):
 				<br><br>
 				<div>
@@ -59,34 +65,33 @@
 				</div>
 				<input style="float:left" id="b3" type="button" value=">" /><input style="float:left" id="b4" type="button" value="<" />
 				<div style="float:left">
-					<select name="elective_selected_courses" id="l6" multiple="multiple" style="font-size:20px">
-					</select>
+					<select name="elective_selected_courses" id="l6" multiple="multiple" style="font-size:20px"></select>
 				</div>
+				</p>
 			<br><br><br><br><br>
 			<h2>Schedule Preferences</h3>
 				<p>
-
 					Would you like anything to be taken into account when organizing your course schedule?<br><br>
 
 					<strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
 
 					<strong>Class Times to Avoid (you may check more than one option)</strong>: <input type="checkbox" name="morning_class_pref">Morning(8:00 am - 12:00 pm)<input type="checkbox" name="afternoon_class_pref">Afternoon(12:00 pm - 5:00 pm)<input type="checkbox" name="evening_class_pref">Evening(5:00 pm - )<br><br>
 
-					<span style="color:red">*</span><strong>Would you like a day off?</strong>: <input type="radio" name="day_off" value="yes">Yes<input type="radio" name="day_off" value="no">No<br><br>
+					<span style="color:red">* </span><strong>Would you like a day off?</strong>: <input type="radio" name="day_off" value="yes">Yes<input type="radio" name="day_off" value="no">No<br><br>
 
 					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <input type="checkbox" name="monday_off">Monday<input type="checkbox" name="tuesday_off">Tuesday<input type="checkbox" name="wednesday_off">Wednesday<input type="checkbox" name="thursday_off">Thursday<input type="checkbox" name="friday_off">Friday<br><br>
 
-					<strong>Preferred CRN(s) (Optional) (these preferences will be ranked, with 1 being the most preferred)</strong>: 1. <input type="number" name="CRN1"> 2. <input type="number" name="CRN2"> 3. <input type="number" name="CRN3"> 4. <input type="number" name="CRN4"> 5. <input type="number" name="CRN5"><br><br>
+					<strong>Preferred CRN(s) (Optional) (these preferences will be ranked, with 1 being the most preferred)</strong>:<br><br> 1. <input type="number" name="CRN1"> 2. <input type="number" name="CRN2"> 3. <input type="number" name="CRN3"> 4. <input type="number" name="CRN4"> 5. <input type="number" name="CRN5"><br><br>
 
-					<span style="color:red">*</span><strong>Would you like to minimise gaps?</strong>: <input type="radio" name="mingaps" value="yes">Yes<input type="radio" name="mingaps" value="no">No<br><br>
+					<span style="color:red">* </span><strong>Would you like to minimise gaps?</strong>: <input type="radio" name="mingaps" value="yes">Yes<input type="radio" name="mingaps" value="no">No<br><br>
 
-					<span style="color:red">*</span> indicates required field<br><br>
+					<span style="color:red">* </span>indicates required field<br><br>
 				</p>
 			<input type="submit" value="Submit" />
 
 		</form>
 
-		<center><img src="http://faculty.uoit.ca/bradbury/csci1060u/images/header_UOITlogo.gif"/></center>
+		<center><img src="http://www.cs.yorku.ca/~huiwang/images/logo.jpg"/></center>
 
 	</body>
 </html>
