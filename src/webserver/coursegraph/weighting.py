@@ -19,6 +19,16 @@ def optimumTimeOfDay(Schedule):
          score += (int(ts.eTime) - int(ts.sTime)) * (2.0 * math.exp( -1.3e-5 * ( (float(ts.sTime)+float(ts.eTime))/2.0 - optimum_time)**2 ) - 1.0)
    return score/counter
 
+def campusPref(Schedule):
+   for CRN in Schedule:
+      if UserPrefs.preferredCampus == "None":
+         
+      if UserPrefs.preferredCampus == "North" and CRN.campus == "North":
+         CRN.weight += 900
+      if UserPrefs.preferredCampus == "Downtown" and CRN.campus == "Downtown":
+         CRN.weight += 900
+      if UserPrefs.preferredCampus == "Other" and CRN.campus == "Other":
+         CRN.weight += 900
 
 def myScore(Schedule):
    weight = 0.
@@ -32,10 +42,12 @@ def myScore(Schedule):
 
 def compute_schedule_score(Schedule):
    score = 0.0
-#   score += optimumTimeOfDay(Schedule)
-#   score+=amberWeighting.earlyRiser(Schedule)
-   score+=daysOff(Schedule)
-   score += myScore(Schedule)
+   #score += optimumTimeOfDay(Schedule)
+   score += addWeights(Schedule)
+#   score += myScore(Schedule)
+   score += campusPref(Schedule)
+   if UserPrefs.preferMinGaps == True:
+      score +=dinoWeighting.course_density(Schedule)
    return score
 
 
