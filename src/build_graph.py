@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import networkx as nx
+from networkx.algorithms.approximation import clique_removal
 from JSON_io import JSON_write
 from course import *
 import styles
@@ -38,9 +39,10 @@ def graph_optimize(query_results):
 
 #Construct the graph object
    G = nx.Graph()
-
+#   iG = ig.Graph()
 #add all potential courses as nodes to the graph
    for Sec in query_results:
+      print Sec.ID
       G.add_node(Sec, label=Sec.course[0:2],selected=1.0)
 
 
@@ -63,7 +65,7 @@ def graph_optimize(query_results):
 # }
 
 
-
+   all_edges = []
 #  Add edges between the nodes, representing conflicts (two courses for which a user
 #  cannot be simultaneously registered.
    for i,iSec in enumerate(G.nodes()):
@@ -94,8 +96,9 @@ def graph_optimize(query_results):
             #Add an edge between them
                G.add_edge(iSec,jSec)
 
-   all_valid = []
 
+   all_valid = []
+   consolation = []
    best_score = -1.0e9
 
    globalFailure = True
@@ -114,7 +117,8 @@ def graph_optimize(query_results):
          # This is NOT the MAXIMUM independent set. Thus we must loop a few times
          # to get the largest possible set.
          thissched = nx.maximal_independent_set(G)
-         #compute the weight-score of this
+
+
          # We need to count the number of pseudo-blocks in the generated schedule since we
          # must only break out of this loop once we have enough sections in our schedule.  
          # Pseudo blocks count, my default, and must be subtracted.
@@ -123,6 +127,7 @@ def graph_optimize(query_results):
             if CRN.CRN == "55555":
                numberofblanks+=1
          successfully_scheduled_sections = len(thissched) - numberofblanks
+
          print "   Attempt",tries
          if (successfully_scheduled_sections >= requiredNumberOfSections):
              failure=False
@@ -136,10 +141,18 @@ def graph_optimize(query_results):
          if thisScore > best_score:
             best_score = thisScore
             bestsched = thissched
+      else:
+         consolation.append(thissched)
+
 
 
    if globalFailure:
       print "FAILURE to find even one valid schedule"
+
+
+
+
+
 
 
 
