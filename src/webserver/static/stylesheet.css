@@ -1,3 +1,28 @@
+h1, h2, h3 {
+	color: #005596;
+}
+
 h1 {
-	background-color: red;
+	font-size: 64px;
+}
+
+h2 {
+	font-size: 36px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+p {
+	color: #0092CF;
+	font-size: 20px;
+}
+
+input, select {
+	font-size: 20px;
+}
+
+* {
+	font-family: Arial;
 }
