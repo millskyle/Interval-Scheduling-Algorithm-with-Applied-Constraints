@@ -170,19 +170,7 @@ def graph_optimize(query_results):
 
 #   for Sec in yoursched:
 #      G.node[Sec]['selected'] = 5.0
-
-   plt.figure(figsize=[24,20])
-   nx.draw_spring(G,
-         with_labels=True,
-         labels=nx.get_node_attributes(G,'label'),
-         node_color=colors,
-         node_size=500,
-#         linewidths=nx.get_node_attributes(G,'selected').values(),
-         )
-   plt.axis('off')
-   plt.savefig('graph.svg')
-
-   JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
+   return JSON_write(yoursched)
 
 
 
