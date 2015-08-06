@@ -4,14 +4,19 @@
 
 	<head>
 		<title>UOIT Course Schedule Organizer</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>		<script src="input.js"></script>
+		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="input.js"></script>
     </head>
 
 	<body>
 
-		<form action="input_form" method="post">
+		<form id="form" action="input_form" method="post" onsubmit="selectAllOptions('l3');selectAllOptions('l6');">
 
-		<h1>UOIT Course Schedule Organizer</h1>
+		<h1 align="center">UOIT Course Schedule Organizer</h1>
+
+		<center><img src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center>
+
 		<h2>Semester</h2>
 
 			Which semester would you like to organize a schedule for?
@@ -69,15 +74,17 @@
 
 					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <input type="checkbox" name="monday_off">Monday<input type="checkbox" name="tuesday_off">Tuesday<input type="checkbox" name="wednesday_off">Wednesday<input type="checkbox" name="thursday_off">Thursday<input type="checkbox" name="friday_off">Friday<br><br>
 
-					<strong>Preferred Instructional Method</strong>: <select><option name="no_instruct_method_pref">none</option><option name="in_class_delivery_pref">In-class Delivery Only</option><option name="online_delivery_pref">Online Delivery Only</option></select><br><br>
+					<strong>Preferred CRN(s) (Optional)</strong>: <input type="number" name="CRN1"><input type="number" name="CRN2"><input type="number" name="CRN3"><input type="number" name="CRN4"><input type="number" name="CRN5"><br><br>
 
-					<strong>Preferred CRN(s) (Optional)</strong>: <input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><input type="text" name="CRN"><br><br>
+					<span style="color:red">*</span><strong>Would you like to minimise gaps?</strong>: <input type="checkbox" name="yes_gaps">Yes<input type="checkbox" name="no_gaps">No<br><br>
 
 					<span style="color:red">*</span> indicates required field<br><br>
 				</p>
 			<input type="submit" value="Submit" />
 
 		</form>
+
+		<center><img src="http://faculty.uoit.ca/bradbury/csci1060u/images/header_UOITlogo.gif"/></center>
 
 	</body>
 </html>

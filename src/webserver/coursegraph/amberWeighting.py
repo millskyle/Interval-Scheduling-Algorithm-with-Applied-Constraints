@@ -1,4 +1,4 @@
-from course import *
+from scraper.course import *
 
 
 def earlyRiser(Schedule):

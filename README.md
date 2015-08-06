@@ -26,4 +26,15 @@
 ```sudo pip install bottle```
 
 
+###MySQL Statements to Prepare
+
+To use the webserver out of the box:
+
+```CREATE DATABASE MyCampusSections;```
+
+```CREATE USER 'hackweek'@'localhost' IDENTIFIED BY 'hackweekteam';```
+
+```GRANT ALL PRIVILEGES ON MyCampusSections.* TO 'hackweek'@'localhost';```
+
+```FLUSH PRIVILEGES```
 

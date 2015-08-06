@@ -14,11 +14,11 @@ function loadXMLDoc() {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
   			courses = JSON.parse(xmlhttp.responseText);
 
-  			$.each(courses[""], function(key, value) {   
+  			$.each(courses["Fall 2015"], function(key, value) {   
   			    $('#l1').append($("<option></option>").attr("value",key).text(key)); 
   			});
 
-  			$.each(courses[""], function(key, value) {   
+  			$.each(courses["Fall 2015"], function(key, value) {   
   			    $('#l4').append($("<option></option>").attr("value",key).text(key)); 
   			});
 
@@ -29,11 +29,13 @@ xmlhttp.open("GET","/getAvailableCourses",true);
 xmlhttp.send();
 }
 
+
 $(function () {
 	
 	$("#b1").click(function() {
 		$("#l2 option:selected").each(function(){
 			$(this).remove().appendTo("#l3");
+			$(this).attr("selected")
 		});
 	});
 
@@ -46,6 +48,7 @@ $(function () {
 	$("#b3").click(function() {
 		$("#l5 option:selected").each(function(){
 			$(this).remove().appendTo("#l6");
+			$(this).attr("selected")
 		});
 	});
 
@@ -61,9 +64,9 @@ $(function () {
 
 			$("#l2").empty();
 
-			$.each(courses[""][subject], function(index) {
+			$.each(courses["Fall 2015"][subject], function(index) {
 
-				$('#l2').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
+				$('#l2').append($("<option></option>").attr("value",courses["Fall 2015"][subject][index]).text(courses["Fall 2015"][subject][index])); 
 			})
 		});
 	});
@@ -74,13 +77,20 @@ $(function () {
 
 			$("#l5").empty();
 
-			$.each(courses[""][subject], function(index) {
+			$.each(courses["Fall 2015"][subject], function(index) {
 
-				$('#l5').append($("<option></option>").attr("value",courses[""][subject][index]).text(courses[""][subject][index])); 
+				$('#l5').append($("<option></option>").attr("value",courses["Fall 2015"][subject][index]).text(courses["Fall 2015"][subject][index])); 
 			})
 		});
 	});
-
 });
+
+function selectAllOptions(selStr)
+{
+	var selObj = document.getElementById(selStr);
+	for (var i=0; i<selObj.options.length; i++) {
+		selObj.options[i].selected = true;
+	}
+}
 
 loadXMLDoc();

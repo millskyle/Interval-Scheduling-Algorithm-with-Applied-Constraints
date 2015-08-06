@@ -1,4 +1,12 @@
 from weighting import *
+from collections import defaultdict
+
+global IiI
+IiI = 0
+def iIi():
+   global IiI
+   IiI +=1
+   return IiI
 
 class Graham_Course():
 
@@ -32,6 +40,7 @@ class Section():
       self.remainingSeats = 0 #34 
       self.timeslots = []     #List of corresponding Timeslot objects
       self.weight = 0
+      self.ID = iIi()
    class Timeslot():
       def __init__(self, sTime, eTime, day):
          self.key="{0}{1}{2}".format(sTime,eTime,day)
@@ -52,7 +61,7 @@ class Section():
       self.course = self.course.replace(" ","")
    def printToScreen(self):
       print "\n"
-      print self.name, self.CRN, self.cType
+      print self.name, self.CRN, self.cType, "@", self.campus
       for ts in self.timeslots:
          print ts.sTime,ts.eTime,ts.day
    def toDict(self):
@@ -79,6 +88,49 @@ class Section():
               "textColor" : "black",
             })
       return w1,w2
+
+
+
+
+def dict_construct(levels, final_type):
+    """Returns n level deep dictionary
+    Keyword arguments:
+    levels: the number of levels desired
+    final_type: data type of the last level
+
+    E.g.
+    some_dict=dict_construct(3, list)
+     will create a 3 level deep (i.e. 3 sets of keys) dictionary
+     with a list as the innermost value
+    """
+
+    return(defaultdict(final_type) if levels<2 else
+          defaultdict(lambda: dict_construct(levels-1,final_type)))
+
+
+
+
+class Timetable():
+   def __init__(self,Schedule):
+      a = dict_construct(8,int)
+      counter = 0
+      for CRN in Schedule:
+          for ts in CRN.timeslots:
+             counter+=1
+             a[CRN.CRN][CRN.course][CRN.campus][CRN.cType][CRN.remainingSeats][ts.sTime][ts.eTime][ts.day] = counter
+      self.dict_ = a
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

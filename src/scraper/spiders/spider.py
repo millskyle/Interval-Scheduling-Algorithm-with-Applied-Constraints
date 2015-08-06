@@ -35,7 +35,7 @@ allcourses = []
 
 def day2int(day):
    d = { 'M':1,'T':2,'W':3,'R':4,'F':5 }
-   return d.get(day,100)
+   return d.get(day,-1)
 
 
 def printer(string):
@@ -65,7 +65,7 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         if (subject in ["PHY","CHEM","CSCI","BIOL","MATH"] ) :
+         if (subject in ["PHY","CHEM","CSCI","BIOL","HLSC","MATH"] ) :
 #         if (1==1):
             yield req
 
@@ -94,6 +94,18 @@ class available_courses_spider(CrawlSpider):
             Sec.semester = semester
             header = ch.xpath('..//th[@class="ddheader"]/text()').extract()[i]
             thisCRN = ch.xpath('.//following-sibling::*[1]')
+            text = thisCRN.xpath('.//span[@class="fieldlabeltext"]/..').extract()[0]
+            if "North Oshawa" in text:
+               Sec.campus = "North"
+#               print "North Campus"
+            elif "Downtown Oshawa" in text:
+               Sec.campus = "Downtown"
+#               print "Downtown campus"
+            else:
+               Sec.campus = "Other"
+#               print "OTHER CAMPUS"
+#            if "Online Delivery" in text:
+#               print "ONLINE"
             Sec.remainingSeats = int(thisCRN.xpath('.//tr/td[span="Seats"]/following-sibling::td[3]/text()').extract()[0])
             meetingtimes = thisCRN.xpath('.//table[caption="Scheduled Meeting Times"]/tr[td[@class="dbdefault"]] ')
             Sec.name,Sec.CRN,Sec.course,section_number = header.split(" - ")
@@ -102,8 +114,15 @@ class available_courses_spider(CrawlSpider):
                fields = mt.xpath('.//td[@class="dbdefault"]/text()').extract()
                #The "week" field includes a non-breaking space (&nbsp;) so it must be dealt with
                week = unicodedata.normalize('NFKD', fields[0]).encode('ascii','ignore')
-               day = day2int(fields[3])
-               startTime,endTime = [time2int(i) for i in fields[2].split(" - ")]
+               if str(fields[3]) in ['M','T','W','R','F']:
+                  day = day2int(fields[3])
+                  startTime,endTime = [time2int(i) for i in fields[2].split(" - ")]
+                  cType = string2courseType(fields[6])
+               else:
+                  day = -1
+                  startTime,endTime = ["0001", "0002"]
+                  cType = string2courseType(fields[4])
+
                if (week==' W1'):
                   days = [day]
                elif (week==' W2'):
@@ -111,12 +130,12 @@ class available_courses_spider(CrawlSpider):
                else:
                   days = [day,day+5]
 
-
                for d in days:
                   Sec.add_timeslot(startTime,endTime,d)
 
             Sec.cleanup()
-            Sec.cType = string2courseType(fields[6])
+#            print fields
+            Sec.cType = cType
 
             allcourses.append(Sec)
 
@@ -138,7 +157,6 @@ class available_courses_spider(CrawlSpider):
 
 
 
- #           print "----------------------------------------------------------------"
          except ValueError:
             print "Error parsing course schedule information for {0}".format(header)
 
@@ -146,12 +164,9 @@ class available_courses_spider(CrawlSpider):
       print len(allcourses)
 
       courses_to_optimize = ['BIOL1010U','CHEM1010U','CSCI1040U','PHY1010U','MATH1010U']
-#     courses_to_optimize = [
-      #subset = filter_section_list(ListOfAllSections,ListOfAllCoursesDesired,MinimumNumberOfAvailableSeats)
       subset = filter_section_list(allcourses,courses_to_optimize,-1)
       graph_optimize(subset)
 
-#   foo()
 
 
 

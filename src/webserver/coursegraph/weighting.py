@@ -1,4 +1,4 @@
-from course import *
+from scraper.course import *
 import amberWeighting
 import math
 

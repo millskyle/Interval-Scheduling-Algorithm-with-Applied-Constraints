@@ -182,9 +182,6 @@ def graph_optimize(query_results):
    plt.axis('off')
    plt.savefig('graph.svg')
 
-
-
-   #JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
    JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
 
 
