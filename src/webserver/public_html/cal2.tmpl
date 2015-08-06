@@ -4,19 +4,27 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js" ></script>
 	<style>
 	.calArea{
-		position: absolute;
+		position: fixed;
 		margin: auto;
 	}
 
 	.calContainer{
-		display: inline-block
+		display: inline-block;
+		float: left;
 	}
 
 	.mycalendar {
-		width:500px;
+		width:750px;
 		display: inline-block;
     	*display: inline;
-	}
+
+    }
+
+    .calCanvas {
+    	position: absolute;
+    	top: 10%;
+    }
+
 	</style>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"  rel="stylesheet" type="text/css">
@@ -53,7 +61,7 @@
 	</script>
 </HEAD>
 <body>
-	<div id='calCanvas'>
+	<div id='calCanvas' class='calCanvas'>
 		%for i in range(len(calendars)):
 			<div id="cal{{i}}" class='calContainer'>
 				<div class='calArea'>
