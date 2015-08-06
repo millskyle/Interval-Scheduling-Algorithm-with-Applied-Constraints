@@ -66,11 +66,11 @@ def selectedCourses():
 	UserPrefs.optimumTimeOfDay = "1200"
 
 	if campus_pref == "none":
-		UserPrefs.preferredCampus = 0
+		UserPrefs.preferredCampus = "None"
 	elif campus_pref == "North Campus":
-		UserPrefs.preferredCampus = 1
+		UserPrefs.preferredCampus = "North"
 	else:
-		UserPrefs.preferredCampus = 2
+		UserPrefs.preferredCampus = "Downtown"
 
 	UserPrefs.preferredCRNs += [CRN1,CRN2,CRN3,CRN4,CRN5]
 
@@ -86,6 +86,10 @@ def index():
 @bottle.route('/stylesheet.css')
 def style():
 	return bottle.static_file('stylesheet.css', root='static/')
+
+@bottle.route('/template.css')
+def style():
+	return bottle.static_file('template.css', root='static/')
 
 @bottle.route('/input.js')
 def input():

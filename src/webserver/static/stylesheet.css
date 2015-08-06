@@ -1,3 +1,12 @@
+
+* {
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+body {
+	margin: 5%;
+}
+
 h1, h2, h3 {
 	color: #005596;
 }
@@ -19,10 +28,10 @@ p {
 	font-size: 20px;
 }
 
-input, select {
-	font-size: 20px;
+span {
+	color: red;
 }
 
-* {
-	font-family: Arial;
+input, select {
+	font-size: 20px;
 }
