@@ -30,7 +30,7 @@ def course_density(Schedule):
 def preferred_crn(Schedule):
     for CRN in Schedule:
         if CRN.CRN in UserPrefs.preferredCRNs:
-            CRN.weight=1.e6
+            CRN.weight+=1.e6
 
 
 
