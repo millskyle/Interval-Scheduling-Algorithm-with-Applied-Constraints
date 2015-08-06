@@ -74,7 +74,7 @@ def selectedCourses():
 	else:
 		UserPrefs.preferredCampus = 2
 
-	UserPrefs.preferredCRNs.append(CRN1,CRN2,CRN3,CRN4,CRN5)
+	UserPrefs.preferredCRNs += [CRN1,CRN2,CRN3,CRN4,CRN5]
 
 	if yes_gaps == "on":
 		UserPrefs.PreferGaps = True
