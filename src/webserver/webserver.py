@@ -6,7 +6,7 @@ from coursegraph import build_graph
 from bottle import request
 from coursegraph.userpreferences import UserPrefs
 
-setup = False
+setup = True
 dbHandler.init(setup)
 scraperWorker = spiderworker.SpiderWorker()
 if setup:
@@ -78,6 +78,10 @@ def selectedCourses():
 		UserPrefs.preferMinGaps = True
 	elif mingaps == "no":
 		UserPrefs.preferMinGaps = False  
+
+@bottle.route('/uoit.svg')
+def uoitsvg():
+    return bottle.static_file('uoit.svg', root='static/')
 
 @bottle.route('/')
 def index():
