@@ -10,6 +10,7 @@ import pseudo_blocks
 from random import randint
 from userpreferences import UserPrefs
 from config import config
+import dinoWeighting
 
 def graph_optimize(query_results):
 ##NOTE:  At this point, it is assumed that the variable query_results is 
@@ -24,6 +25,7 @@ def graph_optimize(query_results):
 #  (e.g.  1 tutorial, 1 lab and 1 lecture each for 3 courses would 
 #  result in requiredNumberOfSections = 9)
    requiredSections = types_within_subset(query_results)
+   print requiredSections
    requiredNumberOfSections = len(requiredSections)
    print requiredNumberOfSections,":",requiredSections
 
@@ -44,6 +46,11 @@ def graph_optimize(query_results):
    for Sec in query_results:
       print Sec.ID
       G.add_node(Sec, label=Sec.course[0:2],selected=1.0)
+
+
+   if len(UserPrefs.preferredCRNs) > 0:
+      dinoWeighting.preferred_crn(G.nodes())
+
 
 
    # If the user wants days off, create pseudo-events that span every day.  Weight them so that if possible, they will be selected.

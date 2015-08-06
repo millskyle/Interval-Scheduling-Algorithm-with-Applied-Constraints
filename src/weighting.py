@@ -1,10 +1,11 @@
 from course import *
 from userpreferences import UserPrefs
 import amberWeighting
+import dinoWeighting
 import math
 from userpreferences import UserPrefs
 
-def daysOff(Schedule):
+def addWeights(Schedule):
    weight = 0.0
    for CRN in Schedule:
       weight += CRN.weight
@@ -35,8 +36,9 @@ def myScore(Schedule):
 def compute_schedule_score(Schedule):
    score = 0.0
    #score += optimumTimeOfDay(Schedule)
-   score+=daysOff(Schedule)
-   score += myScore(Schedule)
+   score += addWeights(Schedule)
+#   score += myScore(Schedule)
+   score +=dinoWeighting.course_density(Schedule)
    return score
 
 
