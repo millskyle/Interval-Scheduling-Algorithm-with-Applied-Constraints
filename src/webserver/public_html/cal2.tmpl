@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js" ></script>
+	<style>
+	.mycalendar {
+	width:500px;
+	float: left;
+	}
+	</style>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"  rel="stylesheet" type="text/css">
+	<script>
+		$(document).ready(function() {
+			%for i in range(len(calendars)):
+			    $('#calendar{{i}}').fullCalendar({
+			                      // put your options and callbacks here
+					minTime: '08:00',
+					maxTime: '21:30',
+					height:500,
+					textColor: "black",
+					weekends: false,                          
+					defaultView: 'agendaWeek',
+					events : {{!calendars[i][0]}},
+					header : false
+				})
+				$('#calendarw2{{i}}').fullCalendar({
+					minTime: '08:00',
+					maxTime: '21:30',
+					height:500,
+					textColor: "black",
+					weekends: false,                          
+					defaultView: 'agendaWeek',
+					events : {{!calendars[i][1]}},
+					header : false
+				})
+			%end
+		});
+	</script>
+</HEAD>
+<body>
+	%for i in range(len(calendars)):
+		<div id="cal{{i}}">
+			<div class='calArea'>
+				<div class='mycalendar' >
+					<div id='calendar{{i}}'></div>
+				</div>
+
+				<div class='mycalendar' >
+					<div id='calendarw2{{i}}'></div>
+				</div>
+			</div>
+
+			<div class='calnotes'>
+				{{!calendars[i][2]}}
+			</div>
+		</div>
+	%end
+	
+	<div id ="buttonArea">
+		%for i in range(len(calendars)):
+			<button id="button{{i}}">
+				Calendar {{i}}
+			</button>
+		%end		
+	</div>
+	
+</body>
+</HTML>
+
