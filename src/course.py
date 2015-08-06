@@ -112,12 +112,10 @@ def dict_construct(levels, final_type):
 
 class Timetable():
    def __init__(self,Schedule):
-      a = dict_construct(8,int)
-      counter = 0
+      a = {1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[],9:[],10:[]} #dict_construct(1,list)
       for CRN in Schedule:
           for ts in CRN.timeslots:
-             counter+=1
-             a[CRN.CRN][CRN.course][CRN.campus][CRN.cType][CRN.remainingSeats][ts.sTime][ts.eTime][ts.day] = counter
+             a[ts.day].append( [ts.sTime,ts.eTime] )
       self.dict_ = a
 
 
