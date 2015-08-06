@@ -7,7 +7,7 @@ class MakeConfig():
 #    Of these, the valid ones will be scored.
 #    Larger values will mean more chance of randomly coming across a better
 #    schedule, but computational time will scale directly with this number.
-     self.generate_this_many_schedules = 2000
+     self.generate_this_many_schedules = 300
 
 #    For each of the above schedules, we will make this many attempts
 #    at finding a maximal-independent-set of the correct length.

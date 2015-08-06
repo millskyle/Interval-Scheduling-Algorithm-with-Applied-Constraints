@@ -26,7 +26,6 @@ def graph_optimize(query_results):
 #  result in requiredNumberOfSections = 9)
    requiredSections = types_within_subset(query_results)
    requiredNumberOfSections = len(requiredSections)
-   print requiredSections,":",requiredNumberOfSections
 
    query_results = [i for i in query_results if i.remainingSeats > 0 ]
 
@@ -42,7 +41,7 @@ def graph_optimize(query_results):
 
 ##start code
 
-#   query_results = generate_dense_data()
+#   query_results = generate_dense_data() #uncomment this and the next line to use fake course data
 #   requiredNumberOfSections = 9
 
 #Construct the graph object
@@ -58,13 +57,14 @@ def graph_optimize(query_results):
 
 
 
-   # If the user wants days off, create pseudo-events that span every day.  Weight them so that if possible, they will be selected.
+   # If the user wants days off, create pseudo-events that span every day.  
+   # Weight them so that if possible, they will be selected.
    if UserPrefs.MaximizeDaysOff:
       for pseudoBlock in pseudo_blocks.add_days_off_blocks():
          G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
 
-   #If the user prefers to have mornings (or afternoons or evenings) FREE, then
-   #create the corresponding pseudo-blocks to conflict with all courses at those times.
+   # If the user prefers to have mornings (or afternoons or evenings) FREE, then
+   # create the corresponding pseudo-blocks to conflict with all courses at those times.
    if not(UserPrefs.PreferTimeOfDay == ""):
       for pseudoBlock in pseudo_blocks.TimeCut():
          G.add_node(pseudoBlock, label="XX", selected = 3.0, score = 1.0 )
@@ -120,6 +120,7 @@ def graph_optimize(query_results):
    # is found (and verified to contain the correct number of courses), it is scored and
    # added to a list of all valid courses.
    for potentialSchedule in xrange(calculate_how_many):
+      print "Attempting to build schedule",potentialSchedule
       successfully_scheduled_sections = 0
       tries = 0
       bestTry = []
@@ -190,10 +191,24 @@ def graph_optimize(query_results):
       schedules_to_return = all_valid[0:good_schedules] + consolation[0:config.number_of_schedules_to_show_user - good_schedules]
 
    for tt in schedules_to_return:
-      _ = missingCourses(tt,requiredSections)
+      missingCourses(tt,requiredSections)
+      stringg = "List of CRNs displayed on this time table:"
+      last_course = ""
+      for CRN in sorted(tt.Schedule, key=lambda x: x.course):
+         if not(CRN.course == last_course):
+            stringg = stringg + "\n<br>"+CRN.course + ": "
+            last_course = CRN.course
+         else:
+            stringg = stringg + ", "
+         stringg = stringg + CRN.CRN #+ ", "
+      tt.notes.append(stringg)
+
+
       print len(tt.Schedule)
       for wn in tt.warnings:
          print wn
+      for nn in tt.notes:
+         print nn
 
    print "FOUND",len(schedules_to_return),"schedules to return"
 
@@ -204,37 +219,4 @@ def graph_optimize(query_results):
 
 
    return returnData
-
-#   yoursched = schedules_to_return[0]
-#   print "BEST SCORE:",yoursched.score
-#   temp = missingCourses(yoursched, requiredSections)
-#   yoursched = yoursched.Schedule
-
-
-   JSON_dump(yoursched)
-
-#print nx.get_node_attributes(G, 'score')
-#   chosen = get_list_of_CRNS(yoursched)
-#   for node in sorted(G.nodes()):
-#      if node.CRN in chosen:
-#         G.node[node]['label'] = "**" + G.node[node]['label']+"**"
-
-
-#   plt.figure(figsize=[24,20])
-#   nx.draw_spring(G,
-#         with_labels=True,
-#         labels=nx.get_node_attributes(G,'label'),
-#         node_color=colors,
-#         node_size=500,
-##         linewidths=nx.get_node_attributes(G,'selected').values(),
-#         )
-#   plt.axis('off')
-#   plt.savefig('graph.svg')
-
-
-
-   #JSON_write(yoursched, 'public_html/w1.json','public_html/w2.json')
-
-
-
 
