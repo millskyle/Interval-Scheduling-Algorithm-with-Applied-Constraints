@@ -5,7 +5,7 @@ from scraper import spiderworker
 from coursegraph import build_graph
 from bottle import request
 
-setup = False
+setup = True
 dbHandler.init(setup)
 scraperWorker = spiderworker.SpiderWorker()
 if setup:

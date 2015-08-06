@@ -1,4 +1,4 @@
-from course import *
+from scraper.course import *
 from userpreferences import UserPrefs
 
 def add_days_off_blocks():
