@@ -68,7 +68,7 @@ def compute_schedule_score(Schedule):
 #   score += myScore(Schedule)
 
    if not(UserPrefs.preferredCampus=="None"):
-      score += campusPref(Schedule)
+      campusPref(Schedule)
 
    if UserPrefs.preferMinGaps == True:
       score +=course_density(Schedule)
