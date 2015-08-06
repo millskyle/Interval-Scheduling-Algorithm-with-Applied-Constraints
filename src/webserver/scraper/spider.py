@@ -59,14 +59,14 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         if (subject in ["PHY","CHEM","CSCI","BIOL","HLSC","MATH"] ) :
+         #if (subject in ["PHY","CHEM","CSCI","BIOL","HLSC","MATH"] ) :
 #         if (1==1):
-            yield req
+         yield req
 
    def parseSemesterChoicePage(self, response):
       if "Search by Term" in response.body:
          semesters = Selector(response).xpath('//td[@class="dedefault"]/select[@name="p_term"]/option/@value').extract()
-         for semester in ["201509"] : #semesters:
+         for semester in semesters:
             req = scrapy.Request('https://ssbp.mycampus.ca/prod/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjectChoicePage)
             req.meta['semester'] = semester
             yield req

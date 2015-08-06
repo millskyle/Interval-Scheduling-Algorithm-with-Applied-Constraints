@@ -52,7 +52,15 @@
 			</div>
 
 			<div class='calnotes'>
-				{{!calendars[i][2]}}
+				%for note in calendars[i][2]:
+					{{note}} <br />
+				%end
+			</div>
+
+			<div class='calwarnings'>
+				%for warning in calendars[i][3]:
+					{{warning}} <br />
+				%end
 			</div>
 		</div>
 	%end
