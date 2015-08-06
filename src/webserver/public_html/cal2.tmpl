@@ -3,9 +3,19 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js" ></script>
 	<style>
+	.calArea{
+		position: absolute;
+		margin: auto;
+	}
+
+	.calContainer{
+		display: inline-block
+	}
+
 	.mycalendar {
-	width:500px;
-	float: left;
+		width:500px;
+		display: inline-block;
+    	*display: inline;
 	}
 	</style>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
@@ -22,7 +32,9 @@
 					weekends: false,                          
 					defaultView: 'agendaWeek',
 					events : {{!calendars[i][0]}},
-					header : false
+					header : false,
+					allDaySlot: false,
+					columnFormat: 'ddd'
 				})
 				$('#calendarw2{{i}}').fullCalendar({
 					minTime: '08:00',
@@ -32,39 +44,42 @@
 					weekends: false,                          
 					defaultView: 'agendaWeek',
 					events : {{!calendars[i][1]}},
-					header : false
+					header : false,
+					allDaySlot: false,
+					columnFormat: 'ddd'
 				})
 			%end
 		});
 	</script>
 </HEAD>
 <body>
-	%for i in range(len(calendars)):
-		<div id="cal{{i}}">
-			<div class='calArea'>
-				<div class='mycalendar' >
-					<div id='calendar{{i}}'></div>
+	<div id='calCanvas'>
+		%for i in range(len(calendars)):
+			<div id="cal{{i}}" class='calContainer'>
+				<div class='calArea'>
+					<div class='mycalendar' >
+						<div id='calendar{{i}}'></div>
+					</div>
+
+					<div class='mycalendar' >
+						<div id='calendarw2{{i}}'></div>
+					</div>
 				</div>
 
-				<div class='mycalendar' >
-					<div id='calendarw2{{i}}'></div>
+				<div class='calnotes'>
+					%for note in calendars[i][2]:
+						{{note}} <br />
+					%end
+				</div>
+
+				<div class='calwarnings'>
+					%for warning in calendars[i][3]:
+						{{warning}} <br />
+					%end
 				</div>
 			</div>
-
-			<div class='calnotes'>
-				%for note in calendars[i][2]:
-					{{note}} <br />
-				%end
-			</div>
-
-			<div class='calwarnings'>
-				%for warning in calendars[i][3]:
-					{{warning}} <br />
-				%end
-			</div>
-		</div>
-	%end
-	
+		%end	
+	</div>
 	<div id ="buttonArea">
 		%for i in range(len(calendars)):
 			<button id="button{{i}}">
@@ -72,7 +87,32 @@
 			</button>
 		%end		
 	</div>
-	
+
+
+<script>
+function hideAllCalendars(){
+	for (var i = 0; i < {{len(calendars)}}; ++i){
+		var id = '#calendar' + i;
+		var id2 = '#calendarw2' + i;
+		$(id).hide();
+		$(id2).hide();
+	}
+}
+
+$(document).ready(function() {
+	hideAllCalendars();
+	$('#calendar0').show();
+	$('#calendarw20').show();
+
+	%for i in range(len(calendars)):
+		$('#button{{i}}').click(function(){
+			hideAllCalendars()
+			$('#calendar{{i}}').show();
+			$('#calendarw2{{i}}').show();
+		});
+	%end
+});
+</script>
 </body>
 </HTML>
 

@@ -87,6 +87,10 @@ def index():
 def style():
 	return bottle.static_file('stylesheet.css', root='static/')
 
+@bottle.route('/template.css')
+def style():
+	return bottle.static_file('stylesheet.css', root='static/')
+
 @bottle.route('/input.js')
 def input():
     return bottle.static_file('input.js', root='static/')
