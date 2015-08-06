@@ -14,5 +14,5 @@ class UserPreferences():
       self.preferredCampus = 0
       #0 for none, 1 for north, 2 for dt
       self.preferredCRNs = []
-      self.PreferGaps = True
+      self.preferMinGaps = True
 UserPrefs = UserPreferences()
