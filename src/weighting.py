@@ -1,7 +1,5 @@
 from course import *
 from userpreferences import UserPrefs
-import amberWeighting
-import dinoWeighting
 import math
 from userpreferences import UserPrefs
 
@@ -46,7 +44,7 @@ def preferred_crn(Schedule):
 def course_density(Schedule):
    """DINO"""
    weight = 0.
-   counter = 0.
+   counter = 1.
    for iCRN in Schedule:
       if not(iCRN.CRN=="55555"):
          for jCRN in Schedule:
