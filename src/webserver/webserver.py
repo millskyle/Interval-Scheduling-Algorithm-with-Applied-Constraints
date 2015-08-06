@@ -115,9 +115,10 @@ def getCalendar():
 	
 	return bottle.template(templ, calendars=calendars)
 
-@bottle.route('/getAvailableCourses')
-def getAvailCourses():
-	return json.dumps(dbHandler.getAvailableCourses())
+@bottle.route('/getAvailableCourses/<sem>')
+def getAvailCourses(sem):
+	print request.body.read()
+	return json.dumps(dbHandler.getAvailableCourses(sem))
 
 bottle.run(host='', port=8080)
 if setup:
