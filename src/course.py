@@ -1,5 +1,12 @@
 from weighting import *
 
+global IiI
+IiI = 0
+def iIi():
+   global IiI
+   IiI +=1
+   return IiI
+
 class Graham_Course():
 
     #Initialize variables
@@ -32,6 +39,7 @@ class Section():
       self.remainingSeats = 0 #34 
       self.timeslots = []     #List of corresponding Timeslot objects
       self.weight = 0
+      self.ID = iIi()
    class Timeslot():
       def __init__(self, sTime, eTime, day):
          self.key="{0}{1}{2}".format(sTime,eTime,day)
@@ -79,6 +87,47 @@ class Section():
               "textColor" : "black",
             })
       return w1,w2
+
+
+
+class Timetable():
+   def __init__(self,Schedule):
+      a = {"ID":[],
+           "CRN": [],
+           "course":[],
+           "campus":[],
+           "cType":[],
+           "remainingSeats":[],
+           "sTime":[],
+           "eTime":[],
+           "day":[],
+      }
+      for CRN in query_results:
+          for ts in CRN.timeslots:
+              a["CRN"].append(CRN.CRN)
+              a["course"].append(CRN.course)
+              a["campus"].append(CRN.campus)
+              a["cType"].append(CRN.cType)
+              a["remainingSeats"].append(CRN.remainingSeats)
+              a["sTime"].append(ts.sTime)
+              a["eTime"].append(ts.eTime)
+              a["day"].append(ts.day)
+      self.asDict = a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
