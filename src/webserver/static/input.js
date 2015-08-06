@@ -63,7 +63,7 @@ $(function () {
 
 			$.each(courses[sem][subject], function(index) {
 
-				$('#l2').append($("<option></option>").attr("value",courses["Fall 2015"][subject][index]).text(courses["Fall 2015"][subject][index])); 
+				$('#l2').append($("<option></option>").attr("value",courses[sem][subject][index]).text(courses[sem][subject][index])); 
 			})
 		});
 	});
@@ -78,7 +78,7 @@ $(function () {
 
 			$.each(courses[sem][subject], function(index) {
 
-				$('#l5').append($("<option></option>").attr("value",courses["Fall 2015"][subject][index]).text(courses["Fall 2015"][subject][index])); 
+				$('#l5').append($("<option></option>").attr("value",courses[sem][subject][index]).text(courses[sem][subject][index])); 
 			})
 		});
 	});
