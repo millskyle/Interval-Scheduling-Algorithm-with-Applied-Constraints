@@ -25,9 +25,10 @@ def graph_optimize(query_results):
 #  (e.g.  1 tutorial, 1 lab and 1 lecture each for 3 courses would 
 #  result in requiredNumberOfSections = 9)
    requiredSections = types_within_subset(query_results)
-   print requiredSections
    requiredNumberOfSections = len(requiredSections)
-   print requiredNumberOfSections,":",requiredSections
+   print requiredSections,":",requiredNumberOfSections
+
+   query_results = [i for i in query_results if i.remainingSeats > 0 ] 
 
 
 #  SOME CONFIGURATION:
@@ -44,7 +45,6 @@ def graph_optimize(query_results):
 #   iG = ig.Graph()
 #add all potential courses as nodes to the graph
    for Sec in query_results:
-      print Sec.ID
       G.add_node(Sec, label=Sec.course[0:2],selected=1.0)
 
 
@@ -111,20 +111,20 @@ def graph_optimize(query_results):
    globalFailure = True
 
 
-
    # Here we begin generating many different schedules.  After each schedule
    # is found (and verified to contain the correct number of courses), it is scored and
    # added to a list of all valid courses.
    for potentialSchedule in xrange(calculate_how_many):
       successfully_scheduled_sections = 0
       tries = 0
+      bestTry = []
+      bestTryCount = 0
       failure = True
       for tries in xrange(max_attempts):
          # compute the maximal independent set.  
          # This is NOT the MAXIMUM independent set. Thus we must loop a few times
          # to get the largest possible set.
          thissched = nx.maximal_independent_set(G)
-
 
          # We need to count the number of pseudo-blocks in the generated schedule since we
          # must only break out of this loop once we have enough sections in our schedule.  
@@ -135,28 +135,72 @@ def graph_optimize(query_results):
                numberofblanks+=1
          successfully_scheduled_sections = len(thissched) - numberofblanks
 
-         print "   Attempt",tries
+ #        print "   Attempt",tries
          if (successfully_scheduled_sections >= requiredNumberOfSections):
-             failure=False
-             break
+            failure=False
+            break
+         else:
+            if successfully_scheduled_sections > bestTryCount:
+               bestTryCount = successfully_scheduled_sections
+               bestTry = thissched
+            thissched = bestTry
+
+
+
+
+      thisTimeTable = Timetable(thissched, compute_schedule_score(thissched))
 
       if not(failure):
+         thisTimeTable.isValid = "VALID"
          globalFailure = False
-         thisScore = compute_schedule_score(thissched)
-         all_valid.append(thissched)
-         print "Timetable option",potentialSchedule,"\t\t Score:",thisScore
-         if thisScore > best_score:
-            best_score = thisScore
-            bestsched = thissched
+         all_valid.append(thisTimeTable)
+         #print "Timetable option",potentialSchedule,"\t\t Score:",thisScore
+         #if thisScore > best_score:
+         #   best_score = thisScore
+         #   bestsched = thissched
       else:
-         consolation.append(thissched)
+         consolation.append(thisTimeTable)
+         thisTimeTable.isValid = "INVALID"
+
+
+   all_valid = sorted(all_valid, key = lambda x: x.score, reverse=True)
+   consolation = sorted(consolation, key = lambda x: len(x.Schedule), reverse=True)
+
+
+
+#   for i in all_valid + consolation:
+#      print "FOUND", i.isValid , "SCHEDULE WITH SCORE \t",i.score
+
+   
+   
+
+
+
 
 
 
    if globalFailure:
       print "FAILURE to find even one valid schedule"
 
+      cccccc="""
+      #psueod code:
+      for each invalid schedule:
+         calculate the score
+      sort the list of invalid schedules by score
 
+      for each invalid schedule in the top five:
+         find_missing_courses(Schedule)
+
+"""
+
+
+   good_schedules = len(all_valid)
+   if good_schedules >= config.number_of_schedules_to_show_user:
+      schedules_to_return = all_valid[0:config.number_of_schedules_to_show_user]
+   else:
+      schedules_to_return = all_valid[0:good_schedules] + consolation[0:config.number_of_schedules_to_show_user - good_schedules]
+
+   print "FOUND",len(schedules_to_return),"schedules to return"
 
 
 
@@ -164,7 +208,10 @@ def graph_optimize(query_results):
 
 
    print "OUTCOME: the best timetable has score",best_score
-   yoursched = bestsched
+   yoursched = schedules_to_return[0]
+
+   temp = missingCourses(yoursched, requiredSections)
+   yoursched = yoursched.Schedule
 
 #   print nx.get_node_attributes(G, 'score')
    chosen = get_list_of_CRNS(yoursched)

@@ -15,7 +15,7 @@ class MakeConfig():
 #    timetables require many more iterations to find the best.
      self.maximum_attempts_per_schedule = 10
 
-
+     self.number_of_schedules_to_show_user = 5
 
 
 

@@ -30,24 +30,17 @@ def get_weights_of_list(allcourses):
       total += C.score()
    return total
 
-def missingCourses(consolation, RS):
- #  x = []
+def missingCourses(TimeTable, RS):
    y = []
-   missingCourses = []
-#   out = open('testsched', 'w+')
-   #out.write("Required: " + "\n")
-   #for Lec in requiredSections:
-   #   out.write(str(Lec) + "\n")
-  #    x.append(str(Lec))
- #  out.write("\n" + "Returned: " + "\n")
-   i = consolation[0]
-   for CRN in i:
-      #out.write(str(CRN.course)+ "_" + str(CRN.cType) + "\n")
+   missing = []
+   for CRN in TimeTable.Schedule:
       y.append(str(CRN.course) + "_" + str(CRN.cType))
-   missingCourses = set(RS) - set(y)
-   print missingCourses
-  # out.write(str(missingCourses))
-  
-   #out.close()
+   missing = set(RS) - set(y)
+   for h in missing:
+      TimeTable.warnings.append("WARNING: We could not include " + str(h) + " in the the timetable.")
+
+
+
+
 
 
