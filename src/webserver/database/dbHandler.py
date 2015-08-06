@@ -65,20 +65,7 @@ def grabCourses(courses):
 	
 	courselist = courses["MCOURSES"]
 	ecourselist = courses["ECOURSES"]
-	tsem = courses["SEMESTER"]
-	sem = ""
-	opts = tsem.split(" ")
-	if opts[0] == 'Fall':
-		sem = str(opts[1]) + '09'
-	elif opts[0] == 'Winter':
-		sem = str(opts[1]) + '01'
-	elif opts[0] == 'Spring/Summer':
-		sem = str(opts[1]) + '05'
-	else:
-		print "if this happens someone goofed"
-		print "in dbHandler grabCourses"
-		return
-
+	sem = getSemesterCode(courses["SEMESTER"])
 	sectionlist = []
 	for course in courselist:
 		createSectionsfromCourse(course, sem, sectionlist)
@@ -116,46 +103,46 @@ def createSectionsfromCourse(course, sem, sectionlist):
 			sectionlist.append(sec)
 
 
-def getAvailableCourses():
+def getAvailableCourses(semester):
 	retdict = {}
+	sem = getSemesterCode(semester)
+	coursesdict = {}
+	semstring=semester
 
-	semesterquery = Sectiondb.\
-					select(Sectiondb.semester).\
-					group_by(Sectiondb.semester)
-	if semesterquery.exists():
-		for semesterrow in semesterquery:
-			coursesdict = {}
-			semstring=""
+	#constructs the query for each subject
+	subjectquery = Sectiondb.\
+					select(Sectiondb.subject).\
+					where(Sectiondb.semester == sem).\
+					distinct().naive()
 
-			#This portion of the code converts a semester string that uses
-			#YYYYMM to a semester string that uses Month YYYY
-			mo = re.match("([0-9]{4})([0-9]{2})", semesterrow.semester)
-			if mo: 
-				if mo.groups()[1] == '09':
-					semstring = "Fall "
-				if mo.groups()[1] == '01':
-					semstring = "Winter "
-				if mo.groups()[1] == '05':
-					semstring = "Spring/Summer "
-				semstring += mo.groups()[0]
+	if subjectquery.exists():
+		for subrow in subjectquery:
+			coursesdict[subrow.subject] = []
 
-			#constructs the query for each subject
-			subjectquery = Sectiondb.\
-							select(Sectiondb.subject).\
-							where(Sectiondb.semester == semesterrow.semester).\
+			coursequery = Sectiondb.select().\
+							where(Sectiondb.subject == subrow.subject,
+								  Sectiondb.semester == sem).\
+							group_by(Sectiondb.code).\
 							distinct().naive()
-
-			if subjectquery.exists():
-				for subrow in subjectquery:
-					coursesdict[subrow.subject] = []
-
-					coursequery = Sectiondb.select().\
-									where(Sectiondb.subject == subrow.subject, Sectiondb.semester == semesterrow.semester).\
-									group_by(Sectiondb.code).\
-									distinct().naive()
-					if coursequery.exists():
-						for row in coursequery:
-							coursesdict[subrow.subject].append(row.code)
+			if coursequery.exists():
+				for row in coursequery:
+					coursesdict[subrow.subject].append(row.code)
 
 			retdict[semstring] = coursesdict
+	else:
+		print sem
 	return retdict
+
+def getSemesterCode(semester):
+	opts = semester.split(" ")
+	if opts[0] == 'Fall':
+		sem = str(opts[1]) + '09'
+	elif opts[0] == 'Winter':
+		sem = str(opts[1]) + '01'
+	elif opts[0] == 'Spring/Summer':
+		sem = str(opts[1]) + '05'
+	else:
+		print "if this happens someone goofed"
+		print "in dbHandler grabCourses"
+		return
+	return sem
