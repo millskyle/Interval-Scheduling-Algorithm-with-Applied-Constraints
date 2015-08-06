@@ -23,8 +23,6 @@ def input():
 @bottle.route('/input_form', method="POST")
 def getCalendar():
 	#Now begin the process of querying the db
-
-
 	semester = request.forms.get("semester")
 	mandatory_subjects = request.forms.get("mandatory_subjects")
 	mandatory_available_courses = request.forms.get("mandatory_available_courses")
