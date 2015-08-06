@@ -1,7 +1,7 @@
 
 
 class MakeConfig():
-  def __init__():
+  def __init__(self):
 #    how many schedules should the script attempt to create
 #    (this is not VALID schedules, just schedules in general)
 #    Of these, the valid ones will be scored.
@@ -26,5 +26,5 @@ class MakeConfig():
 
 
 
-config = makeConfig()
+config = MakeConfig()
 
