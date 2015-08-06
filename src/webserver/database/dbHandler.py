@@ -44,7 +44,7 @@ def updateCourse(sec):
 	#Grabs subject from course code
 	#Course code is seperated into 3 groups like so
 	#(CSCI)(1010)(U)
-	mo = re.match("([A-Za-z]{3,4})([0-9]{4})([UTG])", sec.course)
+	mo = re.match("([A-Za-z]{3,4})([0-9]{4})([A-Z])", sec.course)
 	if mo: 
 		row.subject = mo.groups()[0]
 

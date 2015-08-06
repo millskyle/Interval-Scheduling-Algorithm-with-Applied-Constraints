@@ -9,8 +9,8 @@ from scrapy.spiders import CrawlSpider
 from scrapy.linkextractors.sgml import SgmlLinkExtractor
 import time
 import networkx as nx
-from database import dbHandler
 from  course import *
+from database import dbHandler
 
 def time2int(string):
    try:
@@ -41,6 +41,10 @@ def printer(string):
    logging.info("KYLE: " + string)
    print "\n"
 
+
+#f = open('courses.txt','w')
+#f.write('CRN CTYPE CODE RSEAT STIME ETIME DAY SEM SUBJ \n')
+
 class available_courses_spider(CrawlSpider):
 
    name = "UOITspider"
@@ -59,8 +63,6 @@ class available_courses_spider(CrawlSpider):
          req = scrapy.Request(url,self.parseSubjectOptions)
          req.meta['semester'] = semester
          req.meta['subject'] = subject
-         #if (subject in ["PHY","CHEM","CSCI","BIOL","HLSC","MATH"] ) :
-#         if (1==1):
          yield req
 
    def parseSemesterChoicePage(self, response):
@@ -69,7 +71,9 @@ class available_courses_spider(CrawlSpider):
          for semester in semesters:
             req = scrapy.Request('https://ssbp.mycampus.ca/prod/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjectChoicePage)
             req.meta['semester'] = semester
-            yield req
+            if semester != '':
+               if int(semester) > 201400:
+                  yield req
 
 
    def parseSubjectOptions(self,response):
@@ -133,16 +137,26 @@ class available_courses_spider(CrawlSpider):
 
             allcourses.append(Sec)
 
+#            for ts in Sec.timeslots:
+#               f.write("{CRN} {CTYPE} {CODE} {RSEAT} {STIME} {ETIME} {DAY} {SEM} {SUBJ} \n".format(
+#                    CRN=Sec.CRN,
+#                    CTYPE=Sec.cType,
+#                    CODE=Sec.course,
+#                    RSEAT=Sec.remainingSeats,
+#                    STIME=ts.sTime,
+#                    ETIME=ts.eTime,
+#                    DAY=ts.day,
+#                    SEM=semester,
+#                    SUBJ=subject ) )
+#
+
             Sec.printToScreen()
-            dbHandler.updateCourse(Sec)
+            dbHandler.updateCourse(Sec)  #insert the course into the database.   dbHandler must take care of converting the Section() object to a database query/object.
 
 
 
          except ValueError:
             print "Error parsing course schedule information for {0}".format(header)
-
-   def close(self):
-      return
 
 
 

@@ -7,7 +7,7 @@ from bottle import request
 from coursegraph.userpreferences import UserPrefs
 
 setup = True
-dbHandler.init(setup)
+dbHandler.init()
 scraperWorker = spiderworker.SpiderWorker()
 if setup:
 	scraperWorker.start()
@@ -122,7 +122,8 @@ def getCalendar():
 @bottle.route('/getAvailableCourses/<sem>')
 def getAvailCourses(sem):
 	print request.body.read()
-	return json.dumps(dbHandler.getAvailableCourses(sem))
+	return json.dumps(dbHandler.getAvailableCourses(sem),
+					  sort_keys=True, ensure_ascii=True	)
 
 bottle.run(host='', port=8080)
 if setup:
