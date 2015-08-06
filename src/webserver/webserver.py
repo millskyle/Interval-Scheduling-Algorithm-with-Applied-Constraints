@@ -19,8 +19,7 @@ def selectedCourses():
 	morning_class_pref = request.forms.get("morning_class_pref")
 	afternoon_class_pref = request.forms.get("afternoon_class_pref")
 	evening_class_pref = request.forms.get("evening_class_pref")
-	yes_day_off = request.forms.get("yes_day_off")
-	no_day_off = request.forms.get("no_day_off")
+	day_off = request.forms.get("day_off")
 	monday_off = request.forms.get("monday_off")
 	tuesday_off = request.forms.get("tuesday_off")
 	wednesday_off = request.forms.get("wednesday_off")
@@ -31,39 +30,40 @@ def selectedCourses():
 	CRN3 = request.forms.get("CRN3")
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
-	yes_gaps = request.forms.get("yes_gaps")
-	no_gaps = request.forms.get("no_gaps")
+	mingaps = request.forms.get("mingaps")
 
 	UserPrefs.semester = semester
 
-	if yes_day_off == "on":
+	if day_off == "yes":
 		UserPrefs.MaximizeDaysOff = True
-	elif no_day_off == "on":
+	elif day_off == "no":
 		UserPrefs.MaximizeDaysOff = False
 	
 	if monday_off == "on":
-		UserPrefs.PreferredDaysOff.append(1,6)
+		UserPrefs.PreferredDaysOff += [1,6]
 
 	if tuesday_off == "on":
-		UserPrefs.PreferredDaysOff.append(2,7)
+		UserPrefs.PreferredDaysOff += [2,7]
 
 	if wednesday_off == "on":
-		UserPrefs.PreferredDaysOff.append(3,8)
+		UserPrefs.PreferredDaysOff += [3,8]
 
 	if thursday_off == "on":
-		UserPrefs.PreferredDaysOff.append(4,9)
+		UserPrefs.PreferredDaysOff += [4,9]
 
 	if friday_off == "on":
-		UserPrefs.PreferredDaysOff.append(5,10)
+		UserPrefs.PreferredDaysOff += [5,10]
 
 	if morning_class_pref == "on":
-		UserPrefs.PreferredDaysOff = "Morning"
+		UserPrefs.PreferTimeOfDay = "Morning"
 
 	if afternoon_class_pref == "on":
-		UserPrefs.PreferredDaysOff = "Afternoon"
+		UserPrefs.PreferTimeOfDay = "Afternoon"
 
 	if evening_class_pref == "on":
-		UserPrefs.PreferredDaysOff = "Evening"
+		UserPrefs.PreferTimeOfDay = "Evening"
+
+	print UserPrefs.PreferredDaysOff, "PreferredDaysOff"
 
 	UserPrefs.optimumTimeOfDay = "1200"
 
@@ -76,10 +76,10 @@ def selectedCourses():
 
 	UserPrefs.preferredCRNs += [CRN1,CRN2,CRN3,CRN4,CRN5]
 
-	if yes_gaps == "on":
-		UserPrefs.PreferGaps = True
-	elif no_gaps == "on":
-		UserPrefs.PreferGaps = False  
+	if mingaps == "yes":
+		UserPrefs.preferMinGaps = True
+	elif mingaps == "no":
+		UserPrefs.preferMinGaps = False  
 
 @bottle.route('/')
 def index():
