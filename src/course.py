@@ -1,4 +1,5 @@
 from weighting import *
+from collections import defaultdict
 
 global IiI
 IiI = 0
@@ -90,32 +91,34 @@ class Section():
 
 
 
+
+def dict_construct(levels, final_type):
+    """Returns n level deep dictionary
+    Keyword arguments:
+    levels: the number of levels desired
+    final_type: data type of the last level
+
+    E.g.
+    some_dict=dict_construct(3, list)
+     will create a 3 level deep (i.e. 3 sets of keys) dictionary
+     with a list as the innermost value
+    """
+
+    return(defaultdict(final_type) if levels<2 else
+          defaultdict(lambda: dict_construct(levels-1,final_type)))
+
+
+
+
 class Timetable():
    def __init__(self,Schedule):
-      a = {"ID":[],
-           "CRN": [],
-           "course":[],
-           "campus":[],
-           "cType":[],
-           "remainingSeats":[],
-           "sTime":[],
-           "eTime":[],
-           "day":[],
-      }
-      for CRN in query_results:
+      a = dict_construct(8,int)
+      counter = 0
+      for CRN in Schedule:
           for ts in CRN.timeslots:
-              a["CRN"].append(CRN.CRN)
-              a["course"].append(CRN.course)
-              a["campus"].append(CRN.campus)
-              a["cType"].append(CRN.cType)
-              a["remainingSeats"].append(CRN.remainingSeats)
-              a["sTime"].append(ts.sTime)
-              a["eTime"].append(ts.eTime)
-              a["day"].append(ts.day)
-      self.asDict = a
-
-
-
+             counter+=1
+             a[CRN.CRN][CRN.course][CRN.campus][CRN.cType][CRN.remainingSeats][ts.sTime][ts.eTime][ts.day] = counter
+      self.dict_ = a
 
 
 
