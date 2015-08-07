@@ -216,7 +216,7 @@ def graph_optimize(query_results):
    returnData = []
    for thisSchedule in schedules_to_return:
       thisSchedule.w1JSON,thisSchedule.w2JSON = JSON_dump(thisSchedule.Schedule)
-      returnData.append(  [ thisSchedule.w1JSON,thisSchedule.w1JSON,thisSchedule.notes,thisSchedule.warnings,thisSchedule.score    ]  )
+      returnData.append(  [ thisSchedule.w1JSON,thisSchedule.w2JSON,thisSchedule.notes,thisSchedule.warnings,thisSchedule.score    ]  )
 
 
    return returnData
