@@ -30,10 +30,6 @@ p {
 	font-size: 20px;
 }
 
-span {
-	color: red;
-}
-
 select { width: 200px ; background:#F2FCFF; }
 
 td {text-align: center; }

@@ -25,7 +25,7 @@
 
 		<h2>Semester</h2>
 			<p>
-			<span>*</span>Which semester would you like to organize a schedule for?
+			Which semester would you like to organize a schedule for?
 			<br><br>
 			<select id="semester" name="semester"><option name="201509">Fall 2015</option><option name="201601">Winter 2016</option></select>
 			</p>
@@ -78,43 +78,24 @@
          
          <hr>
 			
-         <h2>Schedule Preferences</h3>
-				<p>Would you like anything to be taken into account when organizing your course schedule?
+         <h2>Schedule Preferences</h2>
+				<p>
+				Would you like anything to be taken into account when organizing your course schedule?
             
-            <br><br><br>
+            	<br><br><br>
 
-<table align=center>
-<tr><td><strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select>
-</td><tr>
+				<strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
 
-<tr>
- <td>
-  <strong>Class Times to Avoid (you may check more than one option)</strong>
- </td>
-</tr>
+  				<strong>Class Times to Avoid (you may check more than one option)</strong>: <br><br><table align="center"><tr><td><input type="checkbox" name="morning_class_pref">Morning(8:00 am - 12:00 pm)</td><td><input type="checkbox" name="afternoon_class_pref">Afternoon(12:00 pm - 5:00 pm)</td><td><input type="checkbox" name="evening_class_pref">Evening(5:00 pm - )</td></table><br><br>
 
-<tr>
- <td>
-  <input type="checkbox" name="morning_class_pref">     Morning(8:00 am - 12:00 pm)     
-</td><td>
-  <input type="checkbox" name="afternoon_class_pref">     Afternoon(12:00 pm - 5:00 pm)     
-</td><td>
-  <input type="checkbox" name="evening_class_pref">     Evening(5:00 pm - )     
-</td>
-  </tr>
-  </table>
+  				<strong>Would you like us to try to give you a day off?</strong> (if we succeed, your other days will likely be very packed):<br><br> <center><input type="radio" name="day_off" value="yes">Yes<input type="radio" name="day_off" value="no" checked>No</center><br><br>
 
+				<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <br><br><table align="center"><tr><td><input type="checkbox" name="monday_off">Monday</td><td><input type="checkbox" name="tuesday_off">Tuesday</td><td><input type="checkbox" name="wednesday_off">Wednesday</td><td><input type="checkbox" name="thursday_off">Thursday</td><td><input type="checkbox" name="friday_off">Friday</td></tr></table><br><br>
 
+				<strong>Preferred CRN(s) (Optional) (these preferences will be ranked, with 1 being the most preferred)</strong>: <br><br>1. <input type="number" name="CRN1" min="10000"> 2. <input type="number" name="CRN2" min="10000"> 3. <input type="number" name="CRN3" min="10000"> 4. <input type="number" name="CRN4" min="10000"> 5. <input type="number" name="CRN5" min="10000"><br><br>
 
-<span>* </span><strong>Would you us to try to give you a day off?</strong> (if we succeed, your other days will likely be very packed): <input type="radio" name="day_off" value="yes">Yes<input type="radio" name="day_off" value="no" checked>No<br><br>
+				<strong>Would you like to minimise gaps?</strong>: <input type="radio" name="mingaps" value="yes">Yes<input type="radio" name="mingaps" value="no" checked>No<br><br>
 
-					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <br><br><input type="checkbox" name="monday_off">Monday<input type="checkbox" name="tuesday_off">Tuesday<input type="checkbox" name="wednesday_off">Wednesday<input type="checkbox" name="thursday_off">Thursday<input type="checkbox" name="friday_off">Friday<br><br>
-
-					<strong>Preferred CRN(s) (Optional) (these preferences will be ranked, with 1 being the most preferred)</strong>: <br><br>1. <input type="number" name="CRN1"> 2. <input type="number" name="CRN2"> 3. <input type="number" name="CRN3"> 4. <input type="number" name="CRN4"> 5. <input type="number" name="CRN5"><br><br>
-
-					<span>* </span><strong>Would you like to minimise gaps?</strong>: <input type="radio" name="mingaps" value="yes">Yes<input type="radio" name="mingaps" value="no" checked>No<br><br>
-
-					<div style="float:right"><span>* </span>indicates required field</div><br><br>
 				</p>
 			<input type="submit" value="Submit" />
 
