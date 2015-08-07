@@ -20,8 +20,8 @@ def __createTables():
 
 def updateCourse(sec):
 	query = Sectiondb.select().\
-			where(Sectiondb.crn == sec.CRN)
-
+			where(Sectiondb.crn == sec.CRN,
+				  Sectiondb.semester == sec.semester)
 	row = Sectiondb()
 
 	#checks to see if we're inserting or updating
