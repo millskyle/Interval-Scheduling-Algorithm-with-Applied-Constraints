@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-from networkx.algorithms.approximation import clique_removal
 from JSON_io import JSON_dump
 from scraper.course import *
 import styles
@@ -26,7 +25,7 @@ def graph_optimize(query_results):
    requiredSections = types_within_subset(query_results)
    requiredNumberOfSections = len(requiredSections)
 
-   query_results = [i for i in query_results if i.remainingSeats > 0 ]
+#   query_results = [i for i in query_results if i.remainingSeats > 0 ]
 
 
    for i in range(10):
