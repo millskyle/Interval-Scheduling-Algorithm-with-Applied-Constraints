@@ -16,7 +16,7 @@ if setup:
 def selectedCourses():
 	semester = request.forms.get("semester")
 	campus_pref = request.forms.get("campus_pref")
-	morning_class_pref = request.forms.get("class_pref")
+	class_pref = request.forms.get("class_pref")
 	day_off = request.forms.get("day_off")
 	monday_off = request.forms.get("monday_off")
 	tuesday_off = request.forms.get("tuesday_off")

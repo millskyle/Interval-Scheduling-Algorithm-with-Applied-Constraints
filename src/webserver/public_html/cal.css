@@ -34,6 +34,7 @@ button:hover {
    padding:20px;
    position: relative;
    margin:auto;
+   font: 20px Sans;
 }
 .buttonwrap {
    text-align: center;
