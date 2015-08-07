@@ -72,16 +72,41 @@
 			<br><br><br><br><br>
 
          -->
-         <br><br><br><hr>
-			<h2>Schedule Preferences</h3>
-				<p>
-					Would you like anything to be taken into account when organizing your course schedule?<br><br><br>
+         <br>
+         <br>
+         <br>
+         
+         <hr>
+			
+         <h2>Schedule Preferences</h3>
+				<p>Would you like anything to be taken into account when organizing your course schedule?
+            
+            <br><br><br>
 
-					<strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
+<table align=center>
+<tr><td><strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select>
+</td><tr>
 
-					<strong>Class Times to Avoid (you may check more than one option)</strong>: <br><br><input type="checkbox" name="morning_class_pref">     Morning(8:00 am - 12:00 pm)     <input type="checkbox" name="afternoon_class_pref">     Afternoon(12:00 pm - 5:00 pm)     <input type="checkbox" name="evening_class_pref">     Evening(5:00 pm - )     <br><br>
+<tr>
+ <td>
+  <strong>Class Times to Avoid (you may check more than one option)</strong>
+ </td>
+</tr>
 
-					<span>* </span><strong>Would you like a day off?</strong>: <input type="radio" name="day_off" value="yes">Yes<input type="radio" name="day_off" value="no" checked>No<br><br>
+<tr>
+ <td>
+  <input type="checkbox" name="morning_class_pref">     Morning(8:00 am - 12:00 pm)     
+</td><td>
+  <input type="checkbox" name="afternoon_class_pref">     Afternoon(12:00 pm - 5:00 pm)     
+</td><td>
+  <input type="checkbox" name="evening_class_pref">     Evening(5:00 pm - )     
+</td>
+  </tr>
+  </table>
+
+
+
+<span>* </span><strong>Would you us to try to give you a day off?</strong> (if we succeed, your other days will likely be very packed): <input type="radio" name="day_off" value="yes">Yes<input type="radio" name="day_off" value="no" checked>No<br><br>
 
 					<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <br><br><input type="checkbox" name="monday_off">Monday<input type="checkbox" name="tuesday_off">Tuesday<input type="checkbox" name="wednesday_off">Wednesday<input type="checkbox" name="thursday_off">Thursday<input type="checkbox" name="friday_off">Friday<br><br>
 
