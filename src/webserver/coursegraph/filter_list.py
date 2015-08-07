@@ -1,5 +1,5 @@
 from scraper.course import *
-
+import collections
 
 def filter_section_list(original,courses,min_remaining_seats=0):
    print "Before:",len(original)
@@ -29,6 +29,18 @@ def get_weights_of_list(allcourses):
    for C in allcourses:
       total += C.score()
    return total
+
+def missingCourses(TimeTable, RS):
+   y = []
+   missing = []
+   for CRN in TimeTable.Schedule:
+      y.append(str(CRN.course) + "_" + str(CRN.cType))
+   missing = set(RS) - set(y)
+   for h in missing:
+      TimeTable.warnings.append("WARNING: We could not include " + str(h) + " in the the timetable.")
+
+
+
 
 
 
