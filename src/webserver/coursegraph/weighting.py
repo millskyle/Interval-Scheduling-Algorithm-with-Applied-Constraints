@@ -14,7 +14,7 @@ def optimumTimeOfDay(Schedule):
              a time in the desired block."""
    opt = { "Morning":"0900","Afternoon":"1400","Evening":"1900" }
    optimum_time = float(opt[UserPrefs.PreferTimeOfDay])
-   counter = 0.
+   counter = 1.
    score = 0.
    for CRN in Schedule:
       for ts in CRN.timeslots:
