@@ -70,7 +70,7 @@ def graph_optimize(query_results):
 
 #map the type to a float for coloring the graph output
 # {
-   typemapping = { 'Lec': styles.colours.lec, 'Tut':styles.colours.tut, 'Lab':styles.colours.lab, 'Oth': '#000' }
+   typemapping = { 'Lec': styles.colours.lec, 'Tut':styles.colours.tut, 'Lab':styles.colours.lab, 'Oth': styles.colours.oth }
    colors = [typemapping[node.cType] for node in G.nodes() ]
 # }
 
