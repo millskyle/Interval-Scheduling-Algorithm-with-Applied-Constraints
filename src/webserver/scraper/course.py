@@ -75,7 +75,7 @@ class Section():
               "start" : time2ftime(t.sTime),
               "end"   : time2ftime(t.eTime),
               "dow"   : "[" + str(t.day-5) + "]",
-              "color" : colors.get(self.cType,"#000"),
+              "color" : colors.get(self.cType,"#B792FF"),
               "textColor" : "black",
             })
          else:
@@ -84,7 +84,7 @@ class Section():
               "start" : time2ftime(t.sTime),
               "end"   : time2ftime(t.eTime),
               "dow"   : "[" + str(t.day) + "]",
-              "color" : colors.get(self.cType,'#000'),
+              "color" : colors.get(self.cType,'#B792FF'),
               "textColor" : "black",
             })
       return w1,w2
