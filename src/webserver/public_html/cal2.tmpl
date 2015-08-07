@@ -14,7 +14,7 @@
 	}
 
 	.mycalendar {
-		width:750px;
+		width:750px; 
 		display: inline-block;
     	*display: inline;
 
@@ -28,6 +28,7 @@
 	</style>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"  rel="stylesheet" type="text/css">
+	<link href="public_html/cal.css"  rel="stylesheet" type="text/css">
 	<script>
 		$(document).ready(function() {
 			%for i in range(len(calendars)):
@@ -35,7 +36,7 @@
 			                      // put your options and callbacks here
 					minTime: '08:00',
 					maxTime: '21:30',
-					height:500,
+					height:660,
 					textColor: "black",
 					weekends: false,                          
 					defaultView: 'agendaWeek',
@@ -47,7 +48,7 @@
 				$('#calendarw2{{i}}').fullCalendar({
 					minTime: '08:00',
 					maxTime: '21:30',
-					height:500,
+					height:660,
 					textColor: "black",
 					weekends: false,                          
 					defaultView: 'agendaWeek',
@@ -65,25 +66,35 @@
 		%for i in range(len(calendars)):
 			<div id="cal{{i}}" class='calContainer'>
 				<div class='calArea'>
-					<div class='mycalendar' >
+               <div class='mycalendar' id='w1mycalendar{{i}}' >
+               <div class='weektitle'>Week 1</div>
 						<div id='calendar{{i}}'></div>
+
+
+
+
 					</div>
 
-					<div class='mycalendar' >
+					<div class='mycalendar' id='w2mycalendar{{i}}' >
+               <div class='weektitle'>Week 2</div>
 						<div id='calendarw2{{i}}'></div>
 					</div>
-				</div>
+
+          </div>
+          <div id='warningsarea' >
 
 				<div class='calnotes'>
 					%for note in calendars[i][2]:
 						{{note}} <br />
 					%end
 				</div>
-
 				<div class='calwarnings'>
 					%for warning in calendars[i][3]:
 						{{warning}} <br />
 					%end
+				</div>
+
+
 				</div>
 			</div>
 		%end	
@@ -100,8 +111,8 @@
 <script>
 function hideAllCalendars(){
 	for (var i = 0; i < {{len(calendars)}}; ++i){
-		var id = '#calendar' + i;
-		var id2 = '#calendarw2' + i;
+		var id = '#cal' + i;
+		var id2 = '#cal' + i;
 		$(id).hide();
 		$(id2).hide();
 	}
@@ -109,14 +120,14 @@ function hideAllCalendars(){
 
 $(document).ready(function() {
 	hideAllCalendars();
-	$('#calendar0').show();
-	$('#calendarw20').show();
+	$('#cal0').show();
+	$('#cal0').show();
 
 	%for i in range(len(calendars)):
 		$('#button{{i}}').click(function(){
 			hideAllCalendars()
-			$('#calendar{{i}}').show();
-			$('#calendarw2{{i}}').show();
+			$('#cal{{i}}').show();
+			$('#cal{{i}}').show();
 		});
 	%end
 });

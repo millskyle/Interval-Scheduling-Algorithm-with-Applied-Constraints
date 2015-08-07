@@ -1,0 +1,22 @@
+.calArea {
+   transform: scale(0.7 );
+}
+
+.fc-view {
+   color: #FF0000;
+}
+
+.calnotes {
+  position: relative;
+  top:700px;
+}
+
+.calwarnings {
+   position: relative;
+   top:700px;
+}
+
+.weektitle {
+   text-align:center;
+   font: 20px Sans;
+}

@@ -83,6 +83,10 @@ def selectedCourses():
 def uoitsvg():
     return bottle.static_file('uoit.svg', root='static/')
 
+@bottle.route('/public_html/cal.css')
+def calcss():
+    return bottle.static_file('cal.css', root='public_html/')
+
 @bottle.route('/')
 def index():
     return bottle.static_file('input.html', root='static/')
