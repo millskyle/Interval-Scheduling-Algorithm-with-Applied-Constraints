@@ -1,5 +1,58 @@
-.calArea {
-   transform: scale(0.7 );
+body {
+  background: #F3FDFF;
+}
+
+
+.mainWrap {
+   margin:auto;
+   border: solid 10px #0077A8;
+   border-radius: 30px;
+   width: 70%;
+   background: #F0FCFF;
+  
+}
+
+
+button {
+   font-size:24px;
+   padding-left:10px;
+   padding-right:10px;
+   margin:10px; 
+   background: #0077A8;
+   color: #FFFFFF;
+   border: solid 2px #0077A8;
+   border-radius:5px;
+}
+
+
+button:hover {
+   background: #2299ca;
+   border: solid 2px #2299ca;
+}
+
+.buttonArea {
+   padding:20px;
+   position: relative;
+   margin:auto;
+}
+.buttonwrap {
+   text-align: center;
+}
+
+.calnotes {
+   background: #FF0000;
+}
+
+.calsubarea {
+/*   transform: scale(0.7);  */
+}
+
+
+.mycalendar {
+   width:45%;
+   margin:20px;
+   float:left;
+   /*display:inline-block; */
 }
 
 .fc-view {
@@ -7,16 +60,29 @@
 }
 
 .calnotes {
-  position: relative;
-  top:700px;
+       position: relative;
+       margin-bottom:100px;
+       display: inline-block;
+       width:40%;
+       border: solid 10px #FFFFFF;
+       border-radius:5px;
 }
 
-.calwarnings {
-   position: relative;
-   top:700px;
+.warnings{
+   background: #FF6666;
+       border: solid 10px #FF6666;
 }
+
+.notes {
+   background: #F0FCFF;
+       border: solid 10px #F0FCFF;
+}
+
 
 .weektitle {
    text-align:center;
    font: 20px Sans;
+}
+.calcontainer {
+   float:left;
 }

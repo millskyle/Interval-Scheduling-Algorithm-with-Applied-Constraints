@@ -3,9 +3,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js" ></script>
 	<style>
+   /*
 	.calArea{
 		position: fixed;
 		margin: auto;
+      width: 70%;
 	}
 
 	.calContainer{
@@ -14,16 +16,16 @@
 	}
 
 	.mycalendar {
-		width:750px; 
 		display: inline-block;
-    	*display: inline;
+    	display: inline;
 
     }
 
     .calCanvas {
-    	position: absolute;
+    	position: relative;
     	top: 10%;
     }
+    */
 
 	</style>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
@@ -36,7 +38,7 @@
 			                      // put your options and callbacks here
 					minTime: '08:00',
 					maxTime: '21:30',
-					height:660,
+					height:670,
 					textColor: "black",
 					weekends: false,                          
 					defaultView: 'agendaWeek',
@@ -48,7 +50,7 @@
 				$('#calendarw2{{i}}').fullCalendar({
 					minTime: '08:00',
 					maxTime: '21:30',
-					height:660,
+					height:670,
 					textColor: "black",
 					weekends: false,                          
 					defaultView: 'agendaWeek',
@@ -62,10 +64,22 @@
 	</script>
 </HEAD>
 <body>
-	<div id='calCanvas' class='calCanvas'>
+ <div class='mainWrap' >
+ <div class='buttonwrap'>
+	<div id ="buttonArea" class='buttonArea'>
+		%for i in range(len(calendars)):
+			<button id="button{{i}}">
+				Calendar {{i+1}}
+			</button>
+		%end		
+	</div>
+   </div>
+	
+   <div id='calCanvas' class='calCanvas'>
 		%for i in range(len(calendars)):
 			<div id="cal{{i}}" class='calContainer'>
 				<div class='calArea'>
+            <div class='calsubarea' >
                <div class='mycalendar' id='w1mycalendar{{i}}' >
                <div class='weektitle'>Week 1</div>
 						<div id='calendar{{i}}'></div>
@@ -79,33 +93,29 @@
                <div class='weektitle'>Week 2</div>
 						<div id='calendarw2{{i}}'></div>
 					</div>
+               </div>
 
           </div>
+          <br><br><br>
           <div id='warningsarea' >
 
-				<div class='calnotes'>
+				<div class='calnotes notes'>
 					%for note in calendars[i][2]:
 						{{note}} <br />
 					%end
 				</div>
-				<div class='calwarnings'>
+				<div class='calnotes warnings'>
 					%for warning in calendars[i][3]:
 						{{warning}} <br />
 					%end
 				</div>
 
-
-				</div>
-			</div>
+          </div>
+		  </div>
 		%end	
 	</div>
-	<div id ="buttonArea">
-		%for i in range(len(calendars)):
-			<button id="button{{i}}">
-				Calendar {{i}}
-			</button>
-		%end		
-	</div>
+
+   </div>
 
 
 <script>
