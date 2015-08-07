@@ -3,6 +3,50 @@
 	font-family: Verdana, Geneva, sans-serif;
 }
 
+
+
+
+#loading {
+   width: 100%;
+   height: 100%;
+   top: 0px;
+   left: 0px;
+   position: fixed;
+   display: block;
+   opacity: 1.0;
+   background-color: #fff;
+   z-index: 99; 
+   text-align: center;
+}
+
+#loading-image {
+  position: absolute;
+  top: 100px;
+  left: 240px;
+  z-index: 100;
+}
+
+
+.submitbutton {
+   width:30%;
+   background:#0077A8;
+   height:40px;
+   border:5px solid #0077A8;
+   border-radius:5px;
+   color:white;
+   margin:50px;
+}
+
+
+
+ .submitbutton:hover {
+    background: #2299ca;
+    border: solid 2px #2299ca;
+}
+
+
+
+
 body {
    color: #0092CF;
    margin: 5%;

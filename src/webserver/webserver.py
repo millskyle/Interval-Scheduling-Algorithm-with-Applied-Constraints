@@ -77,6 +77,11 @@ def selectedCourses():
 	elif mingaps == "no":
 		UserPrefs.preferMinGaps = False  
 
+@bottle.route('/progress_bar.gif')
+def progress_bar():
+    return bottle.static_file('progress_bar.gif', root='static/')
+
+
 @bottle.route('/uoit.svg')
 def uoitsvg():
     return bottle.static_file('uoit.svg', root='static/')

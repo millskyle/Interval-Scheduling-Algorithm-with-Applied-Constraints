@@ -7,11 +7,31 @@
 		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="input.js"></script>
-    </head>
+
+
+     <script language="javascript" type="text/javascript">
+     function showDiv() {
+        $('#loading').show();
+         } ;  
+</script>
+
+
+
+
+</head>
 
 	<body>
 
-		<form id="form" action="input_form" method="post" onsubmit="selectAllOptions('l3');selectAllOptions('l6');">
+      <div id="loading">
+        <img src="progress_bar.gif" id="loading-image">    
+        <h2 align="center">Loading Schedules...</h2>
+      </div>
+
+
+
+
+
+		<form id="form" action="input_form" method="post" onsubmit="return showDiv(); selectAllOptions('l3');selectAllOptions('l6');">
 
  <div class='main'>
 
@@ -97,11 +117,22 @@
 				<strong>Would you like to minimise gaps?</strong>: <input type="radio" name="mingaps" value="yes">Yes<input type="radio" name="mingaps" value="no" checked>No<br><br>
 
 				</p>
-			<input type="submit" value="Submit" />
+			<div style='text-align:center'><input type="submit" value="Submit" class='submitbutton' /></div>
 
 		</form>
 
-		<center><img src="uoit.svg" width='50%'/></center>
+		<center><img src="uoit.svg" width='100%'/></center>
+
+     <script language="javascript" type="text/javascript">
+        $(window).load(function() {
+          $('#loading').hide(); 
+        });  
+</script>
+
+
+
+
+
 </div>
 	</body>
 </html>
