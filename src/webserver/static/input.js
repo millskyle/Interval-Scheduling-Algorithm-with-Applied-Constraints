@@ -2,18 +2,20 @@ var xmlhttp;
 var courses;
 
 function loadXMLDoc() {
-	$('#l1').empty()
-	$('#l2').empty()
-	$('#l3').empty()
-	$('#l4').empty()
-	$('#l5').empty()
-	$('#l6').empty()
+	$('#l2').empty();
+	$('#l3').empty();
+	$('#l5').empty();
+	$('#l6').empty();
 	var sem = $('#semester').find(":selected").text();
 	$.ajax({
 		type: 'get',
 		url: '/getAvailableCourses/'+sem,
 		success: function(data){
 			courses = JSON.parse(data);
+			if(!courses){
+				$('#l1').empty();
+				$('#l4').empty();
+			}
 			$.each(courses[sem], function(key, value) {   
   			    $('#l1').append($("<option></option>").attr("value",key).text(key)); 
   			});
