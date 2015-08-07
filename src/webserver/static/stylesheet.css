@@ -14,7 +14,7 @@
    position: fixed;
    display: block;
    opacity: 1.0;
-   background-color: #FBFDFA;
+   background-color: #fff;
    z-index: 99; 
    text-align: center;
 }
