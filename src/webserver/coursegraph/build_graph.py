@@ -191,11 +191,13 @@ def graph_optimize(query_results):
 
    for tt in schedules_to_return:
       missingCourses(tt,requiredSections)
-      stringg = "List of CRNs displayed on this time table:"
+      tt.notes.append("List of CRNs displayed on this time table:")
       last_course = ""
+      stringg = ""
       for CRN in sorted(tt.Schedule, key=lambda x: x.course):
          if not(CRN.course == last_course):
-            stringg = stringg + "\n<br>"+CRN.course + ": "
+            tt.notes.append(stringg)
+            stringg = CRN.course + ": "
             last_course = CRN.course
          else:
             stringg = stringg + ", "
