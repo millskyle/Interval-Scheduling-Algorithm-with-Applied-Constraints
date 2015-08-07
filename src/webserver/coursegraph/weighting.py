@@ -12,7 +12,7 @@ def addWeights(Schedule):
 def optimumTimeOfDay(Schedule):
    """KYLE:  Weights each course highly based on a Gaussian curve centered aroung
              a time in the desired block."""
-   opt = { "Morning":"0900","Afternoon":"1400","Evening":"1900" }
+   opt = { "Morning":"1900","Afternoon":"1400","Evening":"0900" }
    optimum_time = float(opt.get(UserPrefs.PreferTimeOfDay,"1200"))
    counter = 1.
    score = 0.
@@ -67,14 +67,15 @@ def compute_schedule_score(Schedule):
    score = 0.0
 
    score += optimumTimeOfDay(Schedule)
-   score += addWeights(Schedule)
-#   score += myScore(Schedule)
 
    if not(UserPrefs.preferredCampus=="None"):
       campusPref(Schedule)
 
    if UserPrefs.preferMinGaps == True:
-      score +=course_density(Schedule)
+      score +=5.*course_density(Schedule)
+
+   score += addWeights(Schedule)
+
    return score
 
 
