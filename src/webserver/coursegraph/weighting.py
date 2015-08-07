@@ -13,14 +13,18 @@ def optimumTimeOfDay(Schedule):
    """KYLE:  Weights each course highly based on a Gaussian curve centered aroung
              a time in the desired block."""
    opt = { "Morning":"0900","Afternoon":"1400","Evening":"1900" }
-   optimum_time = float(opt[UserPrefs.PreferTimeOfDay])
+   optimum_time = float(opt.get(UserPrefs.PreferTimeOfDay,"1200"))
    counter = 1.
    score = 0.
    for CRN in Schedule:
       for ts in CRN.timeslots:
          counter += (int(ts.eTime) - int(ts.sTime))
          score += (int(ts.eTime) - int(ts.sTime)) * (2.0 * math.exp( -1.3e-5 * ( (float(ts.sTime)+float(ts.eTime))/2.0 - optimum_time)**2 ) - 1.0)
-   return score/counter
+   if UserPrefs.PreferTimeOfDay=="None":
+      scale=0.0
+   else:
+      scale=10.0
+   return scale*score/counter
 
 def campusPref(Schedule):
    """DINO"""
