@@ -17,10 +17,10 @@
 
 		<h1 align="center">UOIT Course Optimizer</h1>
 
-		<!--<center><img src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br>-->
+		<center><img src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br>
 
 		<p>
-		The UOIT Course Optimizer was created by students for students as a tool to identify all of the class CRNs corresponding to your ideal school schedule. To create your ideal school schedule, input your semester, courses, and schedule preferences in the fields below, and click "Submit" to see the calendar and CRN list for your preferred school schedule. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">here</a>.
+		The UOIT Course Optimizer was created by students, for students as a tool to identify all of the class CRNs corresponding to your ideal school schedule. To create your ideal school schedule, input your semester, courses, and schedule preferences in the fields below, and click "Submit" to see the calendar and CRN list for your preferred school schedule. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">here</a>.
 		</p>
 
 		<h2>Semester</h2>
@@ -33,14 +33,30 @@
 			<h3>Mandatory Courses</h3>
 
 				<p>
-				<span>*</span>Select the courses you have to take this semester per subject(max. 8):
-				<br><br>
-				<div><select name="mandatory_subjects" id="l1" multiple="multiple"></select></div>
-				<br>
-				<div style="float:left"><select name="mandatory_available_courses" id="l2" multiple="multiple"></select></div>
-				<input style="float:left" id="b1" type="button" value=">" /><input style="float:left" id="b2" type="button" value="<" />
-				<div style="float:left"><select name="mandatory_selected_courses" id="l3" multiple="multiple"></select></div>
+				<!-- <span>*</span>Selec the courses to include: -->
+            <table align="center">
+            <tr>
+            <td>
+              Subject:<br>
+				  <select name="mandatory_subjects" id="l1" multiple="multiple" class='biglist' ></select>
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td>
+              Available Courses:<br>
+              <select name="mandatory_available_courses" id="l2" multiple="multiple" class='biglist'></select>
+            </td>
+            <td>
+              <input style="" id="b1" type="button" value="Select >" class="addrem"/><br>
+              <input style="" id="b2" type="button" value="< Remove" class="addrem"/>
+            </td>
+            <td>
+              Selected courses:<br>
+				  <select name="mandatory_selected_courses" id="l3" multiple="multiple" class='biglist selectedlist'></select>
+            </td>
+            </tr>
+            </table>
 				</p>
+            <!--
 			<br><br><br><br><br>
 			<h3>Elective Courses</h3>
 
@@ -54,6 +70,9 @@
 				<div style="float:left"><select name="elective_selected_courses" id="l6" multiple="multiple"></select></div>
 				</p>
 			<br><br><br><br><br>
+
+         -->
+         <br><br><br><hr>
 			<h2>Schedule Preferences</h3>
 				<p>
 					Would you like anything to be taken into account when organizing your course schedule?<br><br><br>

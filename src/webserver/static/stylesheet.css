@@ -4,7 +4,9 @@
 }
 
 body {
+   color: #005596;
 	margin: 5%;
+   background: #E2ECFF;
 }
 
 h1, h2, h3 {
@@ -32,12 +34,27 @@ span {
 	color: red;
 }
 
+select { width: 200px ; background:#F2FCFF; }
+
+td {text-align: center; }
+
+
+.biglist {
+   height:300px;
+}
+
 input, select {
 	font-size: 20px;
 }
 
 
+.addrem {
+   width:120px;
+}
+
+
 .main {
+ background: white;
  margin:auto;
  border: solid 10px #0077A8;
  border-radius: 30px;
