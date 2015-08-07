@@ -16,9 +16,7 @@ if setup:
 def selectedCourses():
 	semester = request.forms.get("semester")
 	campus_pref = request.forms.get("campus_pref")
-	morning_class_pref = request.forms.get("morning_class_pref")
-	afternoon_class_pref = request.forms.get("afternoon_class_pref")
-	evening_class_pref = request.forms.get("evening_class_pref")
+	morning_class_pref = request.forms.get("class_pref")
 	day_off = request.forms.get("day_off")
 	monday_off = request.forms.get("monday_off")
 	tuesday_off = request.forms.get("tuesday_off")
@@ -54,14 +52,14 @@ def selectedCourses():
 	if friday_off == "on":
 		UserPrefs.PreferredDaysOff += [5,10]
 
-	if morning_class_pref == "on":
+	if class_pref == "morning":
 		UserPrefs.PreferTimeOfDay = "Morning"
-
-	if afternoon_class_pref == "on":
+	elif class_pref == "afternoon":
 		UserPrefs.PreferTimeOfDay = "Afternoon"
-
-	if evening_class_pref == "on":
+	elif class_pref == "evening":
 		UserPrefs.PreferTimeOfDay = "Evening"
+	else:
+		UserPrefs.PreferTimeOfDay = "None"
 
 	UserPrefs.optimumTimeOfDay = "1200"
 

@@ -39,6 +39,10 @@ td {text-align: center; }
    height:300px;
 }
 
+input {
+	width: 100px;
+}
+
 input, select {
 	font-size: 20px;
 }
@@ -59,4 +63,8 @@ input, select {
 
 
 
+}
+
+.prefCRNs {
+	width:150px;
 }
