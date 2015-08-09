@@ -28,7 +28,13 @@
 
 ###MySQL Statements to Prepare
 
-To use the webserver out of the box:
+To use the webserver out of the box, start the mysql client:
+
+```mysql -u <user>```
+
+(by default, <user> will be 'root')
+
+Run the following commands:
 
 ```CREATE DATABASE MyCampusSections;```
 
@@ -36,5 +42,5 @@ To use the webserver out of the box:
 
 ```GRANT ALL PRIVILEGES ON MyCampusSections.* TO 'hackweek'@'localhost';```
 
-```FLUSH PRIVILEGES```
+```FLUSH PRIVILEGES;```
 
