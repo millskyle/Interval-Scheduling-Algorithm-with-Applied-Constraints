@@ -27,32 +27,50 @@ def campusPref(Schedule):
    """DINO"""
    for CRN in Schedule:
       if UserPrefs.preferredCampus == "North" and CRN.campus == "North":
-         CRN.weight += 1000./len(Schedule)
+         CRN.weight += 1.e6/len(Schedule)
       if UserPrefs.preferredCampus == "Downtown" and CRN.campus == "Downtown":
-         CRN.weight += 1000./len(Schedule)
+         CRN.weight += 1.e6/len(Schedule)
       if UserPrefs.preferredCampus == "Other" and CRN.campus == "Other":
-         CRN.weight += 1000./len(Schedule)
+         CRN.weight += 1.e6/len(Schedule)
 
 def preferred_crn(Schedule):
     """DINO"""
     for CRN in Schedule:
         if CRN.CRN in UserPrefs.preferredCRNs:
-            CRN.weight+=1.e6
+            CRN.weight+=1.e7
+
+def gap_minimize(Schedule):
+   """KYLE"""
+   weight=0.
+   alltimeslots = []
+   for CRN in Schedule:
+      for ts in CRN.timeslots:
+         alltimeslots.append(ts)
+   alltimeslots = sorted(alltimeslots, key=lambda x: str(x.day) + str(x.sTime))
+   for i in xrange(len(alltimeslots)-1):
+      ts1 = alltimeslots[i]
+      ts2 = alltimeslots[i+1]
+      if (ts2.day==ts1.day) and (int(ts2.sTime) - int(ts1.eTime)) > 20.:
+         weight -= (int(ts2.sTime) - int(ts1.eTime))
+
+   return 100.*weight/len(Schedule)
+
 
 
 def course_density(Schedule):
-   """DINO"""
-   weight = 0.
-   for iCRN in Schedule:
-      if not(iCRN.CRN=="55555"):
-         for jCRN in Schedule:
-            for i in iCRN.timeslots:
-               for j in jCRN.timeslots:
-                  if i.day==j.day:
-                     time = int(j.eTime) - int(i.sTime)
-                     if time<=40:
-                        weight +=1000.
-   return weight/len(Schedule)
+#   """DINO"""
+#   weight = 0.
+#   for iCRN in Schedule:
+#      if not(iCRN.CRN=="55555"):
+#         for jCRN in Schedule:
+#            for i in iCRN.timeslots:
+#               for j in jCRN.timeslots:
+#                  if i.day==j.day:
+#                     time = int(j.eTime) - int(i.sTime)
+#                     if time<=40:
+#                        weight +=1000.
+#   print "dino course density: ",10*weight/len(Schedule)
+   return 0. #10*weight/len(Schedule)
 
 
 
@@ -66,7 +84,8 @@ def compute_schedule_score(Schedule):
       campusPref(Schedule)
 
    if UserPrefs.preferMinGaps == True:
-      score +=5.*course_density(Schedule)
+      #score +=5.*course_density2(Schedule)
+      score +=5.*gap_minimize(Schedule)
 
    score += addWeights(Schedule)
 
