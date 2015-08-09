@@ -32,7 +32,7 @@ To use the webserver out of the box, start the mysql client:
 
 ```mysql -u <user>```
 
-(by default, <user> will be 'root')
+(by default, user will be 'root')
 
 Run the following commands:
 
