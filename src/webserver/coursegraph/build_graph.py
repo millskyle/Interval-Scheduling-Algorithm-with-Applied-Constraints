@@ -141,44 +141,46 @@ def graph_optimize(query_results):
                numberofblanks+=1
          successfully_scheduled_sections = len(thissched)
 
-         #print "   Attempt",tries
          if (successfully_scheduled_sections >= requiredNumberOfSections + numberofblanks):
+         # If there are enough CRNs in the calcuated schedule, then it didn't fail and
+         # we should break out of the loop.
             failure=False
             break
          else:
+         # If there are not enough CRNs present, then keep track of the best schedule, 
+         # but try again to get a better one.
             if successfully_scheduled_sections > bestTryCount:
                bestTryCount = successfully_scheduled_sections
                bestTry = thissched
             thissched = bestTry
 
+      #Build a timetable object to hold schedule, notes, etc.
+      thisTimeTable = Timetable(thissched, compute_schedule_score(thissched))
 
       #Remove all pseudo events now.  They've served their purpose.
       newsched = []
-      for i in range(len(thissched)):
-         if not(thissched[i].CRN=="55555"):
-            newsched.append(thissched[i])
-      thissched = newsched
+      for i in range(len(thisTimeTable.Schedule)):
+         if not(thisTimeTable.Schedule[i].CRN=="55555"):
+            newsched.append(thisTimeTable.Schedule[i])
+      thisTimeTable.Schedule = newsched
 
 
-      #Build a timetable object to hold timetable and associated data.
-      thisTimeTable = Timetable(thissched, compute_schedule_score(thissched))
 
       if not(failure):
          thisTimeTable.isValid = "VALID"
          globalFailure = False
+         # all_valid is a list of all valid timetable objects
          all_valid.append(thisTimeTable)
-         #print "Timetable option",potentialSchedule,"\t\t Score:",thisScore
-         #if thisScore > best_score:
-         #   best_score = thisScore
-         #   bestsched = thissched
       else:
+         #consolation is a list of all invalid timetables.
          consolation.append(thisTimeTable)
          thisTimeTable.isValid = "INVALID"
 
-
+   # Sort the valid timetable list by score, and the consolation list by
+   # the number of events (we'd rather a lower score, if it has more of the
+   # requested courses.
    all_valid = sorted(all_valid, key = lambda x: x.score, reverse=True)
    consolation = sorted(consolation, key = lambda x: len(x.Schedule), reverse=True)
-
 
 
    if globalFailure:
@@ -191,6 +193,7 @@ def graph_optimize(query_results):
       schedules_to_return = all_valid[0:good_schedules] + consolation[0:config.number_of_schedules_to_show_user - good_schedules]
 
    for tt in schedules_to_return:
+      print "  Score --> ",tt.score
       missingCourses(tt,requiredSections)
       tt.notes.append("List of CRNs displayed on this time table:")
       last_course = ""

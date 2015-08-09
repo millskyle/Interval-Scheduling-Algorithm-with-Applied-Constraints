@@ -16,25 +16,22 @@ def optimumTimeOfDay(Schedule):
    else:
       opt = { "Morning":"1900","Afternoon":"1400","Evening":"0900" }
       optimum_time = float(opt.get(UserPrefs.PreferTimeOfDay,"1200"))
-      counter = 1.
       score = 0.
       for CRN in Schedule:
          for ts in CRN.timeslots:
-            counter += (int(ts.eTime) - int(ts.sTime))
             score += (int(ts.eTime) - int(ts.sTime)) * (2.0 * math.exp( -1.3e-5 * ( (float(ts.sTime)+float(ts.eTime))/2.0 - optimum_time)**2 ) - 1.0)
-         scale=10.0
-      print scale*score/counter,": OptimumTimeOfDay"
-      return scale*score/counter
+         scale=1000.0
+      return scale*score/len(Schedule)
 
 def campusPref(Schedule):
    """DINO"""
    for CRN in Schedule:
       if UserPrefs.preferredCampus == "North" and CRN.campus == "North":
-         CRN.weight += 900
+         CRN.weight += 1000./len(Schedule)
       if UserPrefs.preferredCampus == "Downtown" and CRN.campus == "Downtown":
-         CRN.weight += 900
+         CRN.weight += 1000./len(Schedule)
       if UserPrefs.preferredCampus == "Other" and CRN.campus == "Other":
-         CRN.weight += 900
+         CRN.weight += 1000./len(Schedule)
 
 def preferred_crn(Schedule):
     """DINO"""
@@ -46,7 +43,6 @@ def preferred_crn(Schedule):
 def course_density(Schedule):
    """DINO"""
    weight = 0.
-   counter = 1.
    for iCRN in Schedule:
       if not(iCRN.CRN=="55555"):
          for jCRN in Schedule:
@@ -55,9 +51,8 @@ def course_density(Schedule):
                   if i.day==j.day:
                      time = int(j.eTime) - int(i.sTime)
                      if time<=40:
-                        weight +=1.
-                        counter+=1.
-   return weight/counter
+                        weight +=1000.
+   return weight/len(Schedule)
 
 
 
