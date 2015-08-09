@@ -87,7 +87,7 @@ def graph_optimize(query_results):
             if ( (iSec.cType == jSec.cType) and (jSec.course==iSec.course)):
                # If the two sections are from the same course
                # and are the same type, then they're incompatible.
-               # (can't take two physics tutorials)
+               # (e.g. can't take two physics tutorials)
                have_edge = True
             else:
                for itimeslot in iSec.timeslots:

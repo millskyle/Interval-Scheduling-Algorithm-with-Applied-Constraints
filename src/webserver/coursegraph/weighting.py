@@ -8,23 +8,23 @@ def addWeights(Schedule):
       weight += CRN.weight
    return weight
 
-
 def optimumTimeOfDay(Schedule):
-   """KYLE:  Weights each course highly based on a Gaussian curve centered aroung
+   """KYLE:  Weights each course highly based on a Gaussian curve centered around
              a time in the desired block."""
-   opt = { "Morning":"1900","Afternoon":"1400","Evening":"0900" }
-   optimum_time = float(opt.get(UserPrefs.PreferTimeOfDay,"1200"))
-   counter = 1.
-   score = 0.
-   for CRN in Schedule:
-      for ts in CRN.timeslots:
-         counter += (int(ts.eTime) - int(ts.sTime))
-         score += (int(ts.eTime) - int(ts.sTime)) * (2.0 * math.exp( -1.3e-5 * ( (float(ts.sTime)+float(ts.eTime))/2.0 - optimum_time)**2 ) - 1.0)
    if UserPrefs.PreferTimeOfDay=="None":
-      scale=0.0
+      return 0.0
    else:
-      scale=10.0
-   return scale*score/counter
+      opt = { "Morning":"1900","Afternoon":"1400","Evening":"0900" }
+      optimum_time = float(opt.get(UserPrefs.PreferTimeOfDay,"1200"))
+      counter = 1.
+      score = 0.
+      for CRN in Schedule:
+         for ts in CRN.timeslots:
+            counter += (int(ts.eTime) - int(ts.sTime))
+            score += (int(ts.eTime) - int(ts.sTime)) * (2.0 * math.exp( -1.3e-5 * ( (float(ts.sTime)+float(ts.eTime))/2.0 - optimum_time)**2 ) - 1.0)
+         scale=10.0
+      print scale*score/counter,": OptimumTimeOfDay"
+      return scale*score/counter
 
 def campusPref(Schedule):
    """DINO"""
@@ -35,7 +35,6 @@ def campusPref(Schedule):
          CRN.weight += 900
       if UserPrefs.preferredCampus == "Other" and CRN.campus == "Other":
          CRN.weight += 900
-
 
 def preferred_crn(Schedule):
     """DINO"""
