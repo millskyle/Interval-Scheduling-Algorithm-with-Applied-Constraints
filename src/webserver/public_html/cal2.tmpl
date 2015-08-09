@@ -2,32 +2,6 @@
 <HEAD>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js" ></script>
-	<style>
-   /*
-	.calArea{
-		position: fixed;
-		margin: auto;
-      width: 70%;
-	}
-
-	.calContainer{
-		display: inline-block;
-		float: left;
-	}
-
-	.mycalendar {
-		display: inline-block;
-    	display: inline;
-
-    }
-
-    .calCanvas {
-    	position: relative;
-    	top: 10%;
-    }
-    */
-
-	</style>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.js" ></script>
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.min.css"  rel="stylesheet" type="text/css">
 	<link href="public_html/cal.css"  rel="stylesheet" type="text/css">
@@ -38,7 +12,7 @@
 			                      // put your options and callbacks here
 					minTime: '08:00',
 					maxTime: '21:30',
-					height:670,
+					height:500,
 					textColor: "black",
 					weekends: false,                          
 					defaultView: 'agendaWeek',
@@ -50,7 +24,7 @@
 				$('#calendarw2{{i}}').fullCalendar({
 					minTime: '08:00',
 					maxTime: '21:30',
-					height:670,
+					height:500,
 					textColor: "black",
 					weekends: false,                          
 					defaultView: 'agendaWeek',
@@ -70,7 +44,7 @@
 		Pick Your Schedule:
 		%for i in range(len(calendars)):
 			<button id="button{{i}}">
-				Calendar {{i+1}}
+				{{i+1}}
 			</button>
 		%end		
 	</div>
@@ -116,7 +90,7 @@
 		%end	
 	</div>
 
-   </div>
+  </div> 
 
 
 <script>
@@ -147,7 +121,7 @@ $(document).ready(function() {
 
 
 <div style="margin:100px">
-          <center><img src="uoit.svg" width='70%'/></center>
+          <center><img src="uoit.svg" class="logos" /></center>
           </div>
 
 
