@@ -22,6 +22,7 @@
 
 	<body>
 
+  
       <div id="loading">
       <br><br><br>
         <img src="progress_bar.gif" id="loading-image">    
@@ -45,30 +46,30 @@
 		<center><img style="width:75%" src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br>
 
 		<p>
-		The UOIT Course Optimizer was created by students, for students as a tool to identify all of the class CRNs corresponding to your ideal school schedule. To create your ideal school schedule, input your semester, courses, and schedule preferences in the fields below, and click "Submit" to see the calendar and CRN list for your preferred school schedule. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">here</a>.
+		The UOIT Course Optimizer was created by students, for students, as a tool to identify the best possible timetable for each students' specific needs.  To create your ideal school schedule, input your semester, choose the courses you must take, and then set any preference you may have.  Click "Submit" to see the five best schedules according to your preferences. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">on UOIT's website here</a>.
 		</p>
 
 		<h2>Semester</h2>
 			<p>
-			Which semester would you like to organize a schedule for?
+			Choose a semester
 			<br><br>
 			<select id="semester" name="semester"><option name="201509">Fall 2015</option><option name="201601">Winter 2016</option></select>
 			</p>
 		<h2>Courses</h2>
 			<!-- <h3>Mandatory Courses</h3> -->
-
+          Choose the courses you must take.
 				<p>
 				<!-- <span>*</span>Selec the courses to include: -->
             <table align="center">
             <tr>
             <td>
               Subject:<br>
-				  <select name="mandatory_subjects" id="l1" multiple="multiple" class='biglist' ></select>
+				  <select name="mandatory_subjects" id="l1" style='width:100px' multiple="multiple" class='biglist' ></select>
             </td>
             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td>
               Available Courses:<br>
-              <select name="mandatory_available_courses" id="l2" multiple="multiple" class='biglist'></select>
+              <select name="mandatory_available_courses" id="l2" style='width:170px' multiple="multiple" class='biglist'></select>
             </td>
             <td>
               <input style="" id="b1" type="button" value="Select >" class="addrem"/><br>
@@ -101,25 +102,55 @@
          <br>
          <br>
          
-         <hr>
 			
          <h2>Schedule Preferences</h2>
 				<p>
-				Would you like anything to be taken into account when organizing your course schedule?
+            Use the preferences below to customize your schedule.  Preferences that appear higher on the list take priority (e.g. if you have chosen to avoid evenings and to maximize days off, you may end up with some evening classes in order to keep a day empty)
             
             	<br><br><br>
+				
+           <strong>Preferred CRN(s):</strong> <br>
+           If you really want us to include a specific CRN in your timetable (for example,  maybe you really want a specific professor), type them in here, in order of preference.  We'll try our best to put in as many as possible.
+           <br><table class="prefCRNs" align="center"><tr><td>1. <input type="number" name="CRN1" min="10000"></td><td> 2. <input type="number" name="CRN2" min="10000"></td><td> 3. <input type="number" name="CRN3" min="10000"></td><td> 4. <input type="number" name="CRN4" min="10000"></td><td> 5. <input type="number" name="CRN5" min="10000"></td></tr></table><br><br>
 
-				<strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
 
-  				<strong>Class Times to Avoid</strong>: <br><br><table align="center"><tr><td><input type="radio" name="class_pref" value="morning">Morning</td><td><input type="radio" name="class_pref" value="afternoon">Afternoon</td><td><input type="radio" name="class_pref" value="evening">Evening</td><td><input type="radio" name="class_pref" value="none" checked>None</td></tr></table><br><br>
+           <strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
 
-  				<strong>Would you like us to try to give you a day off?</strong> (if we succeed, your other days will likely be very packed):<br><br> <center><input type="radio" name="day_off" value="yes">Yes<input type="radio" name="day_off" value="no" checked>No</center><br><br>
+  			  
+           <strong>Class Times to Avoid</strong>: <br><br><table align="center"><tr><td><input type="radio" name="class_pref" value="morning">Morning</td><td><input type="radio" name="class_pref" value="afternoon">Afternoon</td><td><input type="radio" name="class_pref" value="evening">Evening</td><td><input type="radio" name="class_pref" value="none" checked>None</td></tr></table><br><br>
 
-				<strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>: <br><br><table align="center"><tr><td><input type="checkbox" name="monday_off">Monday</td><td><input type="checkbox" name="tuesday_off">Tuesday</td><td><input type="checkbox" name="wednesday_off">Wednesday</td><td><input type="checkbox" name="thursday_off">Thursday</td><td><input type="checkbox" name="friday_off">Friday</td></tr></table><br><br>
+<div class='question-group'>
+  <div class='question' >
+    <strong>Would you like us to try to give you a day off?</strong> (if we succeed, your other days will likely be very packed):
+  </div>
+  <div class='options'>
+    <div class='option'>
+      <input type="radio" name="day_off" value="yes">Yes
+    </div>
+    <div class='option'>
+      <input type="radio" name="day_off" value="no" checked>No
+    </div>
+  </div>
 
-				<strong>Preferred CRN(s) (Optional) (these preferences will be ranked, with 1 being the most preferred)</strong>: <br><br><table class="prefCRNs" align="center"><tr><td>1. <input type="number" name="CRN1" min="10000"></td><td> 2. <input type="number" name="CRN2" min="10000"></td><td> 3. <input type="number" name="CRN3" min="10000"></td><td> 4. <input type="number" name="CRN4" min="10000"></td><td> 5. <input type="number" name="CRN5" min="10000"></td></tr></table><br><br>
+  <div class='question'>
+  <strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>:
+  </div>
+  <div class='options' >
+  <table align="center"><tr><td><input type="checkbox" name="monday_off">Monday</td><td><input type="checkbox" name="tuesday_off">Tuesday</td><td><input type="checkbox" name="wednesday_off">Wednesday</td><td><input type="checkbox" name="thursday_off">Thursday</td><td><input type="checkbox" name="friday_off">Friday</td></tr></table>
+  </div>
+</div>
 
-				<strong>Would you like to minimise gaps?</strong>: <input type="radio" name="mingaps" value="yes">Yes<input type="radio" name="mingaps" value="no" checked>No<br><br>
+
+
+  <div class='question' > <strong>Would you like us to minimise gaps between classes?</strong>: Some students prefer to have all of their classes condensed with fewer breaks in between classes.  If this is you, enable this option. (Note that <strong>not</strong> enabling this option does not spread out classes) </div>
+<div class="options">
+  <div class="option">
+    <input type="radio" name="mingaps" value="yes">Yes
+  </div>
+  <div class="option">
+    <input type="radio" name="mingaps" value="no" checked>No preference 
+  </div>
+</div>
 
 				</p>
 			<div style='text-align:center'><input type="submit" value="Submit" class='submitbutton' /></div>

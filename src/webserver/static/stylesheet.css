@@ -29,7 +29,7 @@
 .submitbutton {
    width:30%;
    background:#0077A8;
-   height:40px;
+   height:60px;
    border:5px solid #0077A8;
    border-radius:5px;
    color:white;
@@ -82,12 +82,17 @@ td {text-align: center; }
    height:300px;
 }
 
-input {
+/*input {
 	width: 100px;
+}*/
+
+.inputbox {
+   width: 100px;
 }
 
 input, select {
 	font-size: 20px;
+   min-width:100px;
 }
 
 
@@ -102,11 +107,36 @@ input, select {
  border: solid 10px #0077A8;
  border-radius: 30px;
  width:50%;
+ min-width:800px;
  padding:5%;
 
 
 
 }
+.question-group {
+  border: solid 3px #0077A8;
+  border-radius:6px;
+  padding:10px;
+  margin:0px;
+}
+
+.question {
+   margin:20px;
+}
+
+.options {
+   border-radius: 10px;
+   padding: 10px;
+   margin: 30px;
+   background: #DEE7F3;
+   margin:auto;
+}
+
+.option {
+   margin-left:20px;
+   margin-right:20px;
+}
+
 
 .prefCRNs {
 	width:150px;
