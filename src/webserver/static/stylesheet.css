@@ -92,7 +92,7 @@ td {text-align: center; }
 
 input, select {
 	font-size: 20px;
-   min-width:100px;
+   min-width:75px; 
 }
 
 
@@ -113,6 +113,11 @@ input, select {
 
 
 }
+
+.prefcrn {
+   width: 50px !important;
+}
+
 .question-group {
   border: solid 3px #0077A8;
   border-radius:6px;

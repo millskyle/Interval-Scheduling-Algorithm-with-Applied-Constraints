@@ -108,16 +108,47 @@
             Use the preferences below to customize your schedule.  Preferences that appear higher on the list take priority (e.g. if you have chosen to avoid evenings and to maximize days off, you may end up with some evening classes in order to keep a day empty)
             
             	<br><br><br>
-				
-           <strong>Preferred CRN(s):</strong> <br>
-           If you really want us to include a specific CRN in your timetable (for example,  maybe you really want a specific professor), type them in here, in order of preference.  We'll try our best to put in as many as possible.
-           <br><table class="prefCRNs" align="center"><tr><td>1. <input type="number" name="CRN1" min="10000"></td><td> 2. <input type="number" name="CRN2" min="10000"></td><td> 3. <input type="number" name="CRN3" min="10000"></td><td> 4. <input type="number" name="CRN4" min="10000"></td><td> 5. <input type="number" name="CRN5" min="10000"></td></tr></table><br><br>
+			
+<div class='question'>	
+   <strong>Preferred CRN(s):</strong> <br>
+   If you really want us to include a specific CRN in your timetable (for example,  maybe you really want a specific professor), type them in here, in order of preference.  We'll try our best to put in as many as possible.
+</div>
+<div class='options' >
+   <input type="number" name="CRN1" min="10000" class='prefcrn'>
+   <input type="number" name="CRN2" min="10000" class='prefcrn'>
+   <input type="number" name="CRN3" min="10000" class='prefcrn'>
+   <input type="number" name="CRN4" min="10000" class='prefcrn'>
+   <input type="number" name="CRN5" min="10000" class='prefcrn'> 
+</div>
 
 
-           <strong>Campus Preference</strong>: <select name="campus_pref"><option name="none">none</option><option name="Downtown Campus">Downtown Campus</option><option name="North Campus">North Campus</option></select><br><br>
+
+<div class='question'>
+   <strong>Choose your preferred campus.</strong>  Some courses are offered at more than one campus, so use this option to attempt to keep all courses together at one campus.
+</div>
+<div class='options'>
+   <div class='option' >
+   <select name="campus_pref">
+      <option name="none">none</option>
+      <option name="Downtown Campus">Downtown Campus</option>
+      <option name="North Campus">North Campus</option>
+   </select>
+   </div>
+</div>
+<br>
 
   			  
-           <strong>Class Times to Avoid</strong>: <br><br><table align="center"><tr><td><input type="radio" name="class_pref" value="morning">Morning</td><td><input type="radio" name="class_pref" value="afternoon">Afternoon</td><td><input type="radio" name="class_pref" value="evening">Evening</td><td><input type="radio" name="class_pref" value="none" checked>None</td></tr></table><br><br>
+<div class='question'>
+   <strong>Would you like us to try and avoid specific times of day?</strong> We will actively avoid scheduling classes during these periods (if possible).        
+</div>
+<div class='options'>
+<div class='option' ><input type="radio" name="class_pref" value="morning">Morning (8am-12pm) </div>
+<div class='option' ><input type="radio" name="class_pref" value="afternoon">Afternoon (12pm-5pm)</div>
+<div class='option' ><input type="radio" name="class_pref" value="evening">Evening (5pm-10pm)</div>
+<div class='option' ><input type="radio" name="class_pref" value="none" checked>None</div>
+
+</div>
+<br>
 
 <div class='question-group'>
   <div class='question' >
@@ -133,7 +164,7 @@
   </div>
 
   <div class='question'>
-  <strong>If you answered "Yes" above, what are your preferred day(s) off (you may check more than one option)?</strong>:
+  <strong>If you answered "Yes" above, do you prefer any specific days?</strong>:
   </div>
   <div class='options' >
   <table align="center"><tr><td><input type="checkbox" name="monday_off">Monday</td><td><input type="checkbox" name="tuesday_off">Tuesday</td><td><input type="checkbox" name="wednesday_off">Wednesday</td><td><input type="checkbox" name="thursday_off">Thursday</td><td><input type="checkbox" name="friday_off">Friday</td></tr></table>
