@@ -134,7 +134,7 @@ def graph_optimize(query_results):
 
          # We need to count the number of pseudo-blocks in the generated schedule since we
          # must only break out of this loop once we have enough sections in our schedule.  
-         # Pseudo blocks count, my default, and must be subtracted.
+         # Pseudo blocks count, by default, and must be subtracted.
          numberofblanks = 0
          for CRN in thissched:
             if CRN.CRN == "55555":
@@ -187,6 +187,13 @@ def graph_optimize(query_results):
       print "FAILURE to find even one valid schedule"
 
    good_schedules = len(all_valid)
+   for tt in all_valid:
+      tt.generateKey()
+      print tt.key
+
+   unique_valid = len(set(all_valid))
+   print "UNIQUE SCHEDULES POSSIBLE: {0} (of {1} valid schedules)".format(unique_valid,len(all_valid))
+
    if good_schedules >= config.number_of_schedules_to_show_user:
       schedules_to_return = all_valid[0:config.number_of_schedules_to_show_user]
    else:
@@ -194,6 +201,7 @@ def graph_optimize(query_results):
 
    for tt in schedules_to_return:
       print "  Score --> ",tt.score
+      print tt.key
       missingCourses(tt,requiredSections)
       tt.notes.append("List of CRNs displayed on this time table:")
       last_course = ""

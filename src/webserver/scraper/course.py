@@ -111,6 +111,11 @@ def dict_construct(levels, final_type):
 
 
 class Timetable():
+   def __hash__(self):
+      return hash(self.key)
+   def __eq__(self, other):
+      return self.key == other.key
+
    def __init__(self,Schedule,score):
       self.score = score
       self.userscore = 0
@@ -120,6 +125,10 @@ class Timetable():
       self.w2JSON = []
       self.Schedule = Schedule
       self.isValid = ""
+      self.key = ""
+   def generateKey(self):
+      for CRN in sorted(self.Schedule, key=lambda x: x.CRN):
+         self.key = self.key + str(CRN.CRN)
 
 #      for CRN in Schedule:
 #          for ts in CRN.timeslots:
