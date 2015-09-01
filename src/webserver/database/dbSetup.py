@@ -1,4 +1,5 @@
 import peewee
+from playhouse.pool import PooledMySQLDatabase
 import MySQLdb
 import datetime
 
@@ -6,7 +7,8 @@ dbname = 'MyCampusSections'
 dbuser = 'hackweek'
 dbpass = 'hackweekteam'
 
-db = peewee.MySQLDatabase(dbname, user=dbuser, passwd=dbpass)
+#db = peewee.MySQLDatabase(dbname, user=dbuser, passwd=dbpass)
+db = PooledMySQLDatabase(dbname, user=dbuser, passwd=dbpass)
 
 #Base Models for tables to avoid annoying excess code
 class BaseModel(peewee.Model):
