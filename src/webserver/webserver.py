@@ -77,6 +77,18 @@ def selectedCourses():
 	elif mingaps == "no":
 		UserPrefs.preferMinGaps = False  
 
+
+@bottle.hook('before_request')
+def _connect_db():
+   dbHandler.db.connect()
+
+@bottle.hook('after_request')
+def _close_db():
+   if not dbHandler.db.is_closed():
+      dbHandler.db.close()
+
+
+
 @bottle.route('/progress_bar.gif')
 def progress_bar():
     return bottle.static_file('progress_bar.gif', root='static/')
