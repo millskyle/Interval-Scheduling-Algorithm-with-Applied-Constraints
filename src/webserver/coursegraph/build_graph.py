@@ -27,7 +27,8 @@ def graph_optimize(query_results):
 
 
   #remove all empty sections from the query
-   query_results = [i for i in query_results if i.remainingSeats > 0 ]
+   if (UserPrefs.RespectRegistration):
+      query_results = [i for i in query_results if i.remainingSeats > 0 ]
 
 
    for i in range(10):

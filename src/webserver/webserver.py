@@ -28,6 +28,7 @@ def selectedCourses():
 	CRN3 = request.forms.get("CRN3")
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
+	respectregistration = request.forms.get("respectregistration")
 	mingaps = request.forms.get("mingaps")
 
 	UserPrefs.semester = semester
@@ -60,6 +61,11 @@ def selectedCourses():
 		UserPrefs.PreferTimeOfDay = "Evening"
 	else:
 		UserPrefs.PreferTimeOfDay = "None"
+
+	if respectregistration == "yes":
+		UserPrefs.RespectRegistration = True
+	else:
+		UserPrefs.RespectRegistration = False
 
 	UserPrefs.optimumTimeOfDay = "1200"
 

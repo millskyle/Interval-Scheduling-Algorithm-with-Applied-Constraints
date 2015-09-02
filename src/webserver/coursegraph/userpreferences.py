@@ -15,4 +15,5 @@ class UserPreferences():
       #0 for none, 1 for north, 2 for dt
       self.preferredCRNs = []
       self.preferMinGaps = True
+      self.RespectRegistration = True
 UserPrefs = UserPreferences()
