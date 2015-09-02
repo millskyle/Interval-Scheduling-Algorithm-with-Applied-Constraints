@@ -200,6 +200,8 @@ def graph_optimize(query_results):
       schedules_to_return = all_valid[0:good_schedules] + consolation[0:config.number_of_schedules_to_show_user - good_schedules]
 
    for tt in schedules_to_return:
+      if not(UserPrefs.RespectRegistration):
+         tt.warnings.append("WARNING: You chose to ignore current registration numbers. Sections on the above timetable could be full.");
       print "  Score --> ",tt.score
       print tt.key
       missingCourses(tt,requiredSections)
