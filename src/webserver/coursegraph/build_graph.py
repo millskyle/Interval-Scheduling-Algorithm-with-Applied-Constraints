@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import networkx as nx
 from JSON_io import JSON_dump
 from scraper.course import *
