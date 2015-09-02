@@ -6,7 +6,7 @@ from coursegraph import build_graph
 from bottle import request
 from coursegraph.userpreferences import UserPrefs
 
-setup = False #True 
+setup = True #True 
 dbHandler.init()
 scraperWorker = spiderworker.SpiderWorker()
 if setup:
@@ -150,7 +150,7 @@ def getAvailCourses(sem):
 	return json.dumps(dbHandler.getAvailableCourses(sem),
 					  sort_keys=True, ensure_ascii=True	)
 
-bottle.run(host='', port=8080)
+bottle.run(host='', port=80)
 if setup:
 	scraperWorker.end()
 	scraperWorker.join()
