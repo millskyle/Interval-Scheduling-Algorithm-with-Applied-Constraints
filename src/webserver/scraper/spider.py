@@ -1,5 +1,4 @@
 import scrapy
-import matplotlib.pyplot as plt
 import unicodedata
 import logging
 from scrapy.spiders import BaseSpider
