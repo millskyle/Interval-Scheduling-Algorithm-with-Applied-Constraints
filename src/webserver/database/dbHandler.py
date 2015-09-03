@@ -17,6 +17,33 @@ def __deleteTables():
 def __createTables():
 	Sectiondb.create_table(True)
 	Timeslotdb.create_table(True)
+	watches.create_table(True)
+
+
+def add_watch(semester, crn, email):
+   watches.insert(email=email,active=1,crn=crn,semester=semester).execute()
+
+
+
+def check_watches():
+   results = watches.select().where(watches.active == True)
+   print "Checking for available seats..."
+   for result in results:
+      print result.semester,result.crn
+      seatQuery = Sectiondb.select().where(Sectiondb.crn == result.crn, Sectiondb.semester == result.semester, Sectiondb.remainingseats > 0)
+      for query in seatQuery:
+         print "Send email about CRN",query.crn,"  ",query.code,query.name,"    ",query.remainingseats,"seats available"
+         deactivate = watches.update(active = False).where(watches.crn == query.crn, watches.semester==query.semester)
+         deactivate.execute()
+         print "deactivated",deactivate,"watches"
+
+
+
+
+
+
+
+
 
 def updateCourse(sec):
 	query = Sectiondb.select().\

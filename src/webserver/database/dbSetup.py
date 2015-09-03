@@ -35,3 +35,12 @@ class Timeslotdb(BaseModel):
 	day = peewee.IntegerField()
 	starttime = peewee.CharField()
 	endtime = peewee.CharField()
+
+class watches(BaseModel):
+   id = peewee.PrimaryKeyField()
+   dateadded = peewee.DateTimeField(default=datetime.datetime.now)
+   active = peewee.BooleanField(default=True)
+   email = peewee.CharField()
+   crn = peewee.CharField()
+   semester = peewee.CharField()
+

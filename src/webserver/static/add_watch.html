@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>UOIT Course Availability Watch</title>
+		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="addwatch.js"></script>
+
+
+</head>
+
+	<body>
+
+		<form id="form" action="addwatch" method="post" onsubmit="selectAllOptions('l3');selectAllOptions('l6');">
+
+ <div class='main'>
+
+		<h1 align="center">Course Availability Watch</h1>
+
+			
+<div class='question'>	
+   <strong>CRN: </strong> <br>
+</div>
+<div class='options' >
+   <input type="number" name="crn" min="10000" class='prefcrn'> 
+</div>
+
+
+<div class='question'>
+   <strong>Semester</strong>  
+</div>
+<div class='options' >
+   <input type="number" name="semester" min="10000" class='prefcrn'> 
+</div>
+
+
+<br>
+<div class='question'>
+   <strong>Email</strong>  
+</div>
+<div class='options' >
+   <input type="text" name="email"   width="500px"> 
+</div>
+
+
+
+
+
+<div style='text-align:center'><input type="submit" value="Submit" class='submitbutton' /></div>
+
+
+</form>
+
+<center><img src="uoit.svg" width='100%'/></center>
+
+
+
+</div>
+
+	</body>
+</html>

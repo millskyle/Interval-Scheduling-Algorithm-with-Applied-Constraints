@@ -6,11 +6,14 @@ from coursegraph import build_graph
 from bottle import request
 from coursegraph.userpreferences import UserPrefs
 
-setup = True #True 
+setup = False #True 
 dbHandler.init()
 scraperWorker = spiderworker.SpiderWorker()
 if setup:
 	scraperWorker.start()
+
+
+
 
 
 def selectedCourses():
@@ -124,6 +127,19 @@ def style():
 def input():
     return bottle.static_file('input.js', root='static/')
 
+@bottle.route('/add_watch')
+def index():
+   return bottle.static_file('add_watch.html', root='static/')
+
+
+@bottle.route('/addwatch', method="POST")
+def add_watch():
+   crn = request.forms.getall("crn")[0]
+   semester = request.forms.getall("semester")[0]
+   email = request.forms.getall("email")[0]
+   dbHandler.add_watch(semester,crn,email)
+   return bottle.static_file('thank-you.html', root='static/')
+
 @bottle.route('/input_form', method="POST")
 def getCalendar():
 	#Now begin the process of querying the db
@@ -150,6 +166,7 @@ def getAvailCourses(sem):
 	return json.dumps(dbHandler.getAvailableCourses(sem),
 					  sort_keys=True, ensure_ascii=True	)
 
+dbHandler.check_watches()
 bottle.run(host='', port=80)
 if setup:
 	scraperWorker.end()
