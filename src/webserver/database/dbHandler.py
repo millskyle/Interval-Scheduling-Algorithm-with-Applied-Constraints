@@ -53,7 +53,7 @@ has {seats} seats available. """.format(code=query.code, name = query.name, seat
          print "URL: ",url
          urllib2.urlopen(url, urlencode(post))
          deactivate = watches.update(active = False).where(watches.crn == query.crn, watches.semester==query.semester)
-#         deactivate.execute()
+         deactivate.execute()
          print "deactivated",deactivate,"watches"
 
 
