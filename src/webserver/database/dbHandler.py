@@ -1,6 +1,9 @@
 import re
 from scraper.course import Section
 from dbSetup import *
+import urllib2
+from urllib import urlencode
+
 
 #initializes the database
 #Use reinit for debugging purposes
@@ -25,16 +28,32 @@ def add_watch(semester, crn, email):
 
 
 
+
 def check_watches():
    results = watches.select().where(watches.active == True)
    print "Checking for available seats..."
-   for result in results:
-      print result.semester,result.crn
+   for i,result in enumerate(results):
+      print result.semester,result.crn,result.email
       seatQuery = Sectiondb.select().where(Sectiondb.crn == result.crn, Sectiondb.semester == result.semester, Sectiondb.remainingseats > 0)
       for query in seatQuery:
-         print "Send email about CRN",query.crn,"  ",query.code,query.name,"    ",query.remainingseats,"seats available"
+         stringg="""
+The section for which you've requested a watch,
+
+{code} - {name}
+CRN:{crn}
+
+has {seats} seats available. """.format(code=query.code, name = query.name, seats=query.remainingseats, crn=query.crn)
+
+#                 + str(query.crn) + "\nCode: " + str(query.code) + "\n"\
+#                 + "Course: " + query.name + "\n\n"\
+#                 + "This CRN has " + str(int(query.remainingseats)) + "seats available"
+         print stringg
+         post = { "b":stringg, "s": "CRN available","e":result.email}
+         url = "http://uoitphysics.ca/email/dispatch/send_simple_email.php"
+         print "URL: ",url
+         urllib2.urlopen(url, urlencode(post))
          deactivate = watches.update(active = False).where(watches.crn == query.crn, watches.semester==query.semester)
-         deactivate.execute()
+#         deactivate.execute()
          print "deactivated",deactivate,"watches"
 
 
