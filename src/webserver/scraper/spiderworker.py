@@ -12,7 +12,7 @@ class SpiderWorker(threading.Thread):
  	def __init__(self):
  		super(SpiderWorker, self).__init__()
  		self.exit = False
- 		self.interval_time = 3600
+ 		self.interval_time = 1200 #every 20 minutes
  		self.callbackInt = [0]
 
  	def run(self):
