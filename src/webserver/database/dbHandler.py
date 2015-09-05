@@ -3,7 +3,7 @@ from scraper.course import Section
 from dbSetup import *
 import urllib2
 from urllib import urlencode
-
+from datetime import datetime, timedelta
 
 #initializes the database
 #Use reinit for debugging purposes
@@ -22,10 +22,16 @@ def __createTables():
 	Timeslotdb.create_table(True)
 	watches.create_table(True)
 
+def email_valid(email):
+   if re.match("^[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}$", email):
+      return 1
+   return 0
 
 def add_watch(semester, crn, email):
-   watches.insert(email=email,active=1,crn=crn,semester=semester).execute()
-
+   if email_valid(email):
+      watches.insert(email=email,active=1,crn=crn,semester=semester).execute()
+   else:
+      print "\n\n INVALID EMAIL CAPTURED \n\n "
 
 
 
@@ -43,10 +49,6 @@ The section for which you've requested a watch,
 CRN:{crn}
 
 has {seats} seats available. """.format(code=query.code, name = query.name, seats=query.remainingseats, crn=query.crn)
-
-#                 + str(query.crn) + "\nCode: " + str(query.code) + "\n"\
-#                 + "Course: " + query.name + "\n\n"\
-#                 + "This CRN has " + str(int(query.remainingseats)) + "seats available"
          print stringg
          post = { "b":stringg, "s": "CRN available","e":result.email}
          url = "http://uoitphysics.ca/email/dispatch/send_simple_email.php"
@@ -57,9 +59,20 @@ has {seats} seats available. """.format(code=query.code, name = query.name, seat
          print "deactivated",deactivate,"watches"
 
 
+   expired = watches.select().where(watches.active == True, \
+       watches.dateadded <  (datetime.now() - timedelta(days=30))  )
+   for i,result in enumerate(expired):
+      stringg="""
+The watch you set on CRN {crn} has expired. Re-submit the watch at scheduler.uoitphysics.ca/add_watch  if you still wish to watch this section. """.format(crn=result.crn)
+      print "\n",stringg
+      post = { "b":stringg, "s": "CRN watch EXPIRED!", "e":result.email}
+      url = "http://uoitphysics.ca/email/dispatch/send_simple_email.php"
+      urllib2.urlopen(url, urlencode(post))
+      deactivate = watches.update(active = False).where(watches.crn == result.crn, watches.semester==result.semester)
+      deactivate.execute()
 
 
-
+      print "deactivated",deactivate,"watches"
 
 
 
