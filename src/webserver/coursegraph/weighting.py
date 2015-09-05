@@ -53,7 +53,7 @@ def gap_minimize(Schedule):
       if (ts2.day==ts1.day) and (int(ts2.sTime) - int(ts1.eTime)) > 20.:
          weight -= (int(ts2.sTime) - int(ts1.eTime))
 
-   return 100.*weight/len(Schedule)
+   return 10.*weight/len(Schedule)
 
 
 
