@@ -36,6 +36,20 @@ def add_watch(semester, crn, email):
 
 
 def check_watches():
+   #remove expired watches first
+   expired = watches.select().where(watches.active == True, \
+       watches.dateadded <  (datetime.now() - timedelta(days=30))  )
+   for i,result in enumerate(expired):
+      stringg="""
+The watch you set on CRN {crn} has expired. Re-submit the watch at scheduler.uoitphysics.ca/add_watch  if you still wish to watch this section. """.format(crn=result.crn)
+      print "\n",stringg
+      post = { "b":stringg, "s": "CRN watch EXPIRED!", "e":result.email}
+      url = "http://uoitphysics.ca/email/dispatch/send_simple_email.php"
+      urllib2.urlopen(url, urlencode(post))
+      deactivate = watches.update(active = False).where(watches.crn == result.crn, watches.semester==result.semester)
+      deactivate.execute()
+
+   #check for 
    results = watches.select().where(watches.active == True)
    print "Checking for available seats..."
    for i,result in enumerate(results):
@@ -57,23 +71,6 @@ has {seats} seats available. """.format(code=query.code, name = query.name, seat
          deactivate = watches.update(active = False).where(watches.crn == query.crn, watches.semester==query.semester)
          deactivate.execute()
          print "deactivated",deactivate,"watches"
-
-
-   expired = watches.select().where(watches.active == True, \
-       watches.dateadded <  (datetime.now() - timedelta(days=30))  )
-   for i,result in enumerate(expired):
-      stringg="""
-The watch you set on CRN {crn} has expired. Re-submit the watch at scheduler.uoitphysics.ca/add_watch  if you still wish to watch this section. """.format(crn=result.crn)
-      print "\n",stringg
-      post = { "b":stringg, "s": "CRN watch EXPIRED!", "e":result.email}
-      url = "http://uoitphysics.ca/email/dispatch/send_simple_email.php"
-      urllib2.urlopen(url, urlencode(post))
-      deactivate = watches.update(active = False).where(watches.crn == result.crn, watches.semester==result.semester)
-      deactivate.execute()
-
-
-      print "deactivated",deactivate,"watches"
-
 
 
 
