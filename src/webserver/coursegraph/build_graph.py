@@ -182,7 +182,6 @@ def graph_optimize(query_results):
    all_valid = sorted(all_valid, key = lambda x: x.score, reverse=True)
    consolation = sorted(consolation, key = lambda x: len(x.Schedule), reverse=True)
 
-
    if globalFailure:
       print "FAILURE to find even one valid schedule"
 
@@ -209,6 +208,8 @@ def graph_optimize(query_results):
       last_course = ""
       stringg = ""
       for CRN in sorted(tt.Schedule, key=lambda x: x.course):
+         if CRN.remainingSeats == 0:
+            tt.warnings.append(CRN.course + " " + CRN.cType + " is full (CRN " + str(CRN.CRN) + ").")
          if not(CRN.course == last_course):
             tt.notes.append(stringg)
             stringg = CRN.course + ": "
@@ -217,7 +218,6 @@ def graph_optimize(query_results):
             stringg = stringg + ", "
          stringg = stringg + CRN.CRN #+ ", "
       tt.notes.append(stringg)
-
 
       print len(tt.Schedule)
       for wn in tt.warnings:

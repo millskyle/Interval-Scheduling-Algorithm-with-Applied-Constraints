@@ -78,6 +78,9 @@ def course_density(Schedule):
 def compute_schedule_score(Schedule):
    score = 0.0
 
+   #Penalize timetables where sections are full
+   score -= sum( [ 1 if x.remainingSeats == 0 else 0 for x in Schedule ]  ) * 1e4
+
    score += optimumTimeOfDay(Schedule)
 
    if not(UserPrefs.preferredCampus=="None"):
