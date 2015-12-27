@@ -12,14 +12,18 @@ body {
 
 .mainWrap {
    margin:auto;
-   border: solid 10px #0077A8;
+   border: solid 8px #0077A8;
    border-radius: 30px;
    width: 90%;
    background: #FFF;
-   height:10%;
+   height:1800px;
    min-height:60px;
    min-width:600px;
-   padding-bottom:20px;
+   padding:20px;
+}
+
+.calArea {
+
 }
 
 
@@ -67,7 +71,7 @@ button:hover {
    background:#fff;
    width:45%;
    min-width:600px;
-   margin:20px;
+   margin:1%;
    float:left;
    border: solid 3px #0077A8;
    border-radius: 10px;
