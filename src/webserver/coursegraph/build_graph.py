@@ -38,7 +38,7 @@ def graph_optimize(query_results):
 #  SOME CONFIGURATION:
    calculate_how_many = config.generate_this_many_schedules
    max_attempts = config.maximum_attempts_per_schedule
-
+   write_stats = config.write_out_stats
 ##start code
 
 #   query_results = generate_dense_data() #uncomment this and the next line to use fake course data
@@ -164,8 +164,6 @@ def graph_optimize(query_results):
             newsched.append(thisTimeTable.Schedule[i])
       thisTimeTable.Schedule = newsched
 
-
-
       if not(failure):
          thisTimeTable.isValid = "VALID"
          globalFailure = False
@@ -176,9 +174,10 @@ def graph_optimize(query_results):
          consolation.append(thisTimeTable)
          thisTimeTable.isValid = "INVALID"
 
+
    # Sort the valid timetable list by score, and the consolation list by
    # the number of events (we'd rather a lower score, if it has more of the
-   # requested courses.
+   # requested courses).
    all_valid = sorted(all_valid, key = lambda x: x.score, reverse=True)
    consolation = sorted(consolation, key = lambda x: len(x.Schedule), reverse=True)
 
@@ -188,15 +187,33 @@ def graph_optimize(query_results):
    good_schedules = len(all_valid)
    for tt in all_valid:
       tt.generateKey()
-      print tt.key
 
    unique_valid = len(set(all_valid))
+
+   max_score = all_valid[0].score
+
+
+   if config.write_out_stats:
+      stats = open("statistics.txt",'a')
+      stats.write("{0}\t{1}\t{2}\t{3}\t{4}\n".format(
+         config.generate_this_many_schedules,
+         config.maximum_attempts_per_schedule,
+         unique_valid,
+         len(all_valid),
+         max_score
+      ))
+      stats.close()
+
+
+
+
    print "UNIQUE SCHEDULES POSSIBLE: {0} (of {1} valid schedules)".format(unique_valid,len(all_valid))
 
    if good_schedules >= config.number_of_schedules_to_show_user:
       schedules_to_return = all_valid[0:config.number_of_schedules_to_show_user]
    else:
       schedules_to_return = all_valid[0:good_schedules] + consolation[0:config.number_of_schedules_to_show_user - good_schedules]
+
 
    for tt in schedules_to_return:
       if not(UserPrefs.RespectRegistration):
