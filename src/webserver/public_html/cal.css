@@ -14,18 +14,10 @@ body {
    margin:auto;
    border: solid 8px #0077A8;
    border-radius: 30px;
-   width: 90%;
+   width: 1400px;
    background: #FFF;
-   height:1800px;
-   min-height:60px;
-   min-width:600px;
    padding:20px;
 }
-
-.calArea {
-
-}
-
 
 button {
    margin-top:10px;
@@ -69,15 +61,21 @@ button:hover {
 .mycalendar {
    position:relative;
    background:#fff;
-   width:45%;
-   min-width:600px;
+   width:666px;
+   height:525px;
    margin:1%;
    float:left;
    border: solid 3px #0077A8;
    border-radius: 10px;
-   min-height:500px;
    color:black;
    /*display:inline-block; */
+}
+
+.warningsarea {
+   background:#fff;
+   width:50%;
+   min-width:300px;
+   margin:auto; 
 }
 
 .fc-view {
@@ -87,21 +85,20 @@ button:hover {
 .calnotes {
        position: relative;
        margin-bottom:5px;
-       width:40%;
+       width:100%;
        border: solid 10px #FFFFFF;
        border-radius:5px;
        float:left;
-
 }
 
 .warnings{
    background: #FF6666;
-       border: solid 10px #FF6666;
+   border: solid 10px #FF6666;
 }
 
 .notes {
    background: #F0FCFF;
-       border: solid 10px #F0FCFF;
+   border: solid 2px #F0FCFF;
 }
 
 
@@ -111,6 +108,6 @@ button:hover {
    font-weight: 40;
    color: #0077A8;
 }
-.calcontainer {
+.calContainer {
    float:left;
 }
