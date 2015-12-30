@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import networkx as nx
 from JSON_io import JSON_dump
 from scraper.course import *
@@ -27,7 +26,8 @@ def graph_optimize(query_results):
 
 
   #remove all empty sections from the query
-   query_results = [i for i in query_results if i.remainingSeats > 0 ]
+   if (UserPrefs.RespectRegistration):
+      query_results = [i for i in query_results if i.remainingSeats > 0 ]
 
 
    for i in range(10):
@@ -38,7 +38,7 @@ def graph_optimize(query_results):
 #  SOME CONFIGURATION:
    calculate_how_many = config.generate_this_many_schedules
    max_attempts = config.maximum_attempts_per_schedule
-
+   write_stats = config.write_out_stats
 ##start code
 
 #   query_results = generate_dense_data() #uncomment this and the next line to use fake course data
@@ -164,8 +164,6 @@ def graph_optimize(query_results):
             newsched.append(thisTimeTable.Schedule[i])
       thisTimeTable.Schedule = newsched
 
-
-
       if not(failure):
          thisTimeTable.isValid = "VALID"
          globalFailure = False
@@ -176,12 +174,12 @@ def graph_optimize(query_results):
          consolation.append(thisTimeTable)
          thisTimeTable.isValid = "INVALID"
 
+
    # Sort the valid timetable list by score, and the consolation list by
    # the number of events (we'd rather a lower score, if it has more of the
-   # requested courses.
+   # requested courses).
    all_valid = sorted(all_valid, key = lambda x: x.score, reverse=True)
    consolation = sorted(consolation, key = lambda x: len(x.Schedule), reverse=True)
-
 
    if globalFailure:
       print "FAILURE to find even one valid schedule"
@@ -189,9 +187,26 @@ def graph_optimize(query_results):
    good_schedules = len(all_valid)
    for tt in all_valid:
       tt.generateKey()
-      print tt.key
 
    unique_valid = len(set(all_valid))
+
+   max_score = all_valid[0].score
+
+
+   if config.write_out_stats:
+      stats = open("statistics.txt",'a')
+      stats.write("{0}\t{1}\t{2}\t{3}\t{4}\n".format(
+         config.generate_this_many_schedules,
+         config.maximum_attempts_per_schedule,
+         unique_valid,
+         len(all_valid),
+         max_score
+      ))
+      stats.close()
+
+
+
+
    print "UNIQUE SCHEDULES POSSIBLE: {0} (of {1} valid schedules)".format(unique_valid,len(all_valid))
 
    if good_schedules >= config.number_of_schedules_to_show_user:
@@ -199,7 +214,10 @@ def graph_optimize(query_results):
    else:
       schedules_to_return = all_valid[0:good_schedules] + consolation[0:config.number_of_schedules_to_show_user - good_schedules]
 
+
    for tt in schedules_to_return:
+      if not(UserPrefs.RespectRegistration):
+         tt.warnings.append("WARNING: You chose to ignore current registration numbers. Sections on the above timetable could be full.");
       print "  Score --> ",tt.score
       print tt.key
       missingCourses(tt,requiredSections)
@@ -207,6 +225,8 @@ def graph_optimize(query_results):
       last_course = ""
       stringg = ""
       for CRN in sorted(tt.Schedule, key=lambda x: x.course):
+         if CRN.remainingSeats == 0:
+            tt.warnings.append(CRN.course + " " + CRN.cType + " is full (CRN " + str(CRN.CRN) + ").")
          if not(CRN.course == last_course):
             tt.notes.append(stringg)
             stringg = CRN.course + ": "
@@ -215,7 +235,6 @@ def graph_optimize(query_results):
             stringg = stringg + ", "
          stringg = stringg + CRN.CRN #+ ", "
       tt.notes.append(stringg)
-
 
       print len(tt.Schedule)
       for wn in tt.warnings:

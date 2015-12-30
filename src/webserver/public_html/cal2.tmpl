@@ -36,61 +36,83 @@
 			%end
 		});
 	</script>
+
+   <style>
+      .logo-sprite {
+         background-image:url('./uoit.svg');
+         background-size:800px;
+         display:inline-block;
+         width:300px;
+         height:200px;
+      }
+   </style>
 </HEAD>
 <body>
  <div class='mainWrap' >
- <div class='buttonwrap'>
-	<div id ="buttonArea" class='buttonArea'>
-		Pick Your Schedule:
-		%for i in range(len(calendars)):
-			<button id="button{{i}}">
-				{{i+1}}
-			</button>
-		%end		
-	</div>
+   
+   <div class='buttonwrap'>
+	   <div id ="buttonArea" class='buttonArea'>
+		   Pick Your Schedule:
+		   %for i in range(len(calendars)):
+			   <button id="button{{i}}">
+			   	{{i+1}}
+			   </button>
+		   %end		
+	   </div>
    </div>
+     
+   <div class='calCanvas'> 
+	   %for i in range(len(calendars)):
+		   <div id="cal{{i}}" class='calContainer'>
+			   <!-- <div class='calArea'> -->
+               <!-- <div class='calsubarea'> -->
+                  <div class='mycalendar' id='w1mycalendar{{i}}' >
+                     <div class='weektitle'>Week 1</div>
+						   <div id='calendar{{i}}'></div>
+					   </div>
+
+					   <div class='mycalendar' id='w2mycalendar{{i}}' >
+                     <div class='weektitle'>Week 2</div>
+						   <div id='calendarw2{{i}}'></div>
+					   </div>
+               <!-- </div>  calsubarea -->
+           <!-- </div>  calArea -->
+          
+            <div  class='warningsarea' > 
+				   <div class='calnotes notes'> 
+					   %for note in calendars[i][2]: 
+					   	{{note}} <br /> 
+					   %end 
+				   </div> 
+					%for warning in calendars[i][3]: 
+				   <div class='calnotes warnings'> 
+					   	{{warning}} <br /> 
+				   </div> 
+					%end
+
+  <div class='calnotes notes' style='color:white;background:#0077a8;border:solid 10px #0077a8' >
+   Is a section you really want full?  <a href='./add_watch' target='_blank'>Click here</a> to get an email if someone drops the course. 
+   </div>
+
+
+
+           </div> <!-- warningsarea -->
+		  </div> 
+		%end 
 	
-   <div id='calCanvas' class='calCanvas'>
-		%for i in range(len(calendars)):
-			<div id="cal{{i}}" class='calContainer'>
-				<div class='calArea'>
-            <div class='calsubarea' >
-               <div class='mycalendar' id='w1mycalendar{{i}}' >
-               <div class='weektitle'>Week 1</div>
-						<div id='calendar{{i}}'></div>
+<div style='margin:275px;width:600px;display:inline;' >
+        <a href='http://faculty.uoit.ca/itamblyn' target='_blank'><div class='logo-sprite' style="background-position-x:0px;"></div></a>
+        <a href='https://github.com/millskyle/Interval-Scheduling-Algorithm-with-Applied-Constraints/' target='_blank'><div class='logo-sprite' style="background-position-x:-300px;"></div></a>
+        <a href='http://uoit.ca' target='_blank'>
+           <div class='logo-sprite' style="background-position-x:-550px;"></div>
+        </a>
+</div>
 
+ 
+    
+    </div> 
 
-
-
-					</div>
-
-					<div class='mycalendar' id='w2mycalendar{{i}}' >
-               <div class='weektitle'>Week 2</div>
-						<div id='calendarw2{{i}}'></div>
-					</div>
-               </div>
-
-          </div>
-          <br><br><br>
-          <div id='warningsarea' >
-
-				<div class='calnotes notes'>
-					%for note in calendars[i][2]:
-						{{note}} <br />
-					%end
-				</div>
-					%for warning in calendars[i][3]:
-				<div class='calnotes warnings'>
-						{{warning}} <br />
-				</div>
-					%end
-
-          </div>
-		  </div>
-		%end	
-	</div>
-
-  </div> 
+   </div> 
 
 
 <script>
@@ -117,14 +139,6 @@ $(document).ready(function() {
 	%end
 });
 </script>
-
-
-
-<div style="margin:100px">
-          <center><img src="uoit.svg" class="logos" /></center>
-          </div>
-
-
 
 </body>
 </HTML>

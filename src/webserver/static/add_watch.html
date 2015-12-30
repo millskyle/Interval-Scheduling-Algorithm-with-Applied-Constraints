@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>UOIT Course Availability Watch</title>
+		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="addwatch.js"></script>
+
+
+</head>
+
+	<body>
+
+		<form id="form" action="addwatch" method="post" onsubmit="selectAllOptions('l3');selectAllOptions('l6');">
+
+ <div class='main'>
+
+		<h2 align="center">Course Availability Watch</h2>
+<h3 align='center'> BETA </h3>
+
+This tool will notify you when seats are available in a particular CRN. If a section is full, enter the CRN, the semester, and your email.  We'll watch the UOIT website and let you know if space becomes available (for example, if somebody drops the course).
+
+			
+
+
+<div class='question'>
+   <strong>Semester</strong>  
+</div>
+<div class='options' >
+  <select id="semester" name="semester">
+    <option value="201509">Fall 2015</option>
+    <option value="201601">Winter 2016</option>
+  </select>
+</div>
+
+
+<div class='question'>	
+   <strong>CRN: </strong> <br>
+</div>
+<div class='options' >
+   <input type="number" name="crn" min="10000" width="100px"> 
+</div>
+
+
+<br>
+<div class='question'>
+   <strong>Email</strong>  
+</div>
+<div class='options' >
+   <input type="text" name="email"   width="500px">  (we will not share your email with anyone).
+</div>
+
+
+
+
+<div style='text-align:center'><input type="submit" value="Submit" class='submitbutton' /></div>
+
+
+</form>
+
+<center><img src="uoit.svg" width='100%'/></center>
+
+
+
+</div>
+
+	</body>
+</html>

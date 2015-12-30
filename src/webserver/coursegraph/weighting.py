@@ -53,7 +53,7 @@ def gap_minimize(Schedule):
       if (ts2.day==ts1.day) and (int(ts2.sTime) - int(ts1.eTime)) > 20.:
          weight -= (int(ts2.sTime) - int(ts1.eTime))
 
-   return 100.*weight/len(Schedule)
+   return 10.*weight/len(Schedule)
 
 
 
@@ -77,6 +77,9 @@ def course_density(Schedule):
 
 def compute_schedule_score(Schedule):
    score = 0.0
+
+   #Penalize timetables where sections are full
+   score -= sum( [ 1 if x.remainingSeats == 0 else 0 for x in Schedule ]  ) * 1e5
 
    score += optimumTimeOfDay(Schedule)
 

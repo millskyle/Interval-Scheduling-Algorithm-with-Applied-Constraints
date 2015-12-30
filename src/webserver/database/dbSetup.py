@@ -1,4 +1,5 @@
 import peewee
+from playhouse.pool import PooledMySQLDatabase
 import MySQLdb
 import datetime
 
@@ -6,7 +7,8 @@ dbname = 'MyCampusSections'
 dbuser = 'hackweek'
 dbpass = 'hackweekteam'
 
-db = peewee.MySQLDatabase(dbname, user=dbuser, passwd=dbpass)
+#db = peewee.MySQLDatabase(dbname, user=dbuser, passwd=dbpass)
+db = PooledMySQLDatabase(dbname, user=dbuser, passwd=dbpass)
 
 #Base Models for tables to avoid annoying excess code
 class BaseModel(peewee.Model):
@@ -33,3 +35,12 @@ class Timeslotdb(BaseModel):
 	day = peewee.IntegerField()
 	starttime = peewee.CharField()
 	endtime = peewee.CharField()
+
+class watches(BaseModel):
+   id = peewee.PrimaryKeyField()
+   dateadded = peewee.DateTimeField(default=datetime.datetime.now)
+   active = peewee.BooleanField(default=True)
+   email = peewee.CharField()
+   crn = peewee.CharField()
+   semester = peewee.CharField()
+

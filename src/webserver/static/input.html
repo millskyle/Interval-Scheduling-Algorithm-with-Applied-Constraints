@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-
 <html>
 
 	<head>
 		<title>UOIT Course Schedule Optimizer</title>
 		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="input.js"></script>
-
-
-     <script language="javascript" type="text/javascript">
-     function showDiv() {
-        $('#loading').show();
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+		<script src="input.js"></script>     
+      <script language="javascript" type="text/javascript">
+         function showDiv() {
+            $('#loading').show();
          } ;  
-</script>
+      </script>
+<style>
+  .logo-sprite {
+    background-image:url('./uoit.svg');
+    background-size:800px;
+    display:inline-block;
+    width:300px;
+    height:200px;
 
+}
+</style>
 
-
-
-</head>
-
+   </head>
 	<body>
 
-<!--  
+
       <div id="loading">
       <br><br><br>
         <img src="progress_bar.gif" id="loading-image">    
         <br>
-        <h2 align="center">Loading Schedules...</h2>
-        <div style="margin:100px">
-        <center><img src="uoit.svg" width='70%'/></center>
-        </div>
+        <h2 align="center">Loading...</h2> 
+        <a href='http://faculty.uoit.ca/itamblyn' target='_blank'><div class='logo-sprite' style="background-position-x:0px;"></div></a>
+        <a href='https://github.com/millskyle/Interval-Scheduling-Algorithm-with-Applied-Constraints/' target='_blank'><div class='logo-sprite' style="background-position-x:-300px;"></div></a>
+        <a href='http://uoit.ca' target='_blank'><div class='logo-sprite' style="background-position-x:-550px;"></div></a>
       </div>
--->
-
 
 
 
 		<form id="form" action="input_form" method="post" onsubmit="return showDiv(); selectAllOptions('l3');selectAllOptions('l6');">
 
- <div class='main'>
+      <div class='main'>
 
-		<h1 align="center">UOIT Course Optimizer</h1>
-
-		<center><img style="width:75%" src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br>
+	   <h1 align="center">UOIT Course Optimizer</h1>
+		<!-- <center><img style="width:75%" src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br> -->
 
 		<p>
-		The UOIT Course Optimizer was created by students, for students, as a tool to identify the best possible timetable for each students' specific needs.  To create your ideal school schedule, input your semester, choose the courses you must take, and then set any preference you may have.  Click "Submit" to see the five best schedules according to your preferences. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">on UOIT's website here</a>.
-		</p>
+		The UOIT Course Optimizer was created by students, for students, as a tool to identify the best possible timetable for each student's specific needs.  Note that this schedule generation tool is not a service provided by UOIT, and it is not supported or maintained by anyone affiliated with the registrar, IT Services or other UOIT staff. 
+      </p>
 
 		<h2>Semester</h2>
 			<p>
@@ -57,7 +57,7 @@
 			</p>
 		<h2>Courses</h2>
 			<!-- <h3>Mandatory Courses</h3> -->
-          Choose the courses you must take.
+          Choose the courses you must take. See the <a href="http://www.uoit.ca/calendar/">UOIT Course Calendar</a> if you can't remember what courses you must take.
 				<p>
 				<!-- <span>*</span>Selec the courses to include: -->
             <table align="center">
@@ -137,18 +137,6 @@
 </div>
 <br>
 
-  			  
-<div class='question'>
-   <strong>Would you like us to try and avoid specific times of day?</strong> We will actively avoid scheduling classes during these periods (if possible).        
-</div>
-<div class='options'>
-<div class='option' ><input type="radio" name="class_pref" value="morning">Morning (8am-12pm) </div>
-<div class='option' ><input type="radio" name="class_pref" value="afternoon">Afternoon (12pm-5pm)</div>
-<div class='option' ><input type="radio" name="class_pref" value="evening">Evening (5pm-10pm)</div>
-<div class='option' ><input type="radio" name="class_pref" value="none" checked>None</div>
-
-</div>
-<br>
 
 <div class='question-group'>
   <div class='question' >
@@ -173,7 +161,22 @@
 
 
 
-  <div class='question' > <strong>Would you like us to minimise gaps between classes?</strong>: Some students prefer to have all of their classes condensed with fewer breaks in between classes.  If this is you, enable this option. (Note that <strong>not</strong> enabling this option does not spread out classes) </div>
+<div class='question'>
+   <strong>Would you like us to try and avoid specific times of day?</strong> We will actively avoid scheduling classes during these periods (if possible).        
+</div>
+<div class='options'>
+<div class='option' ><input type="radio" name="class_pref" value="morning">Morning (8am-12pm) </div>
+<div class='option' ><input type="radio" name="class_pref" value="afternoon">Afternoon (12pm-5pm)</div>
+<div class='option' ><input type="radio" name="class_pref" value="evening">Evening (5pm-10pm)</div>
+<div class='option' ><input type="radio" name="class_pref" value="none" checked>None</div>
+
+</div>
+<br>
+
+
+
+
+  <div class='question' > <strong>Would you like us to minimise gaps between classes?</strong> Some students prefer to have all of their classes condensed with fewer breaks in between classes.  If this is you, enable this option. (Note that <strong>not</strong> enabling this option does not spread out classes) </div>
 <div class="options">
   <div class="option">
     <input type="radio" name="mingaps" value="yes">Yes
@@ -183,17 +186,37 @@
   </div>
 </div>
 
+
+
+<div class='question' > <strong>Respect current registration numbers?</strong> By default, we will not include sections that are full.  If you'd like to ignore current registration numbers and include (possibly) courses that are full, then choose "no".
+</div>
+<div class="options" >
+<div class="option" >
+<input type="radio" name="respectregistration" value="yes" checked>Yes
+</div>
+<div class="option" >
+<input type="radio" name="respectregistration" value="no">No
+</div>
+</div>
 				</p>
 			<div style='text-align:center'><input type="submit" value="Submit" class='submitbutton' /></div>
 
+
+
+
+
+
 		</form>
 
-		<center><img src="uoit.svg" width='100%'/></center>
+      <a href='http://faculty.uoit.ca/itamblyn' target='_blank'><div class='logo-sprite' style="background-position-x:0px;"></div></a>
+      <a href='https://github.com/millskyle/Interval-Scheduling-Algorithm-with-Applied-Constraints/' target='_blank'><div class='logo-sprite' style="background-position-x:-300px;"></div></a>
+      <a href='http://uoit.ca' target='_blank'><div class='logo-sprite' style="background-position-x:-550px;"></div></a>
+ 
 
      <script language="javascript" type="text/javascript">
         $(window).load(function() {
           $('#loading').hide(); 
-        });  
+         });  
 </script>
 
 

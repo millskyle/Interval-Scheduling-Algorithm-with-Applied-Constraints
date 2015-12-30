@@ -13,6 +13,7 @@ if setup:
 	scraperWorker.start()
 
 
+
 def selectedCourses():
 	semester = request.forms.get("semester")
 	campus_pref = request.forms.get("campus_pref")
@@ -28,6 +29,7 @@ def selectedCourses():
 	CRN3 = request.forms.get("CRN3")
 	CRN4 = request.forms.get("CRN4")
 	CRN5 = request.forms.get("CRN5")
+	respectregistration = request.forms.get("respectregistration")
 	mingaps = request.forms.get("mingaps")
 
 	UserPrefs.semester = semester
@@ -61,6 +63,11 @@ def selectedCourses():
 	else:
 		UserPrefs.PreferTimeOfDay = "None"
 
+	if respectregistration == "yes":
+		UserPrefs.RespectRegistration = True
+	else:
+		UserPrefs.RespectRegistration = False
+
 	UserPrefs.optimumTimeOfDay = "1200"
 
 	if campus_pref == "none":
@@ -76,6 +83,18 @@ def selectedCourses():
 		UserPrefs.preferMinGaps = True
 	elif mingaps == "no":
 		UserPrefs.preferMinGaps = False  
+
+
+@bottle.hook('before_request')
+def _connect_db():
+   dbHandler.db.connect()
+
+@bottle.hook('after_request')
+def _close_db():
+   if not dbHandler.db.is_closed():
+      dbHandler.db.close()
+
+
 
 @bottle.route('/progress_bar.gif')
 def progress_bar():
@@ -106,6 +125,19 @@ def style():
 def input():
     return bottle.static_file('input.js', root='static/')
 
+@bottle.route('/add_watch')
+def index():
+   return bottle.static_file('add_watch.html', root='static/')
+
+
+@bottle.route('/addwatch', method="POST")
+def add_watch():
+   crn = request.forms.getall("crn")[0]
+   semester = request.forms.getall("semester")[0]
+   email = request.forms.getall("email")[0]
+   dbHandler.add_watch(semester,crn,email)
+   return bottle.static_file('thank-you.html', root='static/')
+
 @bottle.route('/input_form', method="POST")
 def getCalendar():
 	#Now begin the process of querying the db
@@ -132,7 +164,7 @@ def getAvailCourses(sem):
 	return json.dumps(dbHandler.getAvailableCourses(sem),
 					  sort_keys=True, ensure_ascii=True	)
 
-bottle.run(host='', port=8080)
+bottle.run(host='', port=80)
 if setup:
 	scraperWorker.end()
 	scraperWorker.join()

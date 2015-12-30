@@ -5,6 +5,10 @@
 
 ###Dependencies:
 
+- MySQL Server
+
+```sudo apt-get install mysql-server```
+
 - Scrapy (Python web scraping package)
 
 ```sudo pip install scrapy```

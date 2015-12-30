@@ -6,12 +6,13 @@ from twisted.internet import reactor
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
 from multiprocessing import Process
+from database import dbHandler
 
 class SpiderWorker(threading.Thread):
  	def __init__(self):
  		super(SpiderWorker, self).__init__()
  		self.exit = False
- 		self.interval_time = 7200
+ 		self.interval_time = 1200 #every 20 minutes
  		self.callbackInt = [0]
 
  	def run(self):
@@ -35,8 +36,10 @@ class SpiderWorker(threading.Thread):
 
  	def runProcess(self):
  		configure_logging()
+		dbHandler.check_watches()
  		runner = CrawlerRunner()
 		runner.crawl(spider.available_courses_spider)
+		dbHandler.check_watches()
 		d = runner.join()
 		d.addBoth(lambda _: reactor.stop())
 

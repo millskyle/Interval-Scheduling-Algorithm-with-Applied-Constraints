@@ -12,8 +12,8 @@ function loadXMLDoc() {
 		url: '/getAvailableCourses/'+sem,
 		success: function(data){
 			courses = JSON.parse(data);
+			$('#l1').empty();
 			if(!courses){
-				$('#l1').empty();
 				$('#l4').empty();
 			}
 			$.each(courses[sem], function(key, value) {   
