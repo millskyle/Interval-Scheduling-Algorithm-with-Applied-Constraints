@@ -190,7 +190,10 @@ def graph_optimize(query_results):
 
    unique_valid = len(set(all_valid))
 
-   max_score = all_valid[0].score
+   if len(all_valid) > 0:
+      max_score = all_valid[0].score
+   else:
+      max_score = 0.0
 
 
    if config.write_out_stats:
