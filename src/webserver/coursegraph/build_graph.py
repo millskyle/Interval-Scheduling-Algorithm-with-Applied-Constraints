@@ -1,5 +1,4 @@
 import networkx as nx
-import matplotlib.pyplot as plt
 from JSON_io import JSON_dump
 from scraper.course import *
 import styles
@@ -117,6 +116,7 @@ def graph_optimize(query_results):
 
 
    if config.make_graph_image:
+      import matplotlib.pyplot as plt
       typemapping = { 'Lec': styles.colours.lec, 'Tut':styles.colours.tut, 'Lab':styles.colours.lab, 'Oth': styles.colours.oth }
       colors = [typemapping[node.cType] for node in G.nodes() ]
 
