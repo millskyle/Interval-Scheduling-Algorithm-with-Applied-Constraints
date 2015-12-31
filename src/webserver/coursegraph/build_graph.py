@@ -1,4 +1,5 @@
 import networkx as nx
+import matplotlib.pyplot as plt
 from JSON_io import JSON_dump
 from scraper.course import *
 import styles
@@ -23,7 +24,6 @@ def graph_optimize(query_results):
 #  result in requiredNumberOfSections = 9)
    requiredSections = types_within_subset(query_results)
    requiredNumberOfSections = len(requiredSections)
-
 
   #remove all empty sections from the query
    if (UserPrefs.RespectRegistration):
@@ -114,6 +114,25 @@ def graph_optimize(query_results):
    best_score = -1.0e9
 
    globalFailure = True
+
+
+   if config.make_graph_image:
+      typemapping = { 'Lec': styles.colours.lec, 'Tut':styles.colours.tut, 'Lab':styles.colours.lab, 'Oth': styles.colours.oth }
+      colors = [typemapping[node.cType] for node in G.nodes() ]
+
+      print colors
+      plt.figure(figsize=[24,20])
+      nx.draw_spring(G,
+#         with_labels=True,
+#         labels=nx.get_node_attributes(G,'label'),
+            node_color=colors,
+            node_size=500,
+#         linewidths=nx.get_node_attributes(G,'selected').values(),
+            )
+      plt.axis('off')
+      plt.savefig('graph.png')
+
+
 
 
    # Here we begin generating many different schedules.  After each schedule

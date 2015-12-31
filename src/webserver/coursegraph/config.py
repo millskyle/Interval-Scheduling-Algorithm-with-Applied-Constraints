@@ -7,7 +7,7 @@ class MakeConfig():
 #    Of these, the valid ones will be scored.
 #    Larger values will mean more chance of randomly coming across a better
 #    schedule, but computational time will scale directly with this number.
-     self.generate_this_many_schedules = 3000
+     self.generate_this_many_schedules = 600
 
 
 #    For each of the above schedules, we will make this many attempts
@@ -18,6 +18,8 @@ class MakeConfig():
      self.number_of_schedules_to_show_user = 5
 
      self.write_out_stats = True
+
+     self.make_graph_image = False
 
 
 config = MakeConfig()
