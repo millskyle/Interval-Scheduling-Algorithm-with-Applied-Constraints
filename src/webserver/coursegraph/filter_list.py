@@ -37,7 +37,7 @@ def missingCourses(TimeTable, RS):
       y.append(str(CRN.course) + "_" + str(CRN.cType))
    missing = set(RS) - set(y)
    for h in missing:
-      TimeTable.warnings.append("WARNING: We could not include " + str(h) + " in the the timetable.")
+      TimeTable.warnings.append("WARNING: We could not include " + str(h) + " in the timetable.")
 
 
 
