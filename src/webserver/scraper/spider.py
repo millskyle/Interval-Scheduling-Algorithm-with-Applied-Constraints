@@ -114,7 +114,9 @@ class available_courses_spider(CrawlSpider):
                if str(fields[3]) in ['M','T','W','R','F']:
                   day = day2int(fields[3])
                   startTime,endTime = [time2int(i) for i in fields[2].split(" - ")]
+                  dateRange = fields[5].split(' - ')
                   cType = string2courseType(fields[6])
+               
                else:
                   day = -1
                   startTime,endTime = ["0001", "0002"]
@@ -127,8 +129,9 @@ class available_courses_spider(CrawlSpider):
                else:
                   days = [day,day+5]
 
-               for d in days:
-                  Sec.add_timeslot(startTime,endTime,d)
+               if not(cType=='Lec' and dateRange[0]==dateRange[1] ):
+                  for d in days:
+                     Sec.add_timeslot(startTime,endTime,d)
 
             Sec.cleanup()
 #            print fields
