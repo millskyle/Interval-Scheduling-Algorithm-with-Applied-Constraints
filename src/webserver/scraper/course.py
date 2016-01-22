@@ -56,6 +56,14 @@ class Section():
       self.timeslots.append(t)
    def cleanup(self):
       #remove duplicate timeslots (e.g. labs listed 6 times per semester)
+      tmp = []
+      for timeslot in self.timeslots:
+         if timeslot.day in tmp:
+            pass
+         else:
+            tmp.append(timeslot.day)
+      count = [tmp.count(i) for i in tmp ]
+      _ = self.timeslots.pop(count.index(min(count)))
       self.timeslots = set(self.timeslots)
       #remove space in course code:
       self.course = self.course.replace(" ","")
