@@ -1,3 +1,4 @@
+import os
 import re
 from scraper.course import Section
 from dbSetup import *
@@ -9,7 +10,7 @@ from datetime import datetime, timedelta
 #Use reinit for debugging purposes
 #True or 1 to clear all data in database
 def init(reinit=False):
-    if reinit:
+    if reinit or os.getenv("DEBUG", False):
         __deleteTables()
     __createTables()
 
