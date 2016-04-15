@@ -1,14 +1,9 @@
 import peewee
-from playhouse.pool import PooledMySQLDatabase
-import MySQLdb
+from playhouse.db_url import connect
 import datetime
+import os
 
-dbname = 'MyCampusSections'
-dbuser = 'hackweek'
-dbpass = 'hackweekteam'
-
-#db = peewee.MySQLDatabase(dbname, user=dbuser, passwd=dbpass)
-db = PooledMySQLDatabase(dbname, user=dbuser, passwd=dbpass)
+db = connect(os.getenv("DATABASE_URL", "sqlite:///scheduling.db"))
 
 #Base Models for tables to avoid annoying excess code
 class BaseModel(peewee.Model):

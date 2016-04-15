@@ -1,4 +1,5 @@
 import json
+import os
 import bottle
 from database import dbHandler
 from scraper import spiderworker
@@ -165,7 +166,8 @@ def getAvailCourses(sem):
 	return json.dumps(dbHandler.getAvailableCourses(sem),
 					  sort_keys=True, ensure_ascii=True	)
 
-bottle.run(host='', port=80)
+bottle.run(host='', port=int(os.getenv("PORT", 80)))
+
 if setup:
 	scraperWorker.end()
 	scraperWorker.join()
