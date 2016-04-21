@@ -1,7 +1,3 @@
-
-
-
-
 class UserPreferences():
    def __init__(self):
       self.semester = "201509"
@@ -16,4 +12,5 @@ class UserPreferences():
       self.preferredCRNs = []
       self.preferMinGaps = True
       self.RespectRegistration = True
+
 UserPrefs = UserPreferences()
