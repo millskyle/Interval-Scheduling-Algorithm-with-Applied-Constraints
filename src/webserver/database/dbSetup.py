@@ -39,3 +39,9 @@ class watches(BaseModel):
    crn = peewee.CharField()
    semester = peewee.CharField()
 
+
+class usage(BaseModel):
+   id = peewee.PrimaryKeyField()
+   semester = peewee.CharField()
+   date = peewee.DateTimeField(default=datetime.datetime.now)
+    

@@ -22,6 +22,7 @@ def __createTables():
     Sectiondb.create_table(True)
     Timeslotdb.create_table(True)
     watches.create_table(True)
+    usage.create_table(True)
 
 def email_valid(email):
     return re.match("^[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}$", email)
@@ -111,6 +112,17 @@ def updateCourse(sec):
             t.starttime = timeslot.sTime
             t.endtime = timeslot.eTime
             t.save()
+
+
+#if someone uses the scheduler, add an entry to the usage table
+def addUsage(semester):
+    row = usage()
+    row.semester = semester
+    row.save()
+
+
+
+
 
 #I'm assuming I'm just going to get a list of strings for this part
 def grabCourses(courses):

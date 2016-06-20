@@ -8,6 +8,23 @@ from scrapy.utils.log import configure_logging
 from multiprocessing import Process
 from database import dbHandler
 
+
+class simpleWorker():
+    def runProcess(self):
+        configure_logging()
+        dbHandler.check_watches()
+        runner = CrawlerRunner()
+        runner.crawl(spider.available_courses_spider)
+        dbHandler.check_watches()
+        d = runner.join()
+        d.addBoth(lambda _: reactor.stop())
+
+        reactor.run()
+ 
+
+
+
+
 class SpiderWorker(threading.Thread):
     def __init__(self):
         super(SpiderWorker, self).__init__()

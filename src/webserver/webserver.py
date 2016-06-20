@@ -141,6 +141,7 @@ def getCalendar():
         'ECOURSES' : elective_selected_courses
     }
 
+    dbHandler.addUsage(semester=semester)
     courses, ecourses = dbHandler.grabCourses(inputdict)
     calendars = build_graph.graph_optimize(courses+ecourses)
     templ = open('public_html/cal2.tmpl','r').read()
