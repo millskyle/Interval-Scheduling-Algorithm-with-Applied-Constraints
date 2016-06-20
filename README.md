@@ -7,7 +7,7 @@
 
 All dependencies can be easily installed using pip:
 
-```sudo pip install -r requirements.txt``
+```pip install -r requirements.txt```
 
 
 
