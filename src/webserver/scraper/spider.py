@@ -55,7 +55,7 @@ class available_courses_spider(CrawlSpider):
         semester = response.meta['semester']
         subjects = Selector(response).xpath('//td[@class="dedefault"]/select[@id="subj_id"]/option/@value').extract()
         for subject in subjects:
-            #if subject=='HLSC':  #for debugging a specific subject
+            if subject=='BUSI':  #for debugging a specific subject
                url = "https://ssbp.mycampus.ca/prod_uoit/bwckschd.p_get_crse_unsec?TRM=U&term_in="+semester+"&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_subj="+subject+"&sel_crse=&sel_title=&sel_schd=%25&sel_insm=%25&sel_from_cred=&sel_to_cred=&sel_camp=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a"
                req = scrapy.Request(url,self.parseSubjectOptions)
                req.meta['semester'] = semester
@@ -105,38 +105,40 @@ class available_courses_spider(CrawlSpider):
                 meetingtimes = thisCRN.xpath('.//table[caption="Scheduled Meeting Times"]/tr[td[@class="dbdefault"]] ')
                 Sec.name,Sec.CRN,Sec.course,section_number = header.split(" - ")
 
-                for mt in meetingtimes:
-                    fields = mt.xpath('.//td[@class="dbdefault"]/text()|.//td[@class="dbdefault"]//*/text()').extract()
-                    #The "week" field includes a non-breaking space (&nbsp;) so it must be dealt with
-                    week = unicodedata.normalize('NFKD', fields[0]).encode('ascii','ignore')
-                    if str(fields[3]) in ['M','T','W','R','F']:
-                        day = day2int(fields[3])
-                        startTime,endTime = [time2int(i) for i in fields[2].split(" - ")]
-                        dateRange = fields[5].split(' - ')
-                        #print 'KYLE DEBUG:',fields
-                        cType = string2courseType(fields[6])
-                    
-                    else:
-                        day = -1
-                        startTime,endTime = ["0001", "0002"]
-                        cType = string2courseType(fields[4])
+                if len(meetingtimes) > 0:
 
-                    if (week==' W1'):
-                        days = [day]
-                    elif (week==' W2'):
-                        days = [day+5]
-                    else:
-                        days = [day,day+5]
+                   for mt in meetingtimes:
+                       fields = mt.xpath('.//td[@class="dbdefault"]/text()|.//td[@class="dbdefault"]//*/text()').extract()
+                       #The "week" field includes a non-breaking space (&nbsp;) so it must be dealt with
+                       week = unicodedata.normalize('NFKD', fields[0]).encode('ascii','ignore')
+                       if str(fields[3]) in ['M','T','W','R','F']:
+                           day = day2int(fields[3])
+                           startTime,endTime = [time2int(i) for i in fields[2].split(" - ")]
+                           dateRange = fields[5].split(' - ')
+                           #print 'KYLE DEBUG:',fields
+                           cType = string2courseType(fields[6])
 
-                    if not(cType=='Lec' and dateRange[0]==dateRange[1] ):
-                        for d in days:
-                            Sec.add_timeslot(startTime,endTime,d)
+                       else:
+                           day = -1
+                           startTime,endTime = ["0001", "0002"]
+                           cType = string2courseType(fields[4])
 
-                Sec.cleanup()
+                       if (week==' W1'):
+                           days = [day]
+                       elif (week==' W2'):
+                           days = [day+5]
+                       else:
+                           days = [day,day+5]
+
+                       if not(cType=='Lec' and dateRange[0]==dateRange[1] ):
+                           for d in days:
+                               Sec.add_timeslot(startTime,endTime,d)
+
+                   Sec.cleanup()
 #                print fields
-                Sec.cType = cType
+                   Sec.cType = cType
 
-                allcourses.append(Sec)
+                   allcourses.append(Sec)
 
 #                for ts in Sec.timeslots:
 #                    f.write("{CRN} {CTYPE} {CODE} {RSEAT} {STIME} {ETIME} {DAY} {SEM} {SUBJ} \n".format(
@@ -151,8 +153,8 @@ class available_courses_spider(CrawlSpider):
 #                          SUBJ=subject ) )
 #
 
-                Sec.printToScreen()
-                dbHandler.updateCourse(Sec)  #insert the course into the database.    dbHandler must take care of converting the Section() object to a database query/object.
+                   Sec.printToScreen()
+                   dbHandler.updateCourse(Sec)  #insert the course into the database.    dbHandler must take care of converting the Section() object to a database query/object.
 
 
 
