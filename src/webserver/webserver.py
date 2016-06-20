@@ -150,7 +150,7 @@ def getCalendar():
 
 @bottle.route('/getAvailableCourses/<sem>')
 def getAvailCourses(sem):
-    print request.body.read()
+    #print request.body.read()
     return json.dumps(dbHandler.getAvailableCourses(sem),
                       sort_keys=True, ensure_ascii=True)
 

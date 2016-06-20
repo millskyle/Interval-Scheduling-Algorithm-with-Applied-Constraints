@@ -131,7 +131,7 @@ def grabCourses(courses):
     ecourselist = courses["ECOURSES"]
     #sem = getSemesterCode(courses["SEMESTER"])
     sem = courses["SEMESTER"]
-    print("*** {}".format(sem))
+    #print("*** {}".format(sem))
     sectionlist = []
     for course in courselist:
         createSectionsfromCourse(course, sem, sectionlist)
@@ -196,10 +196,10 @@ def getAvailableCourses(semester):
                     coursesdict[subrow.subject].append(row.code)
 
             retdict[semstring] = coursesdict
-    else:
-        print sem
+#    else:
+#        print sem
 
-    print(retdict)
+#    print(retdict)
     return retdict
 
 def getSemesterCode(semester):
@@ -212,7 +212,7 @@ def getSemesterCode(semester):
     elif term == 'Spring Summer':
         sem = str(opts[-1]) + '05'
     else:
-        print("Received semester '{}'".format(semester))
+        #print("Received semester '{}'".format(semester))
         return
 
     return sem
