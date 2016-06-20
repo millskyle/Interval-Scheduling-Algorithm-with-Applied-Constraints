@@ -55,11 +55,12 @@ class available_courses_spider(CrawlSpider):
         semester = response.meta['semester']
         subjects = Selector(response).xpath('//td[@class="dedefault"]/select[@id="subj_id"]/option/@value').extract()
         for subject in subjects:
-            url = "https://ssbp.mycampus.ca/prod_uoit/bwckschd.p_get_crse_unsec?TRM=U&term_in="+semester+"&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_subj="+subject+"&sel_crse=&sel_title=&sel_schd=%25&sel_insm=%25&sel_from_cred=&sel_to_cred=&sel_camp=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a"
-            req = scrapy.Request(url,self.parseSubjectOptions)
-            req.meta['semester'] = semester
-            req.meta['subject'] = subject
-            yield req
+            #if subject=='HLSC':  #for debugging a specific subject
+               url = "https://ssbp.mycampus.ca/prod_uoit/bwckschd.p_get_crse_unsec?TRM=U&term_in="+semester+"&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_subj="+subject+"&sel_crse=&sel_title=&sel_schd=%25&sel_insm=%25&sel_from_cred=&sel_to_cred=&sel_camp=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a"
+               req = scrapy.Request(url,self.parseSubjectOptions)
+               req.meta['semester'] = semester
+               req.meta['subject'] = subject
+               yield req
 
     def parseSemesterChoicePage(self, response):
         if "Search by Term" in response.body:
@@ -68,7 +69,7 @@ class available_courses_spider(CrawlSpider):
                 req = scrapy.Request('https://ssbp.mycampus.ca/prod_uoit/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjectChoicePage)
                 req.meta['semester'] = semester
                 if semester != '':
-                    if int(semester) > 201400:
+                    if int(semester) > 201607:
                         yield req
 
 
@@ -105,13 +106,14 @@ class available_courses_spider(CrawlSpider):
                 Sec.name,Sec.CRN,Sec.course,section_number = header.split(" - ")
 
                 for mt in meetingtimes:
-                    fields = mt.xpath('.//td[@class="dbdefault"]/text()').extract()
+                    fields = mt.xpath('.//td[@class="dbdefault"]/text()|.//td[@class="dbdefault"]//*/text()').extract()
                     #The "week" field includes a non-breaking space (&nbsp;) so it must be dealt with
                     week = unicodedata.normalize('NFKD', fields[0]).encode('ascii','ignore')
                     if str(fields[3]) in ['M','T','W','R','F']:
                         day = day2int(fields[3])
                         startTime,endTime = [time2int(i) for i in fields[2].split(" - ")]
                         dateRange = fields[5].split(' - ')
+                        #print 'KYLE DEBUG:',fields
                         cType = string2courseType(fields[6])
                     
                     else:
