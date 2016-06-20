@@ -28,10 +28,10 @@ def graph_optimize(query_results):
     if (UserPrefs.RespectRegistration):
         query_results = [i for i in query_results if i.remainingSeats > 0 ]
 
-    for i in range(10):
-        print "!"*100
-    for CRN in query_results:
-        CRN.printToScreen()
+#    for i in range(10):
+#        print "!"*100
+#    for CRN in query_results:
+#        CRN.printToScreen()
 
 #  SOME CONFIGURATION:
     calculate_how_many = config.generate_this_many_schedules
@@ -119,7 +119,7 @@ def graph_optimize(query_results):
         typemapping = { 'Lec': styles.colours.lec, 'Tut':styles.colours.tut, 'Lab':styles.colours.lab, 'Oth': styles.colours.oth }
         colors = [typemapping[node.cType] for node in G.nodes() ]
 
-        print colors
+        #print colors
         plt.figure(figsize=[24,20])
         nx.draw_spring(G,
 #           with_labels=True,
@@ -138,7 +138,7 @@ def graph_optimize(query_results):
     # is found (and verified to contain the correct number of courses), it is scored and
     # added to a list of all valid courses.
     for potentialSchedule in xrange(calculate_how_many):
-        print "Attempting to build schedule",potentialSchedule
+        #print "Attempting to build schedule",potentialSchedule
         successfully_scheduled_sections = 0
         tries = 0
         bestTry = []
@@ -199,8 +199,8 @@ def graph_optimize(query_results):
     all_valid = sorted(all_valid, key = lambda x: x.score, reverse=True)
     consolation = sorted(consolation, key = lambda x: len(x.Schedule), reverse=True)
 
-    if globalFailure:
-        print "FAILURE to find even one valid schedule"
+   # if globalFailure:
+        #print "FAILURE to find even one valid schedule"
 
     good_schedules = len(all_valid)
     for tt in all_valid:
@@ -228,7 +228,7 @@ def graph_optimize(query_results):
 
 
 
-    print "UNIQUE SCHEDULES POSSIBLE: {0} (of {1} valid schedules)".format(unique_valid,len(all_valid))
+    #print "UNIQUE SCHEDULES POSSIBLE: {0} (of {1} valid schedules)".format(unique_valid,len(all_valid))
 
     if good_schedules >= config.number_of_schedules_to_show_user:
         schedules_to_return = all_valid[0:config.number_of_schedules_to_show_user]
@@ -238,8 +238,8 @@ def graph_optimize(query_results):
     for tt in schedules_to_return:
         if not(UserPrefs.RespectRegistration):
             tt.warnings.append("WARNING: You chose to ignore current registration numbers. Sections on the above timetable could be full.");
-        print "  Score --> ",tt.score
-        print tt.key
+        #print "  Score --> ",tt.score
+        #print tt.key
         missingCourses(tt,requiredSections)
         tt.notes.append("List of CRNs displayed on this time table:")
         last_course = ""
@@ -256,13 +256,13 @@ def graph_optimize(query_results):
             stringg = stringg + CRN.CRN #+ ", "
         tt.notes.append(stringg)
 
-        print len(tt.Schedule)
-        for wn in tt.warnings:
-            print wn
-        for nn in tt.notes:
-            print nn
+#        #print len(tt.Schedule)
+#        for wn in tt.warnings:
+#            print wn
+#        for nn in tt.notes:
+#            print nn
 
-    print "FOUND",len(schedules_to_return),"schedules to return"
+    #print "FOUND",len(schedules_to_return),"schedules to return"
 
     returnData = []
     for thisSchedule in schedules_to_return:
