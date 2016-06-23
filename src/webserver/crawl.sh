@@ -1,7 +1,3 @@
-#!/bin/sh
+cd /home/ubuntu/Interval-Scheduling-Algorithm-with-Applied-Constraints/src/webserver
+/usr/bin/python crawl.py
 
-cd $HOME/Interval-Scheduling-Algorithm-with-Applied-Constraints/src/webserver
-
-# If you want to use a different python interpreter, set your
-# $PATH to something else.
-python crawl.py
