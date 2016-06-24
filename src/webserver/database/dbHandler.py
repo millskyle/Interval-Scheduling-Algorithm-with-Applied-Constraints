@@ -186,10 +186,9 @@ def getAvailableCourses(semester):
         for subrow in subjectquery:
             coursesdict[subrow.subject] = []
 
-            coursequery = Sectiondb.select().\
+            coursequery = Sectiondb.select(Sectiondb.code).\
                             where(Sectiondb.subject == subrow.subject,
                                   Sectiondb.semester == sem).\
-                            group_by(Sectiondb.code).\
                             distinct().naive()
             if coursequery.exists():
                 for row in coursequery:
