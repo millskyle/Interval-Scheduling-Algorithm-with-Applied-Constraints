@@ -7,6 +7,7 @@ from scrapy.selector import Selector,HtmlXPathSelector
 from scrapy.spiders import CrawlSpider
 from scrapy.linkextractors.sgml import SgmlLinkExtractor
 import time
+import random
 import networkx as nx
 from  course import *
 from database import dbHandler
@@ -78,7 +79,7 @@ class available_courses_spider(CrawlSpider):
         semester = response.meta['semester']
         subject = response.meta['subject']
 
-        printer("Parsing available {subject} courses for semester {semester}...".format(subject=subject,semester=semester))
+        #printer("Parsing available {subject} courses for semester {semester}...".format(subject=subject,semester=semester))
 
         body = Selector(response).xpath('//table[@class="datadisplaytable"]')
 
@@ -153,8 +154,9 @@ class available_courses_spider(CrawlSpider):
 #                          SUBJ=subject ) )
 #
 
-                   Sec.printToScreen()
+                   #Sec.printToScreen()
                    dbHandler.updateCourse(Sec)  #insert the course into the database.    dbHandler must take care of converting the Section() object to a database query/object.
+                   time.sleep(random.random())
 
 
 
