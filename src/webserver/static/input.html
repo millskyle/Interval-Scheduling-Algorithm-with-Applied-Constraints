@@ -1,63 +1,78 @@
 <!DOCTYPE html>
-
 <html>
 
 	<head>
 		<title>UOIT Course Schedule Optimizer</title>
 		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="input.js"></script>
+
+      <link rel="icon" type="image/png" href="http://uoitphysics.ca/wp-content/uploads/2016/01/schedfavicon.png"/>
 
 
-     <script language="javascript" type="text/javascript">
-     function showDiv() {
-        $('#loading').show();
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+		<script src="input.js"></script>     
+      <script language="javascript" type="text/javascript">
+         function showDiv() {
+            $('#loading').show();
          } ;  
-</script>
+      </script>
+<style>
+  .logo-sprite {
+    background-image:url('./uoit.svg');
+    background-size:600px;
+    display:inline-block;
+    width:200px;
+    height:130px;
 
+}
+</style>
 
-
-
-</head>
-
+   </head>
 	<body>
 
-  
+
       <div id="loading">
       <br><br><br>
         <img src="progress_bar.gif" id="loading-image">    
         <br>
-        <h2 align="center">Loading Schedules...</h2>
-        <div style="margin:100px">
-        <center><img src="uoit.svg" width='70%'/></center>
-        </div>
+        <h2 align="center">Loading...</h2> 
+        
+	 <a href='http://faculty.uoit.ca/itamblyn' target='_blank'><div class='logo-sprite' style="background-position-x:-10px;"></div></a>
+	      <a href='https://github.com/millskyle/Interval-Scheduling-Algorithm-with-Applied-Constraints/' target='_blank'><div class='logo-sprite' style="background-position-x:-210px;"></div></a>
+	      <a href='http://uoit.ca' target='_blank'><div class='logo-sprite' style="background-position-x:-410px;"></div></a>
+ 
       </div>
-
-
 
 
 
 		<form id="form" action="input_form" method="post" onsubmit="return showDiv(); selectAllOptions('l3');selectAllOptions('l6');">
 
- <div class='main'>
+      <div class='main'>
 
-		<h1 align="center">UOIT Course Optimizer</h1>
+	   <!-- <h1 align="center">UOIT Course Optimizer</h1> -->
+      <img src='http://uoitphysics.ca/wp-content/uploads/2016/01/cover1.jpg' alt='UOIT Course Scheduler' title='UOIT Course Scheduler' width="100%" style="border-radius:10px;" />
 
-		<center><img style="width:75%" src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br>
+
+		<!-- <center><img style="width:75%" src="http://mortgagebrokersoshawa.files.wordpress.com/2011/08/uoit1.jpg"/></center><br> -->
 
 		<p>
-		The UOIT Course Optimizer was created by students, for students, as a tool to identify the best possible timetable for each students' specific needs.  To create your ideal school schedule, input your semester, choose the courses you must take, and then set any preference you may have.  Click "Submit" to see the five best schedules according to your preferences. If you can't remember what courses you have to take, or would like to see what course options are available, please visit the UOIT academic calendar for the correct school year <a href="http://www.uoit.ca/calendar/">on UOIT's website here</a>.
-		</p>
+		The UOIT Course Optimizer was created by students, for students, as a tool to identify the best possible timetable for each student's specific needs.  Note that this schedule generation tool is not a service provided by UOIT, and it is not supported or maintained by anyone affiliated with the registrar, IT Services or other UOIT staff. <br><br>If you find this useful, or can think of ways to improve, send an email to scheduler@uoitphysics.ca. <br>Make sure you double-check the generated schedule to make sure it is correct, and that the CRNs match the courses you selected.
+      </p>
 
 		<h2>Semester</h2>
 			<p>
 			Choose a semester
-			<br><br>
-			<select id="semester" name="semester"><option name="201509">Fall 2015</option><option name="201601">Winter 2016</option></select>
+                        <br><br>
+  <select id="semester" name="semester">
+<!--    <option value="201605">Spring/Summer 2016</option> -->
+    <option value="201609">Fall 2016</option>
+    <option value="201701">Winter 2017</option>
+  </select>
 			</p>
 		<h2>Courses</h2>
 			<!-- <h3>Mandatory Courses</h3> -->
-          Choose the courses you must take.
+          Choose the courses you must take. See the <a href="http://www.uoit.ca/calendar/">UOIT Course Calendar</a> if you can't remember what courses you must take.
 				<p>
 				<!-- <span>*</span>Selec the courses to include: -->
             <table align="center">
@@ -206,14 +221,30 @@
 
 
 
-		</form>
+		<div>
+<div>Known caveats/concerns:</div>
+<ul>
+  <li> If a course has equivalent sections offered both in online-only format (no scheduled meeting times) and in-class format, we will always choose the in-class version. 
+</ul>
+</div>
+<br><br>
 
-		<center><img src="uoit.svg" width='100%'/></center>
+</form>
+
+<div style='text-align:center'>
+
+      <a href='http://faculty.uoit.ca/itamblyn' target='_blank'><div class='logo-sprite' style="background-position-x:-10px;"></div></a>
+      <a href='https://github.com/millskyle/Interval-Scheduling-Algorithm-with-Applied-Constraints/' target='_blank'><div class='logo-sprite' style="background-position-x:-210px;"></div></a>
+      <a href='http://uoit.ca' target='_blank'><div class='logo-sprite' style="background-position-x:-410px;"></div></a>
+ 
+ </div>
+
+<div style='align:center' >This tool was created as a 'hack-week' project in 2015 by a group of Physics students and a computer science graduate student. To read more about the project, see the news article on the UOIT website: <a href='https://news.uoit.ca/archives/2015/08/uoit-science-researcher-encourages-students-to-embrace-summer-hack-week.php' >UOIT SCIENCE RESEARCHER ENCOURAGES STUDENTS TO EMBRACE SUMMER ‘HACK WEEK’</a>.<br><br>  There literally billions of possible schedules that a first-year student could choose, and it can be an overwhelming task to find a suitable schedule for your needs. Hopefully, this tool will make your university experience a little less stressful.</div>
 
      <script language="javascript" type="text/javascript">
         $(window).load(function() {
           $('#loading').hide(); 
-        });  
+         });  
 </script>
 
 
