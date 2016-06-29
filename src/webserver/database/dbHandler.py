@@ -6,6 +6,8 @@ import urllib2
 from urllib import urlencode
 from datetime import datetime, timedelta
 
+#Note that urllib2.* lines have been commented out to avoid 403 errors.  Watch feature is not working.
+
 #initializes the database
 #Use reinit for debugging purposes
 #True or 1 to clear all data in database
@@ -44,7 +46,7 @@ The watch you set on CRN {crn} has expired. Re-submit the watch at scheduler.uoi
         print "\n",stringg
         post = { "b":stringg, "s": "CRN watch EXPIRED!", "e":result.email}
         url = "http://uoitphysics.ca/email/dispatch/send_simple_email.php"
-        urllib2.urlopen(url, urlencode(post))
+        #urllib2.urlopen(url, urlencode(post))
         deactivate = watches.update(active = False).where(watches.crn == result.crn, watches.semester==result.semester)
         deactivate.execute()
 
@@ -66,7 +68,7 @@ has {seats} seats available. """.format(code=query.code, name = query.name, seat
             post = { "b":stringg, "s": "CRN available","e":result.email}
             url = "http://uoitphysics.ca/email/dispatch/send_simple_email.php"
             print "URL: ",url
-            urllib2.urlopen(url, urlencode(post))
+            #urllib2.urlopen(url, urlencode(post))
             deactivate = watches.update(active = False).where(watches.crn == query.crn, watches.semester==query.semester)
             deactivate.execute()
             print "deactivated",deactivate,"watches"

@@ -156,7 +156,7 @@ class available_courses_spider(CrawlSpider):
 
                    #Sec.printToScreen()
                    dbHandler.updateCourse(Sec)  #insert the course into the database.    dbHandler must take care of converting the Section() object to a database query/object.
-                   time.sleep(random.random())
+                   time.sleep(random.random()/3)
 
 
 
