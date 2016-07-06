@@ -55,11 +55,13 @@
    <div class='buttonwrap'>
 	   <div id ="buttonArea" class='buttonArea'>
 		   Pick Your Schedule:
+           <div>
 		   %for i in range(len(calendars)):
 			   <button id="button{{i}}">
 			   	{{i+1}}
 			   </button>
-		   %end		
+		   %end	
+           </div>
 	   </div>
    </div>
      

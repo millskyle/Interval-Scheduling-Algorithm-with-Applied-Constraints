@@ -13,7 +13,7 @@ class MakeConfig():
 #    Smaller numbers are fine for sparse timetables, but more densly packed
 #    timetables require many more iterations to find the best.
         self.maximum_attempts_per_schedule = 45
-        self.number_of_schedules_to_show_user = 5
+        self.number_of_schedules_to_show_user = 10
 
         self.write_out_stats = True
 
