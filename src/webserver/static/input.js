@@ -1,18 +1,28 @@
 var xmlhttp;
 var courses;
 
+function clear_hash() {
+   var vposition = document.body.scrollTop;
+   window.location.hash = "";
+   document.body.scrollTop = vposition;
+}
+
 function loadXMLDoc() {
     $('#l2').empty();
     $('#l3').empty();
     $('#l5').empty();
     $('#l6').empty();
 
+
+    //parse the url hash to get selected courses:
     hash = window.location.hash.replace("#-","").split("-");
     if (hash.length > 1) { 
         $.each(hash,function(key,value) {
-            $('#l3').append($("<option></option>").attr("value",value).text(value));
+            var thiscourse = $('#l3').append($("<option></option>").attr("value",value).text(value));
+//            thiscourse.attr("selected");
         });
     }
+    ///////
 
     var sem = $('#semester').find(":selected").val();
     $.ajax({
@@ -38,39 +48,39 @@ function loadXMLDoc() {
 $(function () {
 
     $("#b0").click(function() {
-        var vposition = document.body.scrollTop;
-        window.location.hash = "";
-        document.body.scrollTop = vposition;
+        clear_hash();
         $('#l3').empty();
     });
     
     $("#b1").click(function() {
         $("#l2 option:selected").each(function(){
-            $(this).remove().appendTo("#l3");
-            $(this).appendTo("#l3");
+            $(this).clone().appendTo("#l3");
             window.location.hash=window.location.hash + '-' + $(this).val();
-            $(this).attr("selected")
         });
     });
 
     $("#b2").click(function() {
         $("#l3 option:selected").each(function(){
-            $(this).remove().appendTo("#l2");
+            $(this).remove();
+            var vposition = document.body.scrollTop;
+            window.location.hash = window.location.hash.replace('-'+$(this).val(),'');
+            document.body.scrollTop = vposition;
+            //$(this).remove().appendTo("#l2");
         });
     });
 
-    $("#b3").click(function() {
-        $("#l5 option:selected").each(function(){
-            $(this).remove().appendTo("#l6");
-            $(this).attr("selected")
-        });
-    });
+//    $("#b3").click(function() {
+//        $("#l5 option:selected").each(function(){
+//            $(this).remove().appendTo("#l6");
+//            $(this).attr("selected")
+//        });
+//    });
 
-    $("#b4").click(function() {
-        $("#l6 option:selected").each(function(){
-            $(this).remove().appendTo("#l5");
-        });
-    });        
+//    $("#b4").click(function() {
+//        $("#l6 option:selected").each(function(){
+//            $(this).remove().appendTo("#l5");
+//        });
+//    });        
 
     $("#l1").change(function(){
         $("#l1 option:selected").each(function(){
@@ -103,16 +113,25 @@ $(function () {
     });
 
     $('#semester').change(function(){
+        clear_hash();
         loadXMLDoc();
     })
 });
 
+
+
 function selectAllOptions(selStr)
 {
-    var selObj = document.getElementById(selStr);
-    for (var i=0; i<selObj.options.length; i++) {
-        selObj.options[i].selected = true;
-    }
+//    var selObj = document.getElementById(selStr);
+    
+    $('#l3 option').each(function() {
+        $(this).attr("selected",'selected');
+    });
+    
+//    for (var i=0; i<selObj.options.length; i++) {
+//        selObj.options[i].selected = true;
+//    }
+
 }
 
 
