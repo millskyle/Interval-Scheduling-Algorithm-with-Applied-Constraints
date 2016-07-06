@@ -80,6 +80,27 @@ td {text-align: center; }
 
 .biglist {
    height:300px;
+   border: solid 2px #0077A8;
+   border-radius: 12px;
+   padding: 6px;
+}
+
+::-webkit-scrollbar {
+        width: 8px;
+        height: 90%;
+}
+ 
+::-webkit-scrollbar-track {
+    border: 1px 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    height: 90%;
+    border-radius: 10px;
+}
+  
+::-webkit-scrollbar-thumb {
+   background: #0077A8;
+   border-radius: 10px;
+   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 
 /*input {
@@ -98,6 +119,16 @@ input, select {
 
 .addrem {
    width:120px;
+   background: #0077A8;
+   color: #FFFFFF;
+   border: solid 1px #0077A8;
+   border-radius: 3px;
+   margin: 5px;
+   padding: 3px;
+}
+.addrem:hover{
+    background: #2299ca;
+    border:solid 1px #2299ca;
 }
 
 

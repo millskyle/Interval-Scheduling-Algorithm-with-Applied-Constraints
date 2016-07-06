@@ -6,6 +6,14 @@ function loadXMLDoc() {
     $('#l3').empty();
     $('#l5').empty();
     $('#l6').empty();
+
+    hash = window.location.hash.replace("#-","").split("-");
+    if (hash.length > 1) { 
+        $.each(hash,function(key,value) {
+            $('#l3').append($("<option></option>").attr("value",value).text(value));
+        });
+    }
+
     var sem = $('#semester').find(":selected").val();
     $.ajax({
         type: 'get',
@@ -28,10 +36,19 @@ function loadXMLDoc() {
 }
 
 $(function () {
+
+    $("#b0").click(function() {
+        var vposition = document.body.scrollTop;
+        window.location.hash = "";
+        document.body.scrollTop = vposition;
+        $('#l3').empty();
+    });
     
     $("#b1").click(function() {
         $("#l2 option:selected").each(function(){
             $(this).remove().appendTo("#l3");
+            $(this).appendTo("#l3");
+            window.location.hash=window.location.hash + '-' + $(this).val();
             $(this).attr("selected")
         });
     });
