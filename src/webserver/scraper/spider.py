@@ -70,7 +70,7 @@ class available_courses_spider(CrawlSpider):
                 req = scrapy.Request('https://ssbp.mycampus.ca/prod_uoit/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjectChoicePage)
                 req.meta['semester'] = semester
                 if semester != '':
-                    if int(semester) > 201607:
+                    if int(semester) > 201707:
                         yield req
 
 
