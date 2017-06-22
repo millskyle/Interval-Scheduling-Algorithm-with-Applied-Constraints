@@ -3,7 +3,9 @@
 
 
 
-###Dependencies:
+## Dependencies:
+
+```sudo apt-get install libpq-dev``` (on Debian)
 
 All dependencies can be easily installed using pip:
 
