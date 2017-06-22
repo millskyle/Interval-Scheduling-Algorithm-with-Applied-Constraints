@@ -5,9 +5,10 @@
 
 ## Dependencies:
 
-```sudo apt-get install libpq-dev``` (on Debian)
+- Some libraries:
+```sudo apt-get install libpq-dev libffi-dev``` (on Debian)
 
-All dependencies can be easily installed using pip:
+- Python dependencies can be easily installed using pip:
 
 ```pip install -r requirements.txt```
 
