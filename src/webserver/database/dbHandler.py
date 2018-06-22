@@ -182,7 +182,7 @@ def getAvailableCourses(semester):
     subjectquery = Sectiondb.\
                     select(Sectiondb.subject).\
                     where(Sectiondb.semester == sem).\
-                    distinct().naive()
+                    distinct().objects()
 
     if subjectquery.exists():
         for subrow in subjectquery:
@@ -191,7 +191,7 @@ def getAvailableCourses(semester):
             coursequery = Sectiondb.select(Sectiondb.code).\
                             where(Sectiondb.subject == subrow.subject,
                                   Sectiondb.semester == sem).\
-                            distinct().naive()
+                            distinct().objects()
             if coursequery.exists():
                 for row in coursequery:
                     coursesdict[subrow.subject].append(row.code)
