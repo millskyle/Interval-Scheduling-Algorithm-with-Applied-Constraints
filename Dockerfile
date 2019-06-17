@@ -1,4 +1,4 @@
-FROM python:2-alpine3.7
+FROM python:2-alpine
 
 RUN apk --no-cache add postgresql-libs \
   libffi \
