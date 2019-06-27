@@ -70,7 +70,7 @@ class available_courses_spider(CrawlSpider):
                 req = scrapy.Request('https://ssbp.mycampus.ca/prod_uoit/bwckgens.p_proc_term_date?p_calling_proc=bwckschd.p_disp_dyn_sched&TRM=U&p_term={semester}'.format(semester=semester), self.parseSubjectChoicePage)
                 req.meta['semester'] = semester
                 if semester != '':
-                    if int(semester) > 201707:
+                    if int(semester) > 201907:
                         yield req
 
 
@@ -107,9 +107,12 @@ class available_courses_spider(CrawlSpider):
                 Sec.name,Sec.CRN,Sec.course,section_number = header.split(" - ")
 
                 if len(meetingtimes) > 0:
-
+                   onlineFlag = False
                    for mt in meetingtimes:
                        fields = mt.xpath('.//td[@class="dbdefault"]/text()|.//td[@class="dbdefault"]//*/text()').extract()
+                       if str(fields[2])=='Online':
+                           onlineFlag=True
+                           break
                        #The "week" field includes a non-breaking space (&nbsp;) so it must be dealt with
                        week = unicodedata.normalize('NFKD', fields[0]).encode('ascii','ignore')
                        if str(fields[2]) in ['M','T','W','R','F']:
@@ -130,11 +133,11 @@ class available_courses_spider(CrawlSpider):
                            days = [day+5]
                        else:
                            days = [day,day+5]
-
                        if not(cType=='Lec' and dateRange[0]==dateRange[1] ):
                            for d in days:
                                Sec.add_timeslot(startTime,endTime,d)
-
+                   if onlineFlag:
+                       continue
                    Sec.cleanup()
 #                print fields
                    Sec.cType = cType

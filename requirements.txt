@@ -9,9 +9,8 @@ enum34
 idna
 ipaddress
 lxml
-networkx
+networkx==2.2
 peewee
-psycopg2
 pyasn1
 pyasn1-modules
 pycparser
